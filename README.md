@@ -1,2 +1,2 @@
 # Windows-Bootloader-Corruption-Fixer
-Fixes the Windows bootloader by useing BCDboot command.
+Fixes the Windows bootloader by using the BCDboot command.
