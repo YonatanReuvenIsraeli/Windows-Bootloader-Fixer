@@ -103,19 +103,19 @@ if "%BIOSType%"=="2" goto :UEFI
 if "%BIOSType%"=="3" goto :Both
 
 :LegacyBIOS
-BCDBOOT %DriveLetterWindows%\Windows /s %DriveLetterBootloader% /f BIOS
+BCDBoot %DriveLetterWindows%\Windows /s %DriveLetterBootloader% /f BIOS
 if errorlevel 1 goto :Error
 goto :Done
 
 :UEFI
-BCDBOOT %DriveLetterWindows%\Windows /s %DriveLetterBootloader% /f UEFI
+BCDBoot %DriveLetterWindows%\Windows /s %DriveLetterBootloader% /f UEFI
 if errorlevel 1 goto :Error
 goto :Done
 
 :Both
-BCDBOOT %DriveLetterWindows%\Windows /s %DriveLetterBootloader% /f ALL
+BCDBoot %DriveLetterWindows%\Windows /s %DriveLetterBootloader% /f ALL
 if errorlevel 1 goto :Error
-goto :done
+goto :Done
 
 :Error
 echo There was an error and no new bootloader was created. You can try again.
