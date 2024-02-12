@@ -1,6 +1,6 @@
 @echo off
 setlocal
-title Windows Bootloader Corruption Fixer
+title Windows Bootloader Fixer
 echo Please run this batch file as an administrator.
 goto :Start
 
