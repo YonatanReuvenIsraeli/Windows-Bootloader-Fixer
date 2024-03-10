@@ -124,5 +124,5 @@ goto :Start
 :Done
 endlocal
 echo Your Windows bootloader is fixed! Press any key to close this batch file.
-pause
+pause >nul
 exit
