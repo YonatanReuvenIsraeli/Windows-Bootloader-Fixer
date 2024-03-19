@@ -15,7 +15,7 @@ if "%BIOSType%"=="1" goto :DriveLetterWindows
 if "%BIOSType%"=="2" goto :DriveLetterWindows
 if "%BIOSType%"=="3" goto :DriveLetterWindows
 echo Invalid Syntax!
-goto :Main
+goto :Start
 
 :DriveLetterWindows
 echo.
