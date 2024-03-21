@@ -10,6 +10,7 @@ echo Are you trying to fix Legacy BIOS, UEFI or both?
 echo [1] Legacy BIOS
 echo [2] UEFI
 echo [3] Both
+set BIOSType=
 set /p BIOSType="Which one to you want? (1-3) "
 if "%BIOSType%"=="1" goto DriveLetterWindows
 if "%BIOSType%"=="2" goto DriveLetterWindows
@@ -19,6 +20,7 @@ goto Start
 
 :DriveLetterWindows
 echo.
+set DriveLetterWindows=
 set /p DriveLetterWindows="What is the Drive letter that Windows is installed on? (A:-Z:) "
 if /i "%DriveLetterWindows%"=="A:" goto SureDriveLetterWindows
 if /i "%DriveLetterWindows%"=="B:" goto SureDriveLetterWindows
@@ -51,6 +53,7 @@ goto DriveLetterWindows
 
 :SureDriveLetterWindows
 echo.
+set SureDriveLetterWindows=
 set /p SureDriveLetterWindows="Are you sure %DriveLetterWindows% is the Drive letter that Windows is installed on? (Yes/No) "
 if /i "%SureDriveLetterWindows%"=="Yes" goto DriveLetterBootloader
 if /i "%SureDriveLetterWindows%"=="No" goto DriveLetterWindows
@@ -59,6 +62,7 @@ goton SureDriveLetterWindows
 
 :DriveLetterBootloader
 echo.
+set DriveLetterBootloader=
 set /p DriveLetterBootloader="What is the Drive letter that the Windows Bootloader is installed on? (A:-Z:) "
 if /i "%DriveLetterBootloader%"=="A:" goto SureDriveLetterBootloader
 if /i "%DriveLetterBootloader%"=="B:" goto SureDriveLetterBootloader
@@ -91,6 +95,7 @@ goto DriveLetterBootloader
 
 :SureDriveLetterBootloader
 echo.
+set SureDriveLetterBootloader=
 set /p SureDriveLetterBootloader="Are you sure %DriveLetterBootloader% the Drive letter that the Windows Bootloader is installed on? (Yes/No) "
 if /i "%SureDriveLetterBootloader%"=="Yes" goto BIOSType
 if /i "%SureDriveLetterBootloader%"=="No" goto DriveLetterBootloader
