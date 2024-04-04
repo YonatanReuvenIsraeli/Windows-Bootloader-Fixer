@@ -1,7 +1,7 @@
 @echo off
 setlocal
 title Windows Bootloader Fixer
-echo Windows Bootloader Fixer v1.0
+echo Windows Bootloader Fixer v1.0.0
 echo.
 echo Please run this batch file as an administrator.
 goto Start
