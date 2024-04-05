@@ -1,19 +1,18 @@
 @echo off
 setlocal
 title Windows Bootloader Fixer
-echo Windows Bootloader Fixer v1.0.1
+echo Windows Bootloader Fixer v1.0.2
 echo.
 echo Please run this batch file as an administrator.
 goto Start
 
 :Start
 echo.
-echo Are you trying to fix Legacy BIOS, UEFI or both?
 echo [1] Legacy BIOS
 echo [2] UEFI
 echo [3] Both
 set BIOSType=
-set /p BIOSType="Which one to you want? (1-3) "
+set /p BIOSType="Are you trying to fix Legacy BIOS, UEFI or both? (1-3) "
 if "%BIOSType%"=="1" goto DriveLetterWindows
 if "%BIOSType%"=="2" goto DriveLetterWindows
 if "%BIOSType%"=="3" goto DriveLetterWindows
