@@ -1,7 +1,7 @@
 @echo off
 setlocal
 title Windows Bootloader Fixer
-echo Windows Bootloader Fixer v1.0.2
+echo Windows Bootloader Fixer v1.0.3
 echo.
 echo Please run this batch file as an administrator.
 goto Start
@@ -110,17 +110,17 @@ if "%BIOSType%"=="3" goto Both
 
 :LegacyBIOS
 BCDBoot "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f BIOS
-if errorlevel 1 goto Error
+if not errorlevel 0 goto Error
 goto Done
 
 :UEFI
 BCDBoot "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f UEFI
-if errorlevel 1 goto Error
+if not errorlevel 0 goto Error
 goto Done
 
 :Both
 BCDBoot "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f ALL
-if errorlevel 1 goto Error
+if not errorlevel 0 goto Error
 goto Done
 
 :Error
@@ -130,5 +130,5 @@ goto Start
 :Done
 endlocal
 echo Your Windows bootloader is fixed! Press any key to close this batch file.
-pause >nul
+pause > nul
 exit
