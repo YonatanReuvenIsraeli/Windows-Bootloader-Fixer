@@ -2,10 +2,10 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 1.1.0
+echo Version: 1.1.1
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
-echo License: GNU General Public License v3.1
+echo License: GNU General Public License v3.0
 echo.
 echo Please run this batch file as an administrator.
 goto Start
