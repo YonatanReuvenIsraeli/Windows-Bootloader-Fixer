@@ -5,7 +5,7 @@ echo Program Name: Windows Bootloader Fixer
 echo Version: 1.1.0
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
-echo License: GNU General Public License v3.0
+echo License: GNU General Public License v3.1
 echo.
 echo Please run this batch file as an administrator.
 goto Start
@@ -134,5 +134,5 @@ goto Start
 :Done
 endlocal
 echo Your Windows bootloader is fixed! Press any key to close this batch file.
-pause > nul
+pause > nul 2>&1
 exit
