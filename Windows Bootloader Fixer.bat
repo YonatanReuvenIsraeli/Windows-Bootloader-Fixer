@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 1.2.1
+echo Version: 1.2.2
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -113,18 +113,21 @@ if /i "%BIOSType%"=="2" goto UEFI
 if /i "%BIOSType%"=="3" goto Both
 
 :LegacyBIOS
+echo.
 echo Fixing bootloader.
 BCDBoot "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f BIOS > nul 2>&1
 if not "%errorlevel%"=="0" goto Error
 goto Done
 
 :UEFI
+echo.
 echo Fixing bootloader.
 BCDBoot "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f UEFI > nul 2>&1
 if not "%errorlevel%"=="0" goto Error
 goto Done
 
 :Both
+echo.
 echo Fixing bootloader.
 BCDBoot "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f ALL > nul 2>&1
 if not "%errorlevel%"=="0" goto Error
