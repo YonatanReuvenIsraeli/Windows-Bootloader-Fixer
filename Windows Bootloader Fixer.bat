@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 1.2.0
+echo Version: 1.2.1
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -17,9 +17,9 @@ echo [2] UEFI
 echo [3] Both
 set BIOSType=
 set /p BIOSType="Are you trying to fix Legacy BIOS, UEFI or both? (1-3) "
-if "%BIOSType%"=="1" goto DriveLetterWindows
-if "%BIOSType%"=="2" goto DriveLetterWindows
-if "%BIOSType%"=="3" goto DriveLetterWindows
+if /i "%BIOSType%"=="1" goto DriveLetterWindows
+if /i "%BIOSType%"=="2" goto DriveLetterWindows
+if /i "%BIOSType%"=="3" goto DriveLetterWindows
 echo Invalid Syntax!
 goto Start
 
@@ -108,9 +108,9 @@ echo Invalid Syntax!
 goto SureDriveLetterBootloader
 
 :BIOSType
-if "%BIOSType%"=="1" goto LegacyBIOS
-if "%BIOSType%"=="2" goto UEFI
-if "%BIOSType%"=="3" goto Both
+if /i "%BIOSType%"=="1" goto LegacyBIOS
+if /i "%BIOSType%"=="2" goto UEFI
+if /i "%BIOSType%"=="3" goto Both
 
 :LegacyBIOS
 echo Fixing bootloader.
