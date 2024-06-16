@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 1.2.2
+echo Version: 1.2.3
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -20,7 +20,7 @@ set /p BIOSType="Are you trying to fix Legacy BIOS, UEFI or both? (1-3) "
 if /i "%BIOSType%"=="1" goto DriveLetterWindows
 if /i "%BIOSType%"=="2" goto DriveLetterWindows
 if /i "%BIOSType%"=="3" goto DriveLetterWindows
-echo Invalid Syntax!
+echo Invalid syntax!
 goto Start
 
 :DriveLetterWindows
@@ -53,7 +53,7 @@ if /i "%DriveLetterWindows%"=="W:" goto SureDriveLetterWindows
 if /i "%DriveLetterWindows%"=="X:" goto SureDriveLetterWindows
 if /i "%DriveLetterWindows%"=="Y:" goto SureDriveLetterWindows
 if /i "%DriveLetterWindows%"=="Z:" goto SureDriveLetterWindows
-echo Invalid Syntax!
+echo Invalid syntax!
 goto DriveLetterWindows
 
 :SureDriveLetterWindows
@@ -62,7 +62,7 @@ set SureDriveLetterWindows=
 set /p SureDriveLetterWindows="Are you sure %DriveLetterWindows% is the Drive letter that Windows is installed on? (Yes/No) "
 if /i "%SureDriveLetterWindows%"=="Yes" goto DriveLetterBootloader
 if /i "%SureDriveLetterWindows%"=="No" goto DriveLetterWindows
-echo Invalid Syntax!
+echo Invalid syntax!
 goton SureDriveLetterWindows
 
 :DriveLetterBootloader
@@ -95,7 +95,7 @@ if /i "%DriveLetterBootloader%"=="W:" goto SureDriveLetterBootloader
 if /i "%DriveLetterBootloader%"=="X:" goto SureDriveLetterBootloader
 if /i "%DriveLetterBootloader%"=="Y:" goto SureDriveLetterBootloader
 if /i "%DriveLetterBootloader%"=="Z:" goto SureDriveLetterBootloader
-echo Invalid Syntax!
+echo Invalid syntax!
 goto DriveLetterBootloader
 
 :SureDriveLetterBootloader
@@ -104,7 +104,7 @@ set SureDriveLetterBootloader=
 set /p SureDriveLetterBootloader="Are you sure %DriveLetterBootloader% the Drive letter that the Windows Bootloader is installed on? (Yes/No) "
 if /i "%SureDriveLetterBootloader%"=="Yes" goto BIOSType
 if /i "%SureDriveLetterBootloader%"=="No" goto DriveLetterBootloader
-echo Invalid Syntax!
+echo Invalid syntax!
 goto SureDriveLetterBootloader
 
 :BIOSType
