@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 2.0.0
+echo Version: 2.0.1
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -73,7 +73,7 @@ set /p SureDriveLetterWindows="Are you sure %DriveLetterWindows% is the Drive le
 if /i "%SureDriveLetterWindows%"=="Yes" goto DriveLetterBootloader
 if /i "%SureDriveLetterWindows%"=="No" goto DriveLetterWindows
 echo Invalid syntax!
-goton SureDriveLetterWindows
+goto SureDriveLetterWindows
 
 :DriveLetterBootloader
 echo.
