@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 2.0.1
+echo Version: 3.0.0
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -111,7 +111,7 @@ goto DriveLetterBootloader
 :SureDriveLetterBootloader
 echo.
 set SureDriveLetterBootloader=
-set /p SureDriveLetterBootloader="Are you sure %DriveLetterBootloader% the Drive letter that the Windows Bootloader is installed on? (Yes/No) "
+set /p SureDriveLetterBootloader="Are you sure "%DriveLetterBootloader%" the Drive letter that the Windows Bootloader is installed on? (Yes/No) "
 if /i "%SureDriveLetterBootloader%"=="Yes" goto BIOSType
 if /i "%SureDriveLetterBootloader%"=="No" goto DriveLetterBootloader
 echo Invalid syntax!
@@ -125,6 +125,8 @@ if /i "%BIOSType%"=="3" goto Both
 :LegacyBIOS
 echo.
 echo Fixing bootloader.
+format "%DriveLetterBootloader%" /FS:FAT32 /Q /V:SYSTEM /Y > nul 2>&1
+if not "%errorlevel%"=="0" goto Error
 BCDBoot "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f BIOS > nul 2>&1
 if not "%errorlevel%"=="0" goto Error
 goto Done
@@ -132,6 +134,8 @@ goto Done
 :UEFI
 echo.
 echo Fixing bootloader.
+format "%DriveLetterBootloader%" /FS:FAT32 /Q /V:SYSTEM /Y > nul 2>&1
+if not "%errorlevel%"=="0" goto Error
 BCDBoot "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f UEFI > nul 2>&1
 if not "%errorlevel%"=="0" goto Error
 goto Done
@@ -139,6 +143,8 @@ goto Done
 :Both
 echo.
 echo Fixing bootloader.
+format "%DriveLetterBootloader%" /FS:FAT32 /Q /V:SYSTEM /Y > nul 2>&1
+if not "%errorlevel%"=="0" goto Error
 BCDBoot "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f ALL > nul 2>&1
 if not "%errorlevel%"=="0" goto Error
 goto Done
