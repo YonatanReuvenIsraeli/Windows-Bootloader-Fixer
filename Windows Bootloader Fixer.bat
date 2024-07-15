@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 3.0.0
+echo Version: 3.0.1
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -79,6 +79,7 @@ goto SureDriveLetterWindows
 echo.
 set DriveLetterBootloader=
 set /p DriveLetterBootloader="What is the Drive letter that the Windows Bootloader is installed on? (A:-Z:) "
+if /i "%DriveLetterWindows%"=="%DriveLetterBootloader%" goto SameDriveLetter
 if /i "%DriveLetterBootloader%"=="A:" goto SureDriveLetterBootloader
 if /i "%DriveLetterBootloader%"=="B:" goto SureDriveLetterBootloader
 if /i "%DriveLetterBootloader%"=="C:" goto SureDriveLetterBootloader
@@ -107,6 +108,11 @@ if /i "%DriveLetterBootloader%"=="Y:" goto SureDriveLetterBootloader
 if /i "%DriveLetterBootloader%"=="Z:" goto SureDriveLetterBootloader
 echo Invalid syntax!
 goto DriveLetterBootloader
+
+:SameDriveLetter
+echo.
+echo "%DriveLetterWindows%" is the same as "%DriveLetterBootloader%"! Please try again.
+goto DriveLetterWindows
 
 :SureDriveLetterBootloader
 echo.
