@@ -46,40 +46,48 @@ goto SureBIOSType
 echo.
 set DriveLetterWindows=
 set /p DriveLetterWindows="What is the drive letter that Windows is installed on? (A:-Z:) "
-if /i "%DriveLetterWindows%"=="A:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="B:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="C:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="D:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="E:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="F:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="G:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="H:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="I:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="J:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="K:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="L:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="M:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="N:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="O:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="P:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="Q:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="R:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="S:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="T:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="U:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="V:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="W:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="X:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="Y:" goto SureDriveLetterWindows
-if /i "%DriveLetterWindows%"=="Z:" goto SureDriveLetterWindows
+if /i "%DriveLetterWindows%"=="A:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="B:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="C:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="D:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="E:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="F:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="G:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="H:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="I:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="J:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="K:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="L:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="M:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="N:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="O:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="P:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="Q:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="R:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="S:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="T:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="U:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="V:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="W:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="X:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="Y:" goto CheckExistDriveLetterWindows
+if /i "%DriveLetterWindows%"=="Z:" goto CheckExistDriveLetterWindows
 echo Invalid syntax!
+goto DriveLetterWindows
+
+:CheckExistDriveLetterWindows
+if not exist "%DriveLetterWindows%" goto DriveLetterWindowsNotExist
+goto SureDriveLetterWindows
+
+:DriveLetterWindowsNotExist
+echo "%DriveLetterWindows%" does not exist! Please try again.
 goto DriveLetterWindows
 
 :SureDriveLetterWindows
 echo.
 set SureDriveLetterWindows=
 set /p SureDriveLetterWindows="Are you sure %DriveLetterWindows% is the drive letter that Windows is installed on? (Yes/No) "
-if /i "%SureDriveLetterWindows%"=="Yes" goto DriveLetterBootloader
+if /i "%SureDriveLetterWindows%"=="Yes" goto CheckExistDriveLetterWindows
 if /i "%SureDriveLetterWindows%"=="No" goto DriveLetterWindows
 echo Invalid syntax!
 goto SureDriveLetterWindows
@@ -89,39 +97,47 @@ echo.
 set DriveLetterBootloader=
 set /p DriveLetterBootloader="What is the drive letter that the Windows bootloader is installed on? (A:-Z:) "
 if /i "%DriveLetterWindows%"=="%DriveLetterBootloader%" goto SameDriveLetter
-if /i "%DriveLetterBootloader%"=="A:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="B:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="C:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="D:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="E:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="F:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="G:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="H:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="I:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="J:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="K:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="L:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="M:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="N:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="O:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="P:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="Q:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="R:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="S:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="T:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="U:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="V:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="W:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="X:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="Y:" goto SureDriveLetterBootloader
-if /i "%DriveLetterBootloader%"=="Z:" goto SureDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="A:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="B:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="C:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="D:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="E:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="F:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="G:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="H:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="I:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="J:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="K:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="L:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="M:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="N:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="O:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="P:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="Q:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="R:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="S:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="T:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="U:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="V:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="W:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="X:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="Y:" goto CheckExistDriveLetterBootloader
+if /i "%DriveLetterBootloader%"=="Z:" goto CheckExistDriveLetterBootloader
 echo Invalid syntax!
 goto DriveLetterBootloader
 
 :SameDriveLetter
 echo.
-echo "%DriveLetterWindows%" is the same as "%DriveLetterBootloader%"! Please try again.
+echo "%DriveLetterBootloader%" is the same as "%DriveLetterWindows%"! Please try again.
 goto DriveLetterWindows
+
+:CheckExistDriveLetterBootloader
+if not exist "%DriveLetterBootloader%" goto DriveLetterBootloaderNotExist
+goto SureDriveLetterBootloader
+
+:DriveLetterBootloaderNotExist
+echo "%DriveLetterBootloader%" does not exist! Please try again.
+goto DriveLetterBootloader
 
 :SureDriveLetterBootloader
 echo.
