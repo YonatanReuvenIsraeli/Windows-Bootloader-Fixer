@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 3.0.2
+echo Version: 3.0.3
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -78,7 +78,7 @@ goto SureDriveLetterWindows
 :DriveLetterBootloader
 echo.
 set DriveLetterBootloader=
-set /p DriveLetterBootloader="What is the drive letter that the Windows Bootloader is installed on? (A:-Z:) "
+set /p DriveLetterBootloader="What is the drive letter that the Windows bootloader is installed on? (A:-Z:) "
 if /i "%DriveLetterWindows%"=="%DriveLetterBootloader%" goto SameDriveLetter
 if /i "%DriveLetterBootloader%"=="A:" goto SureDriveLetterBootloader
 if /i "%DriveLetterBootloader%"=="B:" goto SureDriveLetterBootloader
@@ -117,7 +117,7 @@ goto DriveLetterWindows
 :SureDriveLetterBootloader
 echo.
 set SureDriveLetterBootloader=
-set /p SureDriveLetterBootloader="All data on drive "%DriveLetterBootloader%" will be deleted! Are you sure "%DriveLetterBootloader%" is the drive letter that the Windows Bootloader is installed on? (Yes/No) "
+set /p SureDriveLetterBootloader="All data on drive "%DriveLetterBootloader%" will be deleted! Are you sure "%DriveLetterBootloader%" is the drive letter that the Windows bootloader is installed on? (Yes/No) "
 if /i "%SureDriveLetterBootloader%"=="Yes" goto BIOSType
 if /i "%SureDriveLetterBootloader%"=="No" goto DriveLetterBootloader
 echo Invalid syntax!
