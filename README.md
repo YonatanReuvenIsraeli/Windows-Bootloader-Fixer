@@ -1,4 +1,4 @@
-# Windows Bootloader Fixer v4.0.2
+# Windows Bootloader Fixer v4.0.3
 Fixes the Windows bootloader by using the BCDBoot command.
 ## Note:
 Allows you to fix Windows bootloaders for Legacy BIOS, UEFI and both.
