@@ -397,7 +397,7 @@ pause > nul 2>&1
 goto "AssignDriveLetterBootloader"
 
 :"AssignDriveLetterBootloaderError"
-del %cd%DiskPart.txt" /f /q
+del %cd%DiskPart.txt /f /q
 echo.
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
