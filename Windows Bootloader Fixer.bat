@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.2
+echo Version: 4.0.3
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -134,7 +134,7 @@ echo Found partitions in disk %Disk%.
 echo.
 set Partition=
 set /p Partition="What is the partition number of the boot partition? If there is no boot partition or boot partition needs to be remade enter "Need boot partition" (0-?/Need boot partition) "
-if /i "%Partition%"=="Need boot partition" goto SurePartition
+if /i "%Partition%"=="Need boot partition" goto "SurePartition"
 goto "SureBootPartition"
 
 :"DiskPartExistPartition"
@@ -174,7 +174,7 @@ echo Partition listed in disk %Disk%.
 echo.
 set RemovePartition=
 set /p RemovePartition="Enter partition number that needs to be deleted to make space for boot partition. Recomended space is 350 MB but you can try to go down to 100 MB if you dont have the space. Enter "Done" if you are done deleting partitions. (0-?/Done) "
-if /i "%RemovePartition%"=="Done" goto NewPartition
+if /i "%RemovePartition%"=="Done" goto "NewPartition"
 goto "SureRemovePartition"
 
 :"DiskPartExistRemovePartition"
@@ -189,14 +189,14 @@ del "%cd%DiskPart.txt" /f /q
 echo.
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
-goto ListPartition
+goto "ListPartition"
 
 :"SureRemovePartition"
 echo.
 set SureRemovePartition=
 set /p SureRemovePartition="Are you sure you want to delete partition 1? (Yes/No) "
-if /i "%SureRemovePartition%"=="Yes" goto RemovePartition
-if /i "%SureRemovePartition%"=="No" goto ListPartition
+if /i "%SureRemovePartition%"=="Yes" goto "RemovePartition"
+if /i "%SureRemovePartition%"=="No" goto "ListPartition"
 echo Invalid syntax!
 goto SureRemovePartition
 
