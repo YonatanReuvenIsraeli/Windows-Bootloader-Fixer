@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.3
+echo Version: 4.0.4
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -88,7 +88,6 @@ goto "Disk"
 
 :"DiskError"
 del "%cd%DiskPart.txt" /f /q
-echo.
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "NewPartition"
@@ -146,7 +145,6 @@ goto "Partition"
 
 :"PartitionError"
 del "%cd%DiskPart.txt" /f /q
-echo.
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "Disk"
@@ -186,7 +184,6 @@ goto "RemovePartition"
 
 :"ListPartitionError"
 del "%cd%DiskPart.txt" /f /q
-echo.
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "ListPartition"
@@ -223,7 +220,6 @@ goto "RemovePartition"
 
 :"RemovePartitionError"
 del "%cd%DiskPart.txt" /f /q
-echo.
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "RemovePartition"
@@ -261,7 +257,6 @@ goto "NewPartition"
 
 :"NewPartitionError"
 del "%cd%DiskPart.txt" /f /q
-echo.
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "NewPartition"
@@ -276,7 +271,6 @@ echo Invalid syntax!
 goto "SureBootPartition"
 
 :"Volume1"
-echo.
 if exist "%cd%DiskPart.txt" goto DiskPartExistVolume1
 echo.
 echo Listing volumes attached to this PC.
@@ -297,7 +291,6 @@ goto "Volume1"
 
 :"Volume1Error"
 del "%cd%DiskPart.txt" /f /q
-echo.
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "Volume1"
@@ -399,7 +392,6 @@ goto "AssignDriveLetterBootloader"
 
 :"AssignDriveLetterBootloaderError"
 del %cd%DiskPart.txt /f /q
-echo.
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "AssignDriveLetterBootloader"
@@ -455,7 +447,6 @@ echo "%DriveLetterBootloader%" does not exist! Please try again.
 goto "Volume1"
 
 :"Volume2"
-echo.
 if exist "%cd%DiskPart.txt" goto DiskPartExistVolume2
 echo.
 echo Listing volumes in disk %Disk%.
@@ -476,7 +467,6 @@ goto "Volume2"
 
 :"Volume2Error"
 del "%cd%DiskPart.txt" /f /q
-echo.
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "Volume2"
@@ -577,7 +567,6 @@ goto "AssignDriveLetterWindows"
 
 :"AssignDriveLetterWindowsError"
 del "%cd%DiskPart.txt" /f /q
-echo.
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "AssignDriveLetterWindows"
@@ -696,7 +685,6 @@ goto "Volume3"
 
 :"Volume3Error"
 del "%cd%DiskPart.txt" /f /q
-echo.
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "Volume3"
