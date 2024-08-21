@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.4
+echo Version: 4.0.5
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -25,6 +25,7 @@ echo.
 echo [1] Legacy BIOS
 echo [2] UEFI
 echo [3] Both
+echo.
 set BIOSType=
 set /p BIOSType="Are you trying to fix Legacy BIOS, UEFI or both? (1-3) "
 if /i "%BIOSType%"=="1" goto "SureBIOSTypeLegacyBIOS"
