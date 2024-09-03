@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.8
+echo Version: 4.0.9
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -73,7 +73,7 @@ echo list disk > "%cd%DiskPart.txt"
 echo exit >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "DiskError"
-del "%cd%DiskPart.txt" /f /q
+ "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Disks attached to this PC found.
 echo.
 set Disk=
@@ -88,7 +88,7 @@ pause > nul 2>&1
 goto "Disk"
 
 :"DiskError"
-del "%cd%DiskPart.txt" /f /q
+ "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "NewPartition"
@@ -129,7 +129,7 @@ echo list part >> "%cd%DiskPart.txt"
 echo exit >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "PartitionError"
-del "%cd%DiskPart.txt" /f /q
+ "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Found partitions in disk %Disk%.
 echo.
 set Partition=
@@ -145,7 +145,7 @@ pause > nul 2>&1
 goto "Partition"
 
 :"PartitionError"
-del "%cd%DiskPart.txt" /f /q
+ "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "Disk"
@@ -168,11 +168,11 @@ echo list part >> "%cd%DiskPart.txt"
 echo exit >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "ListPartitionError"
-del "%cd%DiskPart.txt" /f /q
+ "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Partition listed in disk %Disk%.
 echo.
 set RemovePartition=
-set /p RemovePartition="Enter partition number that needs to be deleted to make space for boot partition. Recomended space is 350 MB but you can try to go down to 100 MB if you dont have the space. Enter "Done" if you are done deleting partitions. (0-?/Done) "
+set /p RemovePartition="Enter partition number that needs to be eted to make space for boot partition. Recomended space is 350 MB but you can try to go down to 100 MB if you dont have the space. Enter "Done" if you are done eting partitions. (0-?/Done) "
 if /i "%RemovePartition%"=="Done" goto "NewPartition"
 goto "SureRemovePartition"
 
@@ -184,7 +184,7 @@ pause > nul 2>&1
 goto "RemovePartition"
 
 :"ListPartitionError"
-del "%cd%DiskPart.txt" /f /q
+ "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "ListPartition"
@@ -192,7 +192,7 @@ goto "ListPartition"
 :"SureRemovePartition"
 echo.
 set SureRemovePartition=
-set /p SureRemovePartition="Are you sure you want to delete partition 1? (Yes/No) "
+set /p SureRemovePartition="Are you sure you want to ete partition 1? (Yes/No) "
 if /i "%SureRemovePartition%"=="Yes" goto "RemovePartition"
 if /i "%SureRemovePartition%"=="No" goto "ListPartition"
 echo Invalid syntax!
@@ -204,11 +204,11 @@ echo.
 echo Removing partition %RemovePartition%.
 echo sel disk %Disk% > "%cd%DiskPart.txt"
 echo sel part %RemovePartition% >> "%cd%DiskPart.txt"
-echo del part override >> "%cd%DiskPart.txt"
+echo  part override >> "%cd%DiskPart.txt"
 echo exit >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "RemovePartitionError"
-del "%cd%DiskPart.txt" /f /q
+ "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Partition %RemovePartition% removed.
 goto "ListPartition"
 
@@ -220,7 +220,7 @@ pause > nul 2>&1
 goto "RemovePartition"
 
 :"RemovePartitionError"
-del "%cd%DiskPart.txt" /f /q
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "RemovePartition"
@@ -241,7 +241,7 @@ if /i "%MBRGPT%"=="MBR" echo active >> "%cd%DiskPart.txt"
 echo exit >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "NewPartitionError"
-del "%cd%DiskPart.txt" /f /q
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Boot partition remade.
 goto "Partition"
 
@@ -257,7 +257,7 @@ pause > nul 2>&1
 goto "NewPartition"
 
 :"NewPartitionError"
-del "%cd%DiskPart.txt" /f /q
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "NewPartition"
@@ -279,7 +279,7 @@ echo list vol > "%cd%DiskPart.txt"
 echo exit >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "Volume1Error"
-del "%cd%DiskPart.txt" /f /q
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Volumes attached to this PC listed.
 goto "BootAsk1"
 
@@ -291,7 +291,7 @@ pause > nul 2>&1
 goto "Volume1"
 
 :"Volume1Error"
-del "%cd%DiskPart.txt" /f /q
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "Volume1"
@@ -380,7 +380,7 @@ echo exit >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "AssignDriveLetterBootloaderError"
 echo Drive letter "%BootloaderDriveLetter%" assigned to boot partition and "%BootloaderDriveLetter%" has been formated.
-del "%cd%DiskPart.txt" /f /q
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 set DriveLetterBootloader=%BootloaderDriveLetter%
 goto "Volume2"
 
@@ -392,7 +392,7 @@ pause > nul 2>&1
 goto "AssignDriveLetterBootloader"
 
 :"AssignDriveLetterBootloaderError"
-del %cd%DiskPart.txt /f /q
+del %cd%DiskPart.txt /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "AssignDriveLetterBootloader"
@@ -455,7 +455,7 @@ echo list vol > "%cd%DiskPart.txt"
 echo exit >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "Volume2Error"
-del "%cd%DiskPart.txt" /f /q
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Volumes in disk %Disk% listed.
 goto "WindowsAsk1"
 
@@ -467,7 +467,7 @@ pause > nul 2>&1
 goto "Volume2"
 
 :"Volume2Error"
-del "%cd%DiskPart.txt" /f /q
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "Volume2"
@@ -554,7 +554,7 @@ echo assign letter=%WindowsDriveLetter% >> "%cd%DiskPart.txt"
 echo exit >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "AssignDriveLetterWindowsError"
-del "%cd%DiskPart.txt" /f /q
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Assigned Windows volume %WindowsVolume% drive letter "%WindowsDriveLetter%".
 set DriveLetterWindows=%WindowsDriveLetter%
 goto "BIOSType"
@@ -567,7 +567,7 @@ pause > nul 2>&1
 goto "AssignDriveLetterWindows"
 
 :"AssignDriveLetterWindowsError"
-del "%cd%DiskPart.txt" /f /q
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "AssignDriveLetterWindows"
@@ -672,7 +672,7 @@ echo remove letter=%DriveLetterBootloader% >> "%cd%DiskPart.txt"
 echo exit >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "Volume3Error"
-del "%cd%DiskPart.txt" /f /q
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Drive letter "%DriveLetterBootloader%" removed from boot partition.
 if "%DiskPart%"=="True" goto DiskPartDone
 goto "Done"
@@ -685,7 +685,7 @@ pause > nul 2>&1
 goto "Volume3"
 
 :"Volume3Error"
-del "%cd%DiskPart.txt" /f /q
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "Volume3"
