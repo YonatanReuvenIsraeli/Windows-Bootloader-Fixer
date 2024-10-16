@@ -12,7 +12,7 @@ goto "Start"
 
 :"NotWindowsRecoveryEnvironment"
 echo.
-echo You are not Windows Recovery Environment! You must run this batch file from Windows Recovery Environment. Press any key to close this batch file.
+echo You are not Windows Recovery Environment! You must run this batch file from in Windows Recovery Environment. Press any key to close this batch file.
 pause > nul 2>&1
 goto "Close"
 
