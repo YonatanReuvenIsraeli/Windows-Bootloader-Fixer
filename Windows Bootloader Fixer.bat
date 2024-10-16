@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.13
+echo Version: 4.0.14
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -12,7 +12,7 @@ goto "Start"
 
 :"NotWindowsRecoveryEnvironment"
 echo.
-echo You are not Windows Recovery Environment! You must run this batch file from in Windows Recovery Environment. Press any key to close this batch file.
+echo You are not Windows Recovery Environment! You must run this batch file in Windows Recovery Environment. Press any key to close this batch file.
 pause > nul 2>&1
 goto "Close"
 
