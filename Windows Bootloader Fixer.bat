@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.14
+echo Version: 4.0.15
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -69,8 +69,8 @@ goto "Disk"
 if exist "%cd%DiskPart.txt" goto "DiskPartExistDisk"
 echo.
 echo Finding disks attached to this PC.
-echo list disk > "%cd%DiskPart.txt"
-echo exit >> "%cd%DiskPart.txt"
+(echo list disk) > "%cd%DiskPart.txt"
+(echo exit) >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "DiskError"
  "%cd%DiskPart.txt" /f /q > nul 2>&1
@@ -124,9 +124,9 @@ goto "SureMBRGPT"
 if exist "%cd%DiskPart.txt" goto DiskPartExistPartition
 echo.
 echo Finding partitions in disk %Disk%.
-echo sel disk %Disk% > "%cd%DiskPart.txt"
-echo list part >> "%cd%DiskPart.txt"
-echo exit >> "%cd%DiskPart.txt"
+(echo sel disk %Disk%) > "%cd%DiskPart.txt"
+(echo list part) >> "%cd%DiskPart.txt"
+(echo exit) >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "PartitionError"
  "%cd%DiskPart.txt" /f /q > nul 2>&1
@@ -163,9 +163,9 @@ goto "SurePartition"
 if exist "%cd%DiskPart.txt" goto DiskPartExistListPartition
 echo.
 echo Listing partitions in disk %Disk%.
-echo sel disk %Disk% > "%cd%DiskPart.txt"
-echo list part >> "%cd%DiskPart.txt"
-echo exit >> "%cd%DiskPart.txt"
+(echo sel disk %Disk%) > "%cd%DiskPart.txt"
+(echo list part) >> "%cd%DiskPart.txt"
+(echo exit) >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "ListPartitionError"
  "%cd%DiskPart.txt" /f /q > nul 2>&1
@@ -202,10 +202,10 @@ goto SureRemovePartition
 if exist "%cd%DiskPart.txt" goto DiskPartExistRemovePartition
 echo.
 echo Removing partition %RemovePartition%.
-echo sel disk %Disk% > "%cd%DiskPart.txt"
-echo sel part %RemovePartition% >> "%cd%DiskPart.txt"
-echo  part override >> "%cd%DiskPart.txt"
-echo exit >> "%cd%DiskPart.txt"
+(echo sel disk %Disk%) > "%cd%DiskPart.txt"
+(echo sel part %RemovePartition%) >> "%cd%DiskPart.txt"
+(echo  part override) >> "%cd%DiskPart.txt"
+(echo exit) >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "RemovePartitionError"
  "%cd%DiskPart.txt" /f /q > nul 2>&1
@@ -234,11 +234,11 @@ if not "%Size%" LEQ "350" goto NotInRange
 if exist "%cd%DiskPart.txt" goto DiskPartExistNewPartition
 echo.
 echo Remaking boot parttion.
-echo sel disk %Disk% > "%cd%DiskPart.txt"
-if /i "%MBRGPT%"=="MBR" echo create partition Primary size=%Size% >> "%cd%DiskPart.txt"
-if /i "%MBRGPT%"=="GPT" echo create partition EFI size=%Size% >> "%cd%DiskPart.txt"
-if /i "%MBRGPT%"=="MBR" echo active >> "%cd%DiskPart.txt"
-echo exit >> "%cd%DiskPart.txt"
+(echo sel disk %Disk%) > "%cd%DiskPart.txt"
+if /i "%MBRGPT%"=="MBR" (echo create partition Primary size=%Size%) >> "%cd%DiskPart.txt"
+if /i "%MBRGPT%"=="GPT" (echo create partition EFI size=%Size%) >> "%cd%DiskPart.txt"
+if /i "%MBRGPT%"=="MBR" (echo active) >> "%cd%DiskPart.txt"
+(echo exit) >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "NewPartitionError"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
@@ -275,8 +275,8 @@ goto "SureBootPartition"
 if exist "%cd%DiskPart.txt" goto DiskPartExistVolume1
 echo.
 echo Listing volumes attached to this PC.
-echo list vol > "%cd%DiskPart.txt"
-echo exit >> "%cd%DiskPart.txt"
+(echo list vol) > "%cd%DiskPart.txt"
+(echo exit) >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "Volume1Error"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
@@ -371,12 +371,12 @@ goto "BootloaderDriveLetter"
 if exist "%cd%DiskPart.txt" goto "DiskPartExistAssignDriveLetterBootloader"
 echo.
 echo Assigning drive letter and formating "%BootloaderDriveLetter%" to boot partition.
-echo sel vol %BootVolume% > "%cd%DiskPart.txt"
-echo remove all >> "%cd%DiskPart.txt"
-echo sel vol %BootVolume% >> "%cd%DiskPart.txt"
-echo assign letter=%BootloaderDriveLetter% >> "%cd%DiskPart.txt"
-echo format fs=fat32 label="System" quick >> "%cd%DiskPart.txt"
-echo exit >> "%cd%DiskPart.txt"
+(echo sel vol %BootVolume%) > "%cd%DiskPart.txt"
+(echo remove all) >> "%cd%DiskPart.txt"
+(echo sel vol %BootVolume%) >> "%cd%DiskPart.txt"
+(echo assign letter=%BootloaderDriveLetter%) >> "%cd%DiskPart.txt"
+(echo format fs=fat32 label="System" quick) >> "%cd%DiskPart.txt"
+(echo exit) >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "AssignDriveLetterBootloaderError"
 echo Drive letter "%BootloaderDriveLetter%" assigned to boot partition and "%BootloaderDriveLetter%" has been formated.
@@ -451,8 +451,8 @@ goto "Volume1"
 if exist "%cd%DiskPart.txt" goto DiskPartExistVolume2
 echo.
 echo Listing volumes in disk %Disk%.
-echo list vol > "%cd%DiskPart.txt"
-echo exit >> "%cd%DiskPart.txt"
+(echo list vol) > "%cd%DiskPart.txt"
+(echo exit) >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "Volume2Error"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
@@ -547,11 +547,11 @@ goto "WindowsDriveLetter"
 if exist "%cd%DiskPart.txt" goto DiskPartExistAssignDriveLetterWindows
 echo.
 echo Assigning Windows volume %WindowsVolume% drive letter "%WindowsDriveLetter%".
-echo sel vol %WindowsVolume% > "%cd%DiskPart.txt"
-echo remove all >> "%cd%DiskPart.txt"
-echo sel vol %WindowsVolume% >> "%cd%DiskPart.txt"
-echo assign letter=%WindowsDriveLetter% >> "%cd%DiskPart.txt"
-echo exit >> "%cd%DiskPart.txt"
+(echo sel vol %WindowsVolume%) > "%cd%DiskPart.txt"
+(echo remove all) >> "%cd%DiskPart.txt"
+(echo sel vol %WindowsVolume%) >> "%cd%DiskPart.txt"
+(echo assign letter=%WindowsDriveLetter%) >> "%cd%DiskPart.txt"
+(echo exit) >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "AssignDriveLetterWindowsError"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
@@ -667,9 +667,9 @@ if /i "%BIOSType%"=="3" goto "Start"
 if exist "%cd%DiskPart.txt" goto DiskPartExistVolume3
 echo.
 echo Removing drive letter "%DriveLetterBootloader%" from boot partition.
-echo sel vol %BootVolume% > "%cd%DiskPart.txt"
-echo remove letter=%DriveLetterBootloader% >> "%cd%DiskPart.txt"
-echo exit >> "%cd%DiskPart.txt"
+(echo sel vol %BootVolume%) > "%cd%DiskPart.txt"
+(echo remove letter=%DriveLetterBootloader%) >> "%cd%DiskPart.txt"
+(echo exit) >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "Volume3Error"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
