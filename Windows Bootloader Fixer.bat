@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.16
+echo Version: 4.0.17
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -73,7 +73,7 @@ echo Finding disks attached to this PC.
 (echo exit) >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "DiskError"
- "%cd%DiskPart.txt" /f /q > nul 2>&1
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Disks attached to this PC found.
 echo.
 set Disk=
@@ -88,7 +88,7 @@ pause > nul 2>&1
 goto "Disk"
 
 :"DiskError"
- "%cd%DiskPart.txt" /f /q > nul 2>&1
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "NewPartition"
@@ -129,7 +129,7 @@ echo Finding partitions in disk %Disk%.
 (echo exit) >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "PartitionError"
- "%cd%DiskPart.txt" /f /q > nul 2>&1
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Found partitions in disk %Disk%.
 echo.
 set Partition=
@@ -145,7 +145,7 @@ pause > nul 2>&1
 goto "Partition"
 
 :"PartitionError"
- "%cd%DiskPart.txt" /f /q > nul 2>&1
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "Disk"
@@ -168,7 +168,7 @@ echo Listing partitions in disk %Disk%.
 (echo exit) >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "ListPartitionError"
- "%cd%DiskPart.txt" /f /q > nul 2>&1
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Partition listed in disk %Disk%.
 echo.
 set RemovePartition=
@@ -184,7 +184,7 @@ pause > nul 2>&1
 goto "RemovePartition"
 
 :"ListPartitionError"
- "%cd%DiskPart.txt" /f /q > nul 2>&1
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "ListPartition"
@@ -208,7 +208,7 @@ echo Removing partition %RemovePartition%.
 (echo exit) >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "RemovePartitionError"
- "%cd%DiskPart.txt" /f /q > nul 2>&1
+del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Partition %RemovePartition% removed.
 goto "ListPartition"
 
@@ -540,7 +540,7 @@ echo Invalid syntax!
 goto "WindowsDriveLetter"
 
 :"WindowsDriveLetterExist"
-echo "%WindowsDriveLetter%" exist! Please try again.
+echo "%WindowsDriveLetter%" exists! Please try again.
 goto "WindowsDriveLetter"
 
 :"AssignDriveLetterWindows"
