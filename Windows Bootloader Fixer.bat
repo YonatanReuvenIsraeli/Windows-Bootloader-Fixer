@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.18
+echo Version: 4.0.19
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -372,8 +372,6 @@ if exist "%cd%DiskPart.txt" goto "DiskPartExistAssignDriveLetterBootloader"
 echo.
 echo Assigning drive letter and formating "%BootloaderDriveLetter%" to boot partition.
 (echo sel vol %BootVolume%) > "%cd%DiskPart.txt"
-(echo remove all) >> "%cd%DiskPart.txt"
-(echo sel vol %BootVolume%) >> "%cd%DiskPart.txt"
 (echo assign letter=%BootloaderDriveLetter%) >> "%cd%DiskPart.txt"
 (echo format fs=fat32 label="System" quick) >> "%cd%DiskPart.txt"
 (echo exit) >> "%cd%DiskPart.txt"
@@ -548,8 +546,6 @@ if exist "%cd%DiskPart.txt" goto "DiskPartExistAssignDriveLetterWindows"
 echo.
 echo Assigning Windows volume %WindowsVolume% drive letter "%WindowsDriveLetter%".
 (echo sel vol %WindowsVolume%) > "%cd%DiskPart.txt"
-(echo remove all) >> "%cd%DiskPart.txt"
-(echo sel vol %WindowsVolume%) >> "%cd%DiskPart.txt"
 (echo assign letter=%WindowsDriveLetter%) >> "%cd%DiskPart.txt"
 (echo exit) >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
