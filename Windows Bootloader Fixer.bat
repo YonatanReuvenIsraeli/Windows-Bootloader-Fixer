@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.15
+echo Version: 4.0.16
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -509,7 +509,7 @@ goto "SureWindowsAsk2"
 echo.
 set WindowsDriveLetter=
 set /p WindowsDriveLetter="Enter an unused drive letter. (A:-Z:) "
-if exist "%WindowsDriveLetter%" goto WindowsDriveLetterExist
+if exist "%WindowsDriveLetter%" goto "WindowsDriveLetterExist"
 if /i "%WindowsDriveLetter%"=="A:" goto "AssignDriveLetterWindows"
 if /i "%WindowsDriveLetter%"=="B:" goto "AssignDriveLetterWindows"
 if /i "%WindowsDriveLetter%"=="C:" goto "AssignDriveLetterWindows"
