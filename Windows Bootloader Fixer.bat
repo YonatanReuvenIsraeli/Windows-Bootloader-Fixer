@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.17
+echo Version: 4.0.18
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -121,7 +121,7 @@ echo Invalid syntax!
 goto "SureMBRGPT"
 
 :"Partition"
-if exist "%cd%DiskPart.txt" goto DiskPartExistPartition
+if exist "%cd%DiskPart.txt" goto "DiskPartExistPartition"
 echo.
 echo Finding partitions in disk %Disk%.
 (echo sel disk %Disk%) > "%cd%DiskPart.txt"
@@ -160,7 +160,7 @@ echo Invalid syntax!
 goto "SurePartition"
 
 :"ListPartition"
-if exist "%cd%DiskPart.txt" goto DiskPartExistListPartition
+if exist "%cd%DiskPart.txt" goto "DiskPartExistListPartition"
 echo.
 echo Listing partitions in disk %Disk%.
 (echo sel disk %Disk%) > "%cd%DiskPart.txt"
@@ -196,10 +196,10 @@ set /p SureRemovePartition="Are you sure you want to ete partition 1? (Yes/No) "
 if /i "%SureRemovePartition%"=="Yes" goto "RemovePartition"
 if /i "%SureRemovePartition%"=="No" goto "ListPartition"
 echo Invalid syntax!
-goto SureRemovePartition
+goto "SureRemovePartition"
 
 :"RemovePartition"
-if exist "%cd%DiskPart.txt" goto DiskPartExistRemovePartition
+if exist "%cd%DiskPart.txt" goto "DiskPartExistRemovePartition"
 echo.
 echo Removing partition %RemovePartition%.
 (echo sel disk %Disk%) > "%cd%DiskPart.txt"
@@ -229,9 +229,9 @@ goto "RemovePartition"
 echo.
 set Size=
 set /p Size="Please enter boot partition size. Recomended is 350 MB but you can try to go down to 100 MB if you dont have the space. (100-350) "
-if not "%Size%" GEQ "100" goto NotInRange
-if not "%Size%" LEQ "350" goto NotInRange
-if exist "%cd%DiskPart.txt" goto DiskPartExistNewPartition
+if not "%Size%" GEQ "100" goto "NotInRange"
+if not "%Size%" LEQ "350" goto "NotInRange"
+if exist "%cd%DiskPart.txt" goto "DiskPartExistNewPartition"
 echo.
 echo Remaking boot parttion.
 (echo sel disk %Disk%) > "%cd%DiskPart.txt"
@@ -272,7 +272,7 @@ echo Invalid syntax!
 goto "SureBootPartition"
 
 :"Volume1"
-if exist "%cd%DiskPart.txt" goto DiskPartExistVolume1
+if exist "%cd%DiskPart.txt" goto "DiskPartExistVolume1"
 echo.
 echo Listing volumes attached to this PC.
 (echo list vol) > "%cd%DiskPart.txt"
@@ -333,7 +333,7 @@ goto "SureBootAsk2"
 echo.
 set DriveLetterBootloader=
 set /p BootloaderDriveLetter="Enter an unused drive letter. (A:-Z:) "
-if exist "%BootloaderDriveLetter%" goto DriveLetterBootloaderExist
+if exist "%BootloaderDriveLetter%" goto "DriveLetterBootloaderExist"
 if /i "%BootloaderDriveLetter%"=="A:" goto "AssignDriveLetterBootloader"
 if /i "%BootloaderDriveLetter%"=="B:" goto "AssignDriveLetterBootloader"
 if /i "%BootloaderDriveLetter%"=="C:" goto "AssignDriveLetterBootloader"
@@ -364,7 +364,7 @@ echo Invalid syntax!
 goto "BootloaderDriveLetter"
 
 :"DriveLetterBootloaderExist"
-echo "%DriveLetterBootloader%" exist! Please try again.
+echo "%DriveLetterBootloader%" exists! Please try again.
 goto "BootloaderDriveLetter"
 
 :"AssignDriveLetterBootloader"
@@ -440,7 +440,7 @@ echo Invalid syntax!
 goto "SureDriveLetterBootloader"
 
 :"CheckExistDriveLetterBootloader"
-if not exist "%DriveLetterBootloader%" goto DriveLetterBootloaderNotExist
+if not exist "%DriveLetterBootloader%" goto "DriveLetterBootloaderNotExist"
 goto "Volume2"
 
 :"DriveLetterBootloaderNotExist"
@@ -448,7 +448,7 @@ echo "%DriveLetterBootloader%" does not exist! Please try again.
 goto "Volume1"
 
 :"Volume2"
-if exist "%cd%DiskPart.txt" goto DiskPartExistVolume2
+if exist "%cd%DiskPart.txt" goto "DiskPartExistVolume2"
 echo.
 echo Listing volumes in disk %Disk%.
 (echo list vol) > "%cd%DiskPart.txt"
@@ -544,7 +544,7 @@ echo "%WindowsDriveLetter%" exists! Please try again.
 goto "WindowsDriveLetter"
 
 :"AssignDriveLetterWindows"
-if exist "%cd%DiskPart.txt" goto DiskPartExistAssignDriveLetterWindows
+if exist "%cd%DiskPart.txt" goto "DiskPartExistAssignDriveLetterWindows"
 echo.
 echo Assigning Windows volume %WindowsVolume% drive letter "%WindowsDriveLetter%".
 (echo sel vol %WindowsVolume%) > "%cd%DiskPart.txt"
@@ -624,8 +624,8 @@ echo "%DriveLetterWindows%" does not exist! Please try again.
 goto "DriveLetterWindows"
 
 :"NotWindows"
-+echo Windows not installed on "%DriveLetterWindows%"!
-goto DriveLetterWindows
+echo Windows not installed on "%DriveLetterWindows%"!
+goto "DriveLetterWindows"
 goto "Volume2"
 
 :"BIOSType"
@@ -674,7 +674,7 @@ DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "Volume3Error"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Drive letter "%DriveLetterBootloader%" removed from boot partition.
-if "%DiskPart%"=="True" goto DiskPartDone
+if "%DiskPart%"=="True" goto "DiskPartDone"
 goto "Done"
 
 :"DiskPartExistVolume3"
