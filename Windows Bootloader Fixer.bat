@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.19
+echo Version: 4.0.20
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -566,7 +566,7 @@ goto "AssignDriveLetterWindows"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
-goto "AssignDriveLetterWindows"
+goto "WindowsDriveLetter"
 
 :"DriveLetterWindows"
 echo.
