@@ -1,4 +1,4 @@
-# Windows Bootloader Fixer v4.0.19
+# Windows Bootloader Fixer v4.0.20
 Fixes the Windows bootloader.
 ## Note:
 Allows you to fix Windows bootloaders for Legacy BIOS, UEFI and both.
