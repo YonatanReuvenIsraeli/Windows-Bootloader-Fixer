@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.20
+echo Version: 4.0.21
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -651,16 +651,14 @@ echo Fixing the Windows bootloader.
 BCDBoot "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f ALL > nul 2>&1
 if not "%errorlevel%"=="0" goto "ErrorBIOS"
 echo Your Windows bootloader is fixed!
-goto Volume3
+goto "Volume3"
 
 :"ErrorBIOS"
 echo There was an error and no new bootloader was created. You can try again.
-if /i "%BIOSType%"=="1" goto "Start"
-if /i "%BIOSType%"=="2" goto "Start"
-if /i "%BIOSType%"=="3" goto "Start"
+goto "Start
 
 :"Volume3"
-if exist "%cd%DiskPart.txt" goto DiskPartExistVolume3
+if exist "%cd%DiskPart.txt" goto "DiskPartExistVolume3"
 echo.
 echo Removing drive letter "%DriveLetterBootloader%" from boot partition.
 (echo sel vol %BootVolume%) > "%cd%DiskPart.txt"
