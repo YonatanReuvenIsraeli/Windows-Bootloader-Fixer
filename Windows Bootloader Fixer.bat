@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.22
+echo Version: 4.0.23
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -235,8 +235,8 @@ if exist "%cd%DiskPart.txt" goto "DiskPartExistNewPartition"
 echo.
 echo Remaking boot parttion.
 (echo sel disk %Disk%) > "%cd%DiskPart.txt"
-if /i "%MBRGPT%"=="MBR" (echo create partition Primary size=%Size%) >> "%cd%DiskPart.txt"
-if /i "%MBRGPT%"=="GPT" (echo create partition EFI size=%Size%) >> "%cd%DiskPart.txt"
+if /i "%MBRGPT%"=="MBR" (echo create partition primary size=%Size%) >> "%cd%DiskPart.txt"
+if /i "%MBRGPT%"=="GPT" (echo create partition efi size=%Size%) >> "%cd%DiskPart.txt"
 if /i "%MBRGPT%"=="MBR" (echo active) >> "%cd%DiskPart.txt"
 (echo exit) >> "%cd%DiskPart.txt"
 DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
