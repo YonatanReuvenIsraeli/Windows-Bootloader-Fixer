@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.21
+echo Version: 4.0.22
 echo Developer: @YonatanReuvenIsraeli
 echo Website: https://www.yonatanreuvenisraeli.dev
 echo License: GNU General Public License v3.0
@@ -668,7 +668,7 @@ DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "Volume3Error"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Drive letter "%DriveLetterBootloader%" removed from boot partition.
-if "%DiskPart%"=="True" goto "DiskPartDone"
+if /i "%DiskPart%"=="True" goto "DiskPartDone"
 goto "Done"
 
 :"DiskPartExistVolume3"
