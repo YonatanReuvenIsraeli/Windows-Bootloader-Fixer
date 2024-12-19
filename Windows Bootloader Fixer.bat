@@ -2,10 +2,11 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.23
-echo Developer: @YonatanReuvenIsraeli
-echo Website: https://www.yonatanreuvenisraeli.dev
+echo Version: 4.0.24
 echo License: GNU General Public License v3.0
+echo Developer: @YonatanReuvenIsraeli
+echo GitHub: https://github.com/YonatanReuvenIsraeli
+echo Sponsor: https://github.com/sponsors/YonatanReuvenIsraeli 
 net user > nul 2>&1
 if "%errorlevel%"=="0" goto "NotWindowsRecoveryEnvironment"
 goto "Start"
