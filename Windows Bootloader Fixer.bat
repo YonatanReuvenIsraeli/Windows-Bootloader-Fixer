@@ -2,12 +2,12 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.24
+echo Version: 4.0.25
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
-echo Sponsor: https://github.com/sponsors/YonatanReuvenIsraeli 
-net user > nul 2>&1
+echo Sponsor: https://github.com/sponsors/YonatanReuvenIsraeli
+"%windir%\System32\net.exe" user > nul 2>&1
 if "%errorlevel%"=="0" goto "NotWindowsRecoveryEnvironment"
 goto "Start"
 
@@ -23,9 +23,9 @@ exit
 
 :"Start"
 echo.
-echo [1] Legacy BIOS
-echo [2] UEFI
-echo [3] Both
+echo [1] Legacy BIOS.
+echo [2] UEFI.
+echo [3] Both.
 echo.
 set BIOSType=
 set /p BIOSType="Are you trying to fix Legacy BIOS, UEFI or both? (1-3) "
@@ -72,7 +72,7 @@ echo.
 echo Finding disks attached to this PC.
 (echo list disk) > "%cd%DiskPart.txt"
 (echo exit) >> "%cd%DiskPart.txt"
-DiskPart /s "%cd%DiskPart.txt" 2>&1
+"%windir%\System32\diskpart.exe" /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "DiskError"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Disks attached to this PC found.
@@ -128,7 +128,7 @@ echo Finding partitions in disk %Disk%.
 (echo sel disk %Disk%) > "%cd%DiskPart.txt"
 (echo list part) >> "%cd%DiskPart.txt"
 (echo exit) >> "%cd%DiskPart.txt"
-DiskPart /s "%cd%DiskPart.txt" 2>&1
+"%windir%\System32\diskpart.exe" /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "PartitionError"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Found partitions in disk %Disk%.
@@ -167,13 +167,13 @@ echo Listing partitions in disk %Disk%.
 (echo sel disk %Disk%) > "%cd%DiskPart.txt"
 (echo list part) >> "%cd%DiskPart.txt"
 (echo exit) >> "%cd%DiskPart.txt"
-DiskPart /s "%cd%DiskPart.txt" 2>&1
+"%windir%\System32\diskpart.exe" /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "ListPartitionError"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Partition listed in disk %Disk%.
 echo.
 set RemovePartition=
-set /p RemovePartition="Enter partition number that needs to be eted to make space for boot partition. Recomended space is 350 MB but you can try to go down to 100 MB if you dont have the space. Enter "Done" if you are done eting partitions. (0-?/Done) "
+set /p RemovePartition="Enter partition number that needs to be deleted to make space for boot partition. Recomended space is 350 MB but you can try to go down to 100 MB if you dont have the space. Enter "Done" if you are done deleting partitions. (0-?/Done) "
 if /i "%RemovePartition%"=="Done" goto "NewPartition"
 goto "SureRemovePartition"
 
@@ -207,7 +207,7 @@ echo Removing partition %RemovePartition%.
 (echo sel part %RemovePartition%) >> "%cd%DiskPart.txt"
 (echo  part override) >> "%cd%DiskPart.txt"
 (echo exit) >> "%cd%DiskPart.txt"
-DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
+"%windir%\System32\diskpart.exe" /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "RemovePartitionError"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Partition %RemovePartition% removed.
@@ -240,7 +240,7 @@ if /i "%MBRGPT%"=="MBR" (echo create partition primary size=%Size%) >> "%cd%Disk
 if /i "%MBRGPT%"=="GPT" (echo create partition efi size=%Size%) >> "%cd%DiskPart.txt"
 if /i "%MBRGPT%"=="MBR" (echo active) >> "%cd%DiskPart.txt"
 (echo exit) >> "%cd%DiskPart.txt"
-DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
+"%windir%\System32\diskpart.exe" /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "NewPartitionError"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Boot partition remade.
@@ -278,7 +278,7 @@ echo.
 echo Listing volumes attached to this PC.
 (echo list vol) > "%cd%DiskPart.txt"
 (echo exit) >> "%cd%DiskPart.txt"
-DiskPart /s "%cd%DiskPart.txt" 2>&1
+"%windir%\System32\diskpart.exe" /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "Volume1Error"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Volumes attached to this PC listed.
@@ -376,7 +376,7 @@ echo Assigning drive letter and formating "%BootloaderDriveLetter%" to boot part
 (echo assign letter=%BootloaderDriveLetter%) >> "%cd%DiskPart.txt"
 (echo format fs=fat32 label="System" quick) >> "%cd%DiskPart.txt"
 (echo exit) >> "%cd%DiskPart.txt"
-DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
+"%windir%\System32\diskpart.exe" /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "AssignDriveLetterBootloaderError"
 echo Drive letter "%BootloaderDriveLetter%" assigned to boot partition and "%BootloaderDriveLetter%" has been formated.
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
@@ -452,7 +452,7 @@ echo.
 echo Listing volumes in disk %Disk%.
 (echo list vol) > "%cd%DiskPart.txt"
 (echo exit) >> "%cd%DiskPart.txt"
-DiskPart /s "%cd%DiskPart.txt" 2>&1
+"%windir%\System32\diskpart.exe" /s "%cd%DiskPart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "Volume2Error"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Volumes in disk %Disk% listed.
@@ -549,7 +549,7 @@ echo Assigning Windows volume %WindowsVolume% drive letter "%WindowsDriveLetter%
 (echo sel vol %WindowsVolume%) > "%cd%DiskPart.txt"
 (echo assign letter=%WindowsDriveLetter%) >> "%cd%DiskPart.txt"
 (echo exit) >> "%cd%DiskPart.txt"
-DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
+"%windir%\System32\diskpart.exe" /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "AssignDriveLetterWindowsError"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Assigned Windows volume %WindowsVolume% drive letter "%WindowsDriveLetter%".
@@ -633,7 +633,7 @@ if /i "%BIOSType%"=="3" goto "Both"
 :"LegacyBIOS"
 echo.
 echo Fixing the Windows bootloader.
-BCDBoot "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f BIOS > nul 2>&1
+"%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f BIOS > nul 2>&1
 if not "%errorlevel%"=="0" goto "ErrorBIOS"
 echo Your Windows bootloader is fixed!
 goto "Volume3"
@@ -641,7 +641,7 @@ goto "Volume3"
 :"UEFI"
 echo.
 echo Fixing the Windows bootloader.
-BCDBoot "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f UEFI > nul 2>&1
+"%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f UEFI > nul 2>&1
 if not "%errorlevel%"=="0" goto "ErrorBIOS"
 echo Your Windows bootloader is fixed!
 goto "Volume3"
@@ -649,7 +649,7 @@ goto "Volume3"
 :"Both"
 echo.
 echo Fixing the Windows bootloader.
-BCDBoot "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f ALL > nul 2>&1
+"%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f ALL > nul 2>&1
 if not "%errorlevel%"=="0" goto "ErrorBIOS"
 echo Your Windows bootloader is fixed!
 goto "Volume3"
@@ -665,7 +665,7 @@ echo Removing drive letter "%DriveLetterBootloader%" from boot partition.
 (echo sel vol %BootVolume%) > "%cd%DiskPart.txt"
 (echo remove letter=%DriveLetterBootloader%) >> "%cd%DiskPart.txt"
 (echo exit) >> "%cd%DiskPart.txt"
-DiskPart /s "%cd%DiskPart.txt" > nul 2>&1
+"%windir%\System32\diskpart.exe" /s "%cd%DiskPart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "Volume3Error"
 del "%cd%DiskPart.txt" /f /q > nul 2>&1
 echo Drive letter "%DriveLetterBootloader%" removed from boot partition.
@@ -695,4 +695,4 @@ endlocal
 echo.
 echo Press any key to restart this PC.
 pause > nul 2>&1
-wpeutil reboot
+"%windir%\System32\wpeutil.exe" Reboot
