@@ -2,16 +2,16 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.28
+echo Version: 4.0.29
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
 echo Sponsor: https://github.com/sponsors/YonatanReuvenIsraeli
 "%windir%\System32\net.exe" user > nul 2>&1
-if "%errorlevel%"=="0" goto "NotWindowsPreinstallationEnvironmentWindowsRecoveryEnvironment"
+if "%errorlevel%"=="0" goto "NotInWindowsPreinstallationEnvironmentWindowsRecoveryEnvironment"
 goto "Start"
 
-:"NotWindowsPreinstallationEnvironmentWindowsRecoveryEnvironment"
+:"NotInWindowsPreinstallationEnvironmentWindowsRecoveryEnvironment"
 echo.
 echo You are not Windows Preinstallation Environment or Windows Recovery Environment! You must run this batch file in Windows Preinstallation Environment or Windows Recovery Environment. Press any key to close this batch file.
 pause > nul 2>&1
