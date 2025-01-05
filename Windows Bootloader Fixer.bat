@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.26
+echo Version: 4.0.27
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -38,7 +38,7 @@ goto "Start"
 :"SureBIOSTypeLegacyBIOS"
 echo.
 set SureBIOSType=
-set /p SureBIOSType="Are you sure your trying to fix legacy BIOS? (Yes/No) "
+set /p SureBIOSType="Are you sure you are trying to fix legacy BIOS? (Yes/No) "
 if /i "%SureBIOSType%"=="Yes" goto "DiskPartSet"
 if /i "%SureBIOSType%"=="No" goto "Start"
 echo Invalid syntax!
@@ -47,7 +47,7 @@ goto "SureBIOSTypeBIOS"
 :"SureBIOSTypeUEFI"
 echo.
 set SureBIOSType=
-set /p SureBIOSType="Are you sure your trying to fix UEFI? (Yes/No) "
+set /p SureBIOSType="Are you sure you are trying to fix UEFI? (Yes/No) "
 if /i "%SureBIOSType%"=="Yes" goto "DiskPartSet"
 if /i "%SureBIOSType%"=="No" goto "Start"
 echo Invalid syntax!
@@ -56,7 +56,7 @@ goto "SureBIOSTypeUEFI"
 :"SureBIOSTypeBoth"
 echo.
 set SureBIOSType=
-set /p SureBIOSType="Are you sure your trying to fix both? (Yes/No) "
+set /p SureBIOSType="Are you sure you are trying to fix both? (Yes/No) "
 if /i "%SureBIOSType%"=="Yes" goto "DiskPartSet"
 if /i "%SureBIOSType%"=="No" goto "Start"
 echo Invalid syntax!
