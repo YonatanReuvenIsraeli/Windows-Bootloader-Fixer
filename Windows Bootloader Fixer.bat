@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.30
+echo Version: 4.0.31
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -67,14 +67,14 @@ set DiskPart=
 goto "Disk"
 
 :"Disk"
-if exist "%cd%diskpart.txt" goto "DiskPartExistDisk"
+if exist "diskpart.txt" goto "DiskPartExistDisk"
 echo.
 echo Finding disks attached to this PC.
-(echo list disk) > "%cd%diskpart.txt"
-(echo exit) >> "%cd%diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "%cd%diskpart.txt" 2>&1
+(echo list disk) > "diskpart.txt"
+(echo exit) >> "diskpart.txt"
+"%windir%\System32\diskpart.exe" /s "diskpart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "DiskError"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo Disks attached to this PC found.
 echo.
 set Disk=
@@ -84,12 +84,12 @@ goto "SureDisk"
 :"DiskPartExistDisk"
 set DiskPart=True
 echo.
-echo Please temporary rename to something else or temporary move to another location "%cd%diskpart.txt" in order for this batch file to proceed. "%cd%diskpart.txt" is not a system file. Press any key to continue when "%cd%diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
+echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
 pause > nul 2>&1
 goto "Disk"
 
 :"DiskError"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "NewPartition"
@@ -122,15 +122,15 @@ echo Invalid syntax!
 goto "SureMBRGPT"
 
 :"Partition"
-if exist "%cd%diskpart.txt" goto "DiskPartExistPartition"
+if exist "diskpart.txt" goto "DiskPartExistPartition"
 echo.
 echo Finding partitions in disk %Disk%.
-(echo sel disk %Disk%) > "%cd%diskpart.txt"
-(echo list part) >> "%cd%diskpart.txt"
-(echo exit) >> "%cd%diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "%cd%diskpart.txt" 2>&1
+(echo sel disk %Disk%) > "diskpart.txt"
+(echo list part) >> "diskpart.txt"
+(echo exit) >> "diskpart.txt"
+"%windir%\System32\diskpart.exe" /s "diskpart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "PartitionError"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo Found partitions in disk %Disk%.
 echo.
 set Partition=
@@ -141,12 +141,12 @@ goto "SureBootPartition"
 :"DiskPartExistPartition"
 set DiskPart=True
 echo.
-echo Please temporary rename to something else or temporary move to another location "%cd%diskpart.txt" in order for this batch file to proceed. "%cd%diskpart.txt" is not a system file. Press any key to continue when "%cd%diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
+echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
 pause > nul 2>&1
 goto "Partition"
 
 :"PartitionError"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "Disk"
@@ -161,15 +161,15 @@ echo Invalid syntax!
 goto "SurePartition"
 
 :"ListPartition"
-if exist "%cd%diskpart.txt" goto "DiskPartExistListPartition"
+if exist "diskpart.txt" goto "DiskPartExistListPartition"
 echo.
 echo Listing partitions in disk %Disk%.
-(echo sel disk %Disk%) > "%cd%diskpart.txt"
-(echo list part) >> "%cd%diskpart.txt"
-(echo exit) >> "%cd%diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "%cd%diskpart.txt" 2>&1
+(echo sel disk %Disk%) > "diskpart.txt"
+(echo list part) >> "diskpart.txt"
+(echo exit) >> "diskpart.txt"
+"%windir%\System32\diskpart.exe" /s "diskpart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "ListPartitionError"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo Partition listed in disk %Disk%.
 echo.
 set RemovePartition=
@@ -180,12 +180,12 @@ goto "SureRemovePartition"
 :"DiskPartExistRemovePartition"
 set DiskPart=True
 echo.
-echo Please temporary rename to something else or temporary move to another location "%cd%diskpart.txt" in order for this batch file to proceed. "%cd%diskpart.txt" is not a system file. Press any key to continue when "%cd%diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
+echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
 pause > nul 2>&1
 goto "RemovePartition"
 
 :"ListPartitionError"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "ListPartition"
@@ -200,28 +200,28 @@ echo Invalid syntax!
 goto "SureRemovePartition"
 
 :"RemovePartition"
-if exist "%cd%diskpart.txt" goto "DiskPartExistRemovePartition"
+if exist "diskpart.txt" goto "DiskPartExistRemovePartition"
 echo.
 echo Removing partition %RemovePartition%.
-(echo sel disk %Disk%) > "%cd%diskpart.txt"
-(echo sel part %RemovePartition%) >> "%cd%diskpart.txt"
-(echo  part override) >> "%cd%diskpart.txt"
-(echo exit) >> "%cd%diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "%cd%diskpart.txt" > nul 2>&1
+(echo sel disk %Disk%) > "diskpart.txt"
+(echo sel part %RemovePartition%) >> "diskpart.txt"
+(echo  part override) >> "diskpart.txt"
+(echo exit) >> "diskpart.txt"
+"%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "RemovePartitionError"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo Partition %RemovePartition% removed.
 goto "ListPartition"
 
 :"DiskPartExistRemovePartition"
 set DiskPart=True
 echo.
-echo Please temporary rename to something else or temporary move to another location "%cd%diskpart.txt" in order for this batch file to proceed. "%cd%diskpart.txt" is not a system file. Press any key to continue when "%cd%diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
+echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
 pause > nul 2>&1
 goto "RemovePartition"
 
 :"RemovePartitionError"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "RemovePartition"
@@ -232,17 +232,17 @@ set Size=
 set /p Size="Please enter boot partition size. Recomended is 350 MB but you can try to go down to 100 MB if you dont have the space. (100-350) "
 if not "%Size%" GEQ "100" goto "NotInRange"
 if not "%Size%" LEQ "350" goto "NotInRange"
-if exist "%cd%diskpart.txt" goto "DiskPartExistNewPartition"
+if exist "diskpart.txt" goto "DiskPartExistNewPartition"
 echo.
 echo Remaking boot parttion.
-(echo sel disk %Disk%) > "%cd%diskpart.txt"
-if /i "%MBRGPT%"=="MBR" (echo create partition primary size=%Size%) >> "%cd%diskpart.txt"
-if /i "%MBRGPT%"=="GPT" (echo create partition efi size=%Size%) >> "%cd%diskpart.txt"
-if /i "%MBRGPT%"=="MBR" (echo active) >> "%cd%diskpart.txt"
-(echo exit) >> "%cd%diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "%cd%diskpart.txt" > nul 2>&1
+(echo sel disk %Disk%) > "diskpart.txt"
+if /i "%MBRGPT%"=="MBR" (echo create partition primary size=%Size%) >> "diskpart.txt"
+if /i "%MBRGPT%"=="GPT" (echo create partition efi size=%Size%) >> "diskpart.txt"
+if /i "%MBRGPT%"=="MBR" (echo active) >> "diskpart.txt"
+(echo exit) >> "diskpart.txt"
+"%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "NewPartitionError"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo Boot partition remade.
 goto "Partition"
 
@@ -253,12 +253,12 @@ goto "NewPartition"
 :"DiskPartExistNewPartition"
 set DiskPart=True
 echo.
-echo Please temporary rename to something else or temporary move to another location "%cd%diskpart.txt" in order for this batch file to proceed. "%cd%diskpart.txt" is not a system file. Press any key to continue when "%cd%diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
+echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
 pause > nul 2>&1
 goto "NewPartition"
 
 :"NewPartitionError"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "NewPartition"
@@ -273,26 +273,26 @@ echo Invalid syntax!
 goto "SureBootPartition"
 
 :"Volume1"
-if exist "%cd%diskpart.txt" goto "DiskPartExistVolume1"
+if exist "diskpart.txt" goto "DiskPartExistVolume1"
 echo.
 echo Listing volumes attached to this PC.
-(echo list vol) > "%cd%diskpart.txt"
-(echo exit) >> "%cd%diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "%cd%diskpart.txt" 2>&1
+(echo list vol) > "diskpart.txt"
+(echo exit) >> "diskpart.txt"
+"%windir%\System32\diskpart.exe" /s "diskpart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "Volume1Error"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo Volumes attached to this PC listed.
 goto "BootAsk1"
 
 :"DiskPartExistVolume1"
 set DiskPart=True
 echo.
-echo Please temporary rename to something else or temporary move to another location "%cd%diskpart.txt" in order for this batch file to proceed. "%cd%diskpart.txt" is not a system file.Press any key to continue when "%cd%diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
+echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file.Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
 pause > nul 2>&1
 goto "Volume1"
 
 :"Volume1Error"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "Volume1"
@@ -369,29 +369,29 @@ echo "%DriveLetterBootloader%" exists! Please try again.
 goto "BootloaderDriveLetter"
 
 :"AssignDriveLetterBootloader"
-if exist "%cd%diskpart.txt" goto "DiskPartExistAssignDriveLetterBootloader"
+if exist "diskpart.txt" goto "DiskPartExistAssignDriveLetterBootloader"
 echo.
 echo Assigning drive letter and formating "%BootloaderDriveLetter%" to boot partition.
-(echo sel vol %BootVolume%) > "%cd%diskpart.txt"
-(echo assign letter=%BootloaderDriveLetter%) >> "%cd%diskpart.txt"
-(echo format fs=fat32 label="System" quick) >> "%cd%diskpart.txt"
-(echo exit) >> "%cd%diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "%cd%diskpart.txt" > nul 2>&1
+(echo sel vol %BootVolume%) > "diskpart.txt"
+(echo assign letter=%BootloaderDriveLetter%) >> "diskpart.txt"
+(echo format fs=fat32 label="System" quick) >> "diskpart.txt"
+(echo exit) >> "diskpart.txt"
+"%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "AssignDriveLetterBootloaderError"
 echo Drive letter "%BootloaderDriveLetter%" assigned to boot partition and "%BootloaderDriveLetter%" has been formated.
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 set DriveLetterBootloader=%BootloaderDriveLetter%
 goto "Volume2"
 
 :"DiskPartExistAssignDriveLetterBootloader"
 set DiskPart=True
 echo.
-echo Please temporary rename to something else or temporary move to another location "%cd%diskpart.txt" in order for this batch file to proceed. "%cd%diskpart.txt" is not a system file.Press any key to continue when "%cd%diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
+echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file.Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
 pause > nul 2>&1
 goto "AssignDriveLetterBootloader"
 
 :"AssignDriveLetterBootloaderError"
-del %cd%diskpart.txt /f /q > nul 2>&1
+del diskpart.txt /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "AssignDriveLetterBootloader"
@@ -447,26 +447,26 @@ echo "%DriveLetterBootloader%" does not exist! Please try again.
 goto "Volume1"
 
 :"Volume2"
-if exist "%cd%diskpart.txt" goto "DiskPartExistVolume2"
+if exist "diskpart.txt" goto "DiskPartExistVolume2"
 echo.
 echo Listing volumes in disk %Disk%.
-(echo list vol) > "%cd%diskpart.txt"
-(echo exit) >> "%cd%diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "%cd%diskpart.txt" 2>&1
+(echo list vol) > "diskpart.txt"
+(echo exit) >> "diskpart.txt"
+"%windir%\System32\diskpart.exe" /s "diskpart.txt" 2>&1
 if not "%errorlevel%"=="0" goto "Volume2Error"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo Volumes in disk %Disk% listed.
 goto "WindowsAsk1"
 
 :"DiskPartExistVolume2"
 set DiskPart=True
 echo.
-echo Please temporary rename to something else or temporary move to another location "%cd%diskpart.txt" in order for this batch file to proceed. "%cd%diskpart.txt" is not a system file. Press any key to continue when "%cd%diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
+echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
 pause > nul 2>&1
 goto "Volume2"
 
 :"Volume2Error"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "Volume2"
@@ -543,15 +543,15 @@ echo "%WindowsDriveLetter%" exists! Please try again.
 goto "WindowsDriveLetter"
 
 :"AssignDriveLetterWindows"
-if exist "%cd%diskpart.txt" goto "DiskPartExistAssignDriveLetterWindows"
+if exist "diskpart.txt" goto "DiskPartExistAssignDriveLetterWindows"
 echo.
 echo Assigning Windows volume %WindowsVolume% drive letter "%WindowsDriveLetter%".
-(echo sel vol %WindowsVolume%) > "%cd%diskpart.txt"
-(echo assign letter=%WindowsDriveLetter%) >> "%cd%diskpart.txt"
-(echo exit) >> "%cd%diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "%cd%diskpart.txt" > nul 2>&1
+(echo sel vol %WindowsVolume%) > "diskpart.txt"
+(echo assign letter=%WindowsDriveLetter%) >> "diskpart.txt"
+(echo exit) >> "diskpart.txt"
+"%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "AssignDriveLetterWindowsError"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo Assigned Windows volume %WindowsVolume% drive letter "%WindowsDriveLetter%".
 set DriveLetterWindows=%WindowsDriveLetter%
 goto "BIOSType"
@@ -559,12 +559,12 @@ goto "BIOSType"
 :"DiskPartExistAssignDriveLetterWindows"
 set DiskPart=True
 echo.
-echo Please temporary rename to something else or temporary move to another location "%cd%diskpart.txt" in order for this batch file to proceed. "%cd%diskpart.txt" is not a system file. Press any key to continue when "%cd%diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
+echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
 pause > nul 2>&1
 goto "AssignDriveLetterWindows"
 
 :"AssignDriveLetterWindowsError"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "WindowsDriveLetter"
@@ -659,15 +659,15 @@ echo There was an error and no new bootloader was created. You can try again.
 goto "Start
 
 :"Volume3"
-if exist "%cd%diskpart.txt" goto "DiskPartExistVolume3"
+if exist "diskpart.txt" goto "DiskPartExistVolume3"
 echo.
 echo Removing drive letter "%DriveLetterBootloader%" from boot partition.
-(echo sel vol %BootVolume%) > "%cd%diskpart.txt"
-(echo remove letter=%DriveLetterBootloader%) >> "%cd%diskpart.txt"
-(echo exit) >> "%cd%diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "%cd%diskpart.txt" > nul 2>&1
+(echo sel vol %BootVolume%) > "diskpart.txt"
+(echo remove letter=%DriveLetterBootloader%) >> "diskpart.txt"
+(echo exit) >> "diskpart.txt"
+"%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "Volume3Error"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo Drive letter "%DriveLetterBootloader%" removed from boot partition.
 if /i "%DiskPart%"=="True" goto "DiskPartDone"
 goto "Done"
@@ -675,19 +675,19 @@ goto "Done"
 :"DiskPartExistVolume3"
 set DiskPart=True
 echo.
-echo Please temporary rename to something else or temporary move to another location "%cd%diskpart.txt" in order for this batch file to proceed. "%cd%diskpart.txt" is not a system file. Press any key to continue when "%cd%diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
+echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
 pause > nul 2>&1
 goto "Volume3"
 
 :"Volume3Error"
-del "%cd%diskpart.txt" /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "Volume3"
 
 :"DiskPartDone"
 echo.
-echo You can now rename or move back the file back to "%cd%diskpart.txt".
+echo You can now rename or move back the file back to "diskpart.txt".
 goto "Done"
 
 :"Done"
