@@ -10,8 +10,8 @@ echo Sponsor: https://github.com/sponsors/YonatanReuvenIsraeli
 "%windir%\System32\net.exe" session > nul 2>&1
 if not "%errorlevel%"=="0" goto "NotAdministrator"
 "%windir%\System32\net.exe" user > nul 2>&1
-if "%errorlevel%"=="0" set PE/RE=False
-if not "%errorlevel%"=="0" set PE/RE=True
+if "%errorlevel%"=="0" set PERE=False
+if not "%errorlevel%"=="0" set PERE=True
 goto "Start"
 
 :"NotAdministrator"
@@ -674,7 +674,8 @@ if not "%errorlevel%"=="0" goto "Volume3Error"
 del "diskpart.txt" /f /q > nul 2>&1
 echo Drive letter "%DriveLetterBootloader%" removed from boot partition.
 if /i "%DiskPart%"=="True" goto "DiskPartDone"
-goto "Done"
+if /i "%PERE%"=="False" goto "DoneExit"
+if /i "%PERE%"=="True" goto "DoneReboot"
 
 :"DiskPartExistVolume3"
 set DiskPart=True
@@ -692,13 +693,19 @@ goto "Volume3"
 :"DiskPartDone"
 echo.
 echo You can now rename or move back the file back to "diskpart.txt".
-goto "Done"
+if /i "%PERE%"=="False" goto "DoneExit"
+if /i "%PERE%"=="True" goto "DoneReboot"
 
-:"Done"
+:"DoneExit"
 endlocal
 echo.
-if /i "%PE/RE%"=="False" echo Press any key to exit.
-if /i "%PE/RE%"=="True" echo Press any key to reboot.
+echo Press any key to exit.
 pause > nul 2>&1
-if /i "%PE/RE%"=="False" exit
-if /i "%PE/RE%"=="True" "%windir%\System32\wpeutil.exe" Reboot
+exit
+
+:"DoneReboot"
+endlocal
+echo.
+echo Press any key to reboot.
+pause > nul 2>&1
+"%windir%\System32\wpeutil.exe" Reboot
