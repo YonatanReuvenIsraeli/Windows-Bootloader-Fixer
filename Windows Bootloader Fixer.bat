@@ -115,7 +115,8 @@ goto "MBRGPT"
 :"SureMBRGPT"
 echo.
 set SureMBRGPT=
-set /p SureMBRGPT="Are you sure disk %Disk% is %MBRGPT%? (Yes/No) "
+if /i "%MBRGPT%"=="MBR" set /p SureMBRGPT="Are you sure disk %Disk% is MBR? (Yes/No) "
+if /i "%MBRGPT%"=="GPT" set /p SureMBRGPT="Are you sure disk %Disk% is GPT? (Yes/No) "
 if /i "%SureMBRGPT%"=="Yes" goto "Partition"
 if /i "%SureMBRGPT%"=="No" goto "MBRGPT"
 echo Invalid syntax!
