@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.35
+echo Version: 4.0.36
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -697,8 +697,8 @@ goto "Done"
 :"Done"
 endlocal
 echo.
-if "%PE/RE%"=="False" echo Press any key to exit.
-if "%PE/RE%"=="True" echo Press any key to reboot.
+if /i "%PE/RE%"=="False" echo Press any key to exit.
+if /i "%PE/RE%"=="True" echo Press any key to reboot.
 pause > nul 2>&1
-if "%PE/RE%"=="False" exit
-if "%PE/RE%"=="True" "%windir%\System32\wpeutil.exe" Reboot
+if /i "%PE/RE%"=="False" exit
+if /i "%PE/RE%"=="True" "%windir%\System32\wpeutil.exe" Reboot
