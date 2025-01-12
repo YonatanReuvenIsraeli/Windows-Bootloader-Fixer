@@ -2,18 +2,18 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.31
+echo Version: 4.0.32
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
 echo Sponsor: https://github.com/sponsors/YonatanReuvenIsraeli
-"%windir%\System32\net.exe" user > nul 2>&1
-if "%errorlevel%"=="0" goto "NotInWindowsPreinstallationEnvironmentWindowsRecoveryEnvironment"
+"%windir%\System32\net.exe" session > nul 2>&1
+if not "%errorlevel%"=="0" goto "NotAdministrator"
 goto "Start"
 
-:"NotInWindowsPreinstallationEnvironmentWindowsRecoveryEnvironment"
+:"NotAdministrator"
 echo.
-echo You are not in Windows Preinstallation Environment or Windows Recovery Environment! You must run this batch file in Windows Preinstallation Environment or Windows Recovery Environment. Press any key to close this batch file.
+echo Please run this batch file as an administrator. Press any key to close this batch file.
 pause > nul 2>&1
 goto "Close"
 
@@ -205,7 +205,7 @@ echo.
 echo Removing partition %RemovePartition%.
 (echo sel disk %Disk%) > "diskpart.txt"
 (echo sel part %RemovePartition%) >> "diskpart.txt"
-(echo  part override) >> "diskpart.txt"
+(echo del part override) >> "diskpart.txt"
 (echo exit) >> "diskpart.txt"
 "%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "RemovePartitionError"
