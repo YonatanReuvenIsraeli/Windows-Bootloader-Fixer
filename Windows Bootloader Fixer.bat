@@ -9,6 +9,9 @@ echo GitHub: https://github.com/YonatanReuvenIsraeli
 echo Sponsor: https://github.com/sponsors/YonatanReuvenIsraeli
 "%windir%\System32\net.exe" session > nul 2>&1
 if not "%errorlevel%"=="0" goto "NotAdministrator"
+"%windir%\System32\net.exe" user > nul 2>&1
+if "%errorlevel%"=="0" set PE/RE=False
+if not "%errorlevel%"=="0" set PE/RE=True
 goto "Start"
 
 :"NotAdministrator"
@@ -694,6 +697,8 @@ goto "Done"
 :"Done"
 endlocal
 echo.
-echo Press any key to exit.
+if "%PE/RE%"=="False" echo Press any key to exit.
+if "%PE/RE%"=="True" echo Press any key to reboot.
 pause > nul 2>&1
-exit
+if "%PE/RE%"=="False" exit
+if "%PE/RE%"=="True" "%windir%\System32\wpeutil.exe" Reboot
