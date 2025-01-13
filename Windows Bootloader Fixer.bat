@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.1.0
+echo Version: 4.1.1
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -197,7 +197,7 @@ goto "ListPartition"
 :"SureRemovePartition"
 echo.
 set SureRemovePartition=
-set /p SureRemovePartition="Are you sure you want to ete partition 1? (Yes/No) "
+set /p SureRemovePartition="Are you sure you want to delete partition %RemovePartition%? (Yes/No) "
 if /i "%SureRemovePartition%"=="Yes" goto "RemovePartition"
 if /i "%SureRemovePartition%"=="No" goto "ListPartition"
 echo Invalid syntax!
