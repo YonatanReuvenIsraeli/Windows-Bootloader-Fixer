@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.1.5
+echo Version: 4.1.6
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -226,7 +226,6 @@ echo Remaking boot parttion.
 (echo sel disk %Disk%) > "diskpart.txt"
 if /i "%MBRGPT%"=="MBR" (echo create partition primary size=%Size%) >> "diskpart.txt"
 if /i "%MBRGPT%"=="GPT" (echo create partition efi size=%Size%) >> "diskpart.txt"
-if /i "%MBRGPT%"=="MBR" (echo active) >> "diskpart.txt"
 (echo exit) >> "diskpart.txt"
 "%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "NewPartitionError"
@@ -294,7 +293,7 @@ goto "SureBootAsk1"
 :"SureBootAsk1"
 echo.
 set SureBootAsk1=
-set /p SureBootAsk1="Are you sure volume %BootVolume% is the boot volume? (Yes/No) "
+set /p SureBootAsk1="All data on volume %BootVolume% will be deleted! Are you sure volume %BootVolume% is the boot volume? (Yes/No) "
 if /i "%SureBootAsk1%"=="Yes" goto "BootAsk2"
 if /i "%SureBootAsk1%"=="No" goto "Volume2"
 echo Invalid syntax!
@@ -356,34 +355,6 @@ goto "BootloaderDriveLetter"
 echo "%BootloaderDriveLetter%" exists! Please try again.
 goto "BootloaderDriveLetter"
 
-:"AssignDriveLetterBootloader"
-if exist "diskpart.txt" goto "DiskPartExistAssignDriveLetterBootloader"
-echo.
-echo Assigning drive letter and formating "%BootloaderDriveLetter%" to boot partition.
-(echo sel vol %BootVolume%) > "diskpart.txt"
-(echo assign letter=%BootloaderDriveLetter%) >> "diskpart.txt"
-(echo format fs=fat32 label="System" quick) >> "diskpart.txt"
-(echo exit) >> "diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
-if not "%errorlevel%"=="0" goto "AssignDriveLetterBootloaderError"
-echo Drive letter "%BootloaderDriveLetter%" assigned to boot partition and "%BootloaderDriveLetter%" has been formated.
-del "diskpart.txt" /f /q > nul 2>&1
-set DriveLetterBootloader=%BootloaderDriveLetter%
-goto "Volume2"
-
-:"DiskPartExistAssignDriveLetterBootloader"
-set DiskPart=True
-echo.
-echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. "diskpart.txt" is located in the folder you ran this batch file from. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
-pause > nul 2>&1
-goto "AssignDriveLetterBootloader"
-
-:"AssignDriveLetterBootloaderError"
-del diskpart.txt /f /q > nul 2>&1
-echo There has been an error! Press any key to try again.
-pause > nul 2>&1
-goto "AssignDriveLetterBootloader"
-
 :"DriveLetterBootloader"
 echo.
 set DriveLetterBootloader=
@@ -428,11 +399,42 @@ goto "SureDriveLetterBootloader"
 
 :"CheckExistDriveLetterBootloader"
 if not exist "%DriveLetterBootloader%" goto "DriveLetterBootloaderNotExist"
-goto "Volume2"
+goto "AssignDriveLetterBootloader"
 
 :"DriveLetterBootloaderNotExist"
 echo "%DriveLetterBootloader%" does not exist! Please try again.
 goto "Volume1"
+
+:"AssignDriveLetterBootloader"
+if exist "diskpart.txt" goto "DiskPartExistAssignDriveLetterBootloader"
+echo.
+if /i "%BootAsk2%"=="No" echo Assigning drive letter "%BootloaderDriveLetter%" to boot partition and formating boot partition.
+if /i "%BootAsk2%"=="Yes" echo Formating boot partition "%DriveLetterBootloader%".
+(echo sel vol %BootVolume%) > "diskpart.txt"
+(echo format fs=fat32 label="System" quick) >> "diskpart.txt"
+if /i "%BootAsk2%"=="No" (echo assign letter=%BootloaderDriveLetter%) >> "diskpart.txt"
+if /i "%MBRGPT%"=="MBR" (echo active) >> "diskpart.txt"
+(echo exit) >> "diskpart.txt"
+"%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
+if not "%errorlevel%"=="0" goto "AssignDriveLetterBootloaderError"
+if /i "%BootAsk2%"=="No" echo Drive letter "%BootloaderDriveLetter%" assigned to boot partition and boot partition "%BootloaderDriveLetter%" has been formated.
+if /i "%BootAsk2%"=="Yes" echo Boot partition "%DriveLetterBootloader%" has been formated.
+del "diskpart.txt" /f /q > nul 2>&1
+set DriveLetterBootloader=%BootloaderDriveLetter%
+goto "Volume2"
+
+:"DiskPartExistAssignDriveLetterBootloader"
+set DiskPart=True
+echo.
+echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. "diskpart.txt" is located in the folder you ran this batch file from. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
+pause > nul 2>&1
+goto "AssignDriveLetterBootloader"
+
+:"AssignDriveLetterBootloaderError"
+del diskpart.txt /f /q > nul 2>&1
+echo There has been an error! Press any key to try again.
+pause > nul 2>&1
+goto "AssignDriveLetterBootloader"
 
 :"Volume2"
 if exist "diskpart.txt" goto "DiskPartExistVolume2"
