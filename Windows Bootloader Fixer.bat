@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.0.38
+echo Version: 4.1.0
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -336,7 +336,7 @@ goto "SureBootAsk2"
 
 :"BootloaderDriveLetter"
 echo.
-set DriveLetterBootloader=
+set BootloaderDriveLetter=
 set /p BootloaderDriveLetter="Enter an unused drive letter. (A:-Z:) "
 if exist "%BootloaderDriveLetter%" goto "DriveLetterBootloaderExist"
 if /i "%BootloaderDriveLetter%"=="A:" goto "AssignDriveLetterBootloader"
@@ -369,7 +369,7 @@ echo Invalid syntax!
 goto "BootloaderDriveLetter"
 
 :"DriveLetterBootloaderExist"
-echo "%DriveLetterBootloader%" exists! Please try again.
+echo "%BootloaderDriveLetter%" exists! Please try again.
 goto "BootloaderDriveLetter"
 
 :"AssignDriveLetterBootloader"
@@ -558,7 +558,7 @@ if not "%errorlevel%"=="0" goto "AssignDriveLetterWindowsError"
 del "diskpart.txt" /f /q > nul 2>&1
 echo Assigned Windows volume %WindowsVolume% drive letter "%WindowsDriveLetter%".
 set DriveLetterWindows=%WindowsDriveLetter%
-goto "BIOSType"
+goto "Bootloader"
 
 :"DiskPartExistAssignDriveLetterWindows"
 set DiskPart=True
@@ -618,7 +618,7 @@ goto "SureDriveLetterWindows"
 :"CheckExistDriveLetterWindows"
 if not exist "%DriveLetterWindows%" goto "DriveLetterWindowsNotExist"
 if not exist "%DriveLetterWindows%"\Windows goto "NotWindows"
-goto "BIOSType"
+goto "Bootloader"
 
 :"DriveLetterWindowsNotExist"
 echo "%DriveLetterWindows%" does not exist! Please try again.
@@ -629,33 +629,13 @@ echo Windows not installed on "%DriveLetterWindows%"!
 goto "DriveLetterWindows"
 goto "Volume2"
 
-:"BIOSType"
-if /i "%BIOSType%"=="1" goto "LegacyBIOS"
-if /i "%BIOSType%"=="2" goto "UEFI"
-if /i "%BIOSType%"=="3" goto "Both"
-
-:"LegacyBIOS"
+:"Bootloader"
 echo.
 echo Fixing the Windows bootloader.
-"%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f BIOS > nul 2>&1
-if not "%errorlevel%"=="0" goto "ErrorBIOS"
-echo Your Windows bootloader is fixed!
-goto "Volume3"
-
-:"UEFI"
-echo.
-echo Fixing the Windows bootloader.
-"%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f UEFI > nul 2>&1
-if not "%errorlevel%"=="0" goto "ErrorBIOS"
-echo Your Windows bootloader is fixed!
-goto "Volume3"
-
-:"Both"
-echo.
-echo Fixing the Windows bootloader.
-"%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f ALL > nul 2>&1
-if not "%errorlevel%"=="0" goto "ErrorBIOS"
-echo Your Windows bootloader is fixed!
+if /i "%BIOSType%"=="1" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f BIOS > nul 2>&1
+if /i "%BIOSType%"=="2" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f UEFI > nul 2>&1
+if /i "%BIOSType%"=="3" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f ALL > nul 2>&1
+if not "%errorlevel%"=="0" goto "ErrorBootloader"
 goto "Volume3"
 
 :"ErrorBIOS"
@@ -664,22 +644,18 @@ goto "Start
 
 :"Volume3"
 if exist "diskpart.txt" goto "DiskPartExistVolume3"
-echo.
-echo Removing drive letter "%DriveLetterBootloader%" from boot partition.
 (echo sel vol %BootVolume%) > "diskpart.txt"
 (echo remove letter=%DriveLetterBootloader%) >> "diskpart.txt"
 (echo exit) >> "diskpart.txt"
 "%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "Volume3Error"
 del "diskpart.txt" /f /q > nul 2>&1
-echo Drive letter "%DriveLetterBootloader%" removed from boot partition.
 if /i "%DiskPart%"=="True" goto "DiskPartDone"
 if /i "%PERE%"=="False" goto "DoneExit"
 if /i "%PERE%"=="True" goto "DoneReboot"
 
 :"DiskPartExistVolume3"
 set DiskPart=True
-echo.
 echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. "diskpart.txt" is located in the folder you ran this batch file from. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
 pause > nul 2>&1
 goto "Volume3"
@@ -698,14 +674,12 @@ if /i "%PERE%"=="True" goto "DoneReboot"
 
 :"DoneExit"
 endlocal
-echo.
-echo Press any key to exit.
+echo Your bootloader is fixed! Press any key to exit.
 pause > nul 2>&1
 exit
 
 :"DoneReboot"
 endlocal
-echo.
-echo Press any key to reboot.
+echo Your bootloader is fixed! Press any key to reboot.
 pause > nul 2>&1
 "%windir%\System32\wpeutil.exe" Reboot
