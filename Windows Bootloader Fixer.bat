@@ -2,8 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.1.4
-
+echo Version: 4.1.5
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -191,7 +190,7 @@ goto "SureRemovePartition"
 :"RemovePartition"
 if exist "diskpart.txt" goto "DiskPartExistRemovePartition"
 echo.
-echo Removing partition %RemovePartition%.
+echo Deleting partition %RemovePartition%.
 (echo sel disk %Disk%) > "diskpart.txt"
 (echo sel part %RemovePartition%) >> "diskpart.txt"
 (echo del part override) >> "diskpart.txt"
@@ -199,7 +198,7 @@ echo Removing partition %RemovePartition%.
 "%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "RemovePartitionError"
 del "diskpart.txt" /f /q > nul 2>&1
-echo Partition %RemovePartition% removed.
+echo Partition %RemovePartition% deleted.
 goto "ListPartition"
 
 :"DiskPartExistRemovePartition"
