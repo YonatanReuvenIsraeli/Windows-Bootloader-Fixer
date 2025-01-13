@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.1.7
+echo Version: 4.1.8
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -161,7 +161,7 @@ del "diskpart.txt" /f /q > nul 2>&1
 echo Partition listed in disk %Disk%.
 echo.
 set DeletePartition=
-set /p DeletePartition="Enter partition number that needs to be deleted to make space for boot partition. Recomended space is 350 MB but you can try to go down to 100 MB if you do not have the space. Enter "Done" if you are done deleting partitions. (0-?/Done) "
+set /p DeletePartition="Enter partition number that needs to be deleted to make space for boot partition. Recomended size is 350 MB but you can try to go down to 100 MB if you do not have the space. Enter "Done" if you are done deleting partitions. (0-?/Done) "
 if /i "%DeletePartition%"=="Done" goto "NewPartition"
 goto "SureDeletePartition"
 
@@ -217,7 +217,7 @@ goto "DeletePartition"
 :"NewPartition"
 echo.
 set Size=
-set /p Size="Please enter boot partition size to create. Recomended is 350 MB but you can try to go down to 100 MB if you do not have the space. (100-350) "
+set /p Size="Please enter boot partition size to create. Recomended size is 350 MB but you can try to go down to 100 MB if you do not have the space. (100-350) "
 if not "%Size%" GEQ "100" goto "NotInRange"
 if not "%Size%" LEQ "350" goto "NotInRange"
 if exist "diskpart.txt" goto "DiskPartExistNewPartition"
