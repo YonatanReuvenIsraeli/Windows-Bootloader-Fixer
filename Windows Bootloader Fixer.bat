@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.1.8
+echo Version: 4.2.0
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -295,7 +295,7 @@ echo.
 set SureBootAsk1=
 set /p SureBootAsk1="All data on volume %BootVolume% will be deleted! Are you sure volume %BootVolume% is the boot volume? (Yes/No) "
 if /i "%SureBootAsk1%"=="Yes" goto "BootAsk2"
-if /i "%SureBootAsk1%"=="No" goto "Volume2"
+if /i "%SureBootAsk1%"=="No" goto "Volume1"
 echo Invalid syntax!
 goto "SureBootAsk1"
 
@@ -322,32 +322,32 @@ echo.
 set BootloaderDriveLetter=
 set /p BootloaderDriveLetter="Enter an unused drive letter. (A:-Z:) "
 if exist "%BootloaderDriveLetter%" goto "DriveLetterBootloaderExist"
-if /i "%BootloaderDriveLetter%"=="A:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="B:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="C:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="D:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="E:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="F:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="G:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="H:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="I:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="J:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="K:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="L:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="M:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="N:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="O:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="P:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="Q:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="R:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="S:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="T:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="U:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="V:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="W:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="X:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="Y:" goto "AssignDriveLetterBootloader"
-if /i "%BootloaderDriveLetter%"=="Z:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderDriveLetter%"=="A:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="B:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="C:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="D:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="E:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="F:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="G:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="H:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="I:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="J:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="K:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="L:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="M:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="N:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="O:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="P:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="Q:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="R:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="S:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="T:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="U:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="V:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="W:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="X:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="Y:" goto "WindowsAsk1"
+if /i "%BootloaderDriveLetter%"=="Z:" goto "WindowsAsk1"
 echo Invalid syntax!
 goto "BootloaderDriveLetter"
 
@@ -399,42 +399,11 @@ goto "SureDriveLetterBootloader"
 
 :"CheckExistDriveLetterBootloader"
 if not exist "%DriveLetterBootloader%" goto "DriveLetterBootloaderNotExist"
-goto "AssignDriveLetterBootloader"
+goto "WindowsAsk1"
 
 :"DriveLetterBootloaderNotExist"
 echo "%DriveLetterBootloader%" does not exist! Please try again.
 goto "Volume1"
-
-:"AssignDriveLetterBootloader"
-if exist "diskpart.txt" goto "DiskPartExistAssignDriveLetterBootloader"
-echo.
-if /i "%BootAsk2%"=="No" echo Assigning drive letter "%BootloaderDriveLetter%" to boot partition and formating boot partition.
-if /i "%BootAsk2%"=="Yes" echo Formating boot partition "%DriveLetterBootloader%".
-(echo sel vol %BootVolume%) > "diskpart.txt"
-(echo format fs=fat32 label="System" quick) >> "diskpart.txt"
-if /i "%BootAsk2%"=="No" (echo assign letter=%BootloaderDriveLetter%) >> "diskpart.txt"
-if /i "%MBRGPT%"=="MBR" (echo active) >> "diskpart.txt"
-(echo exit) >> "diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
-if not "%errorlevel%"=="0" goto "AssignDriveLetterBootloaderError"
-if /i "%BootAsk2%"=="No" echo Drive letter "%BootloaderDriveLetter%" assigned to boot partition and boot partition "%BootloaderDriveLetter%" has been formated.
-if /i "%BootAsk2%"=="Yes" echo Boot partition "%DriveLetterBootloader%" has been formated.
-del "diskpart.txt" /f /q > nul 2>&1
-set DriveLetterBootloader=%BootloaderDriveLetter%
-goto "Volume2"
-
-:"DiskPartExistAssignDriveLetterBootloader"
-set DiskPart=True
-echo.
-echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. "diskpart.txt" is located in the folder you ran this batch file from. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
-pause > nul 2>&1
-goto "AssignDriveLetterBootloader"
-
-:"AssignDriveLetterBootloaderError"
-del diskpart.txt /f /q > nul 2>&1
-echo There has been an error! Press any key to try again.
-pause > nul 2>&1
-goto "AssignDriveLetterBootloader"
 
 :"Volume2"
 if exist "diskpart.txt" goto "DiskPartExistVolume2"
@@ -499,64 +468,37 @@ echo.
 set WindowsDriveLetter=
 set /p WindowsDriveLetter="Enter an unused drive letter. (A:-Z:) "
 if exist "%WindowsDriveLetter%" goto "WindowsDriveLetterExist"
-if /i "%WindowsDriveLetter%"=="A:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="B:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="C:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="D:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="E:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="F:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="G:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="H:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="I:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="J:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="K:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="L:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="M:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="N:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="O:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="P:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="Q:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="R:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="S:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="T:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="U:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="V:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="W:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="X:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="Y:" goto "AssignDriveLetterWindows"
-if /i "%WindowsDriveLetter%"=="Z:" goto "AssignDriveLetterWindows"
+if /i "%WindowsDriveLetter%"=="A:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="B:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="C:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="D:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="E:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="F:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="G:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="H:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="I:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="J:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="K:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="L:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="M:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="N:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="O:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="P:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="Q:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="R:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="S:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="T:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="U:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="V:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="W:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="X:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="Y:" goto "AssignDriveLetterBootloader"
+if /i "%WindowsDriveLetter%"=="Z:" goto "AssignDriveLetterBootloader"
 echo Invalid syntax!
 goto "WindowsDriveLetter"
 
 :"WindowsDriveLetterExist"
 echo "%WindowsDriveLetter%" exists! Please try again.
-goto "WindowsDriveLetter"
-
-:"AssignDriveLetterWindows"
-if exist "diskpart.txt" goto "DiskPartExistAssignDriveLetterWindows"
-echo.
-echo Assigning Windows volume %WindowsVolume% drive letter "%WindowsDriveLetter%".
-(echo sel vol %WindowsVolume%) > "diskpart.txt"
-(echo assign letter=%WindowsDriveLetter%) >> "diskpart.txt"
-(echo exit) >> "diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
-if not "%errorlevel%"=="0" goto "AssignDriveLetterWindowsError"
-del "diskpart.txt" /f /q > nul 2>&1
-echo Assigned Windows volume %WindowsVolume% drive letter "%WindowsDriveLetter%".
-set DriveLetterWindows=%WindowsDriveLetter%
-goto "Bootloader"
-
-:"DiskPartExistAssignDriveLetterWindows"
-set DiskPart=True
-echo.
-echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. "diskpart.txt" is located in the folder you ran this batch file from. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
-pause > nul 2>&1
-goto "AssignDriveLetterWindows"
-
-:"AssignDriveLetterWindowsError"
-del "diskpart.txt" /f /q > nul 2>&1
-echo There has been an error! Press any key to try again.
-pause > nul 2>&1
 goto "WindowsDriveLetter"
 
 :"DriveLetterWindows"
@@ -604,7 +546,7 @@ goto "SureDriveLetterWindows"
 :"CheckExistDriveLetterWindows"
 if not exist "%DriveLetterWindows%" goto "DriveLetterWindowsNotExist"
 if not exist "%DriveLetterWindows%"\Windows goto "NotWindows"
-goto "Bootloader"
+goto "AssignDriveLetterBootloader"
 
 :"DriveLetterWindowsNotExist"
 echo "%DriveLetterWindows%" does not exist! Please try again.
@@ -614,6 +556,65 @@ goto "DriveLetterWindows"
 echo Windows not installed on "%DriveLetterWindows%"!
 goto "DriveLetterWindows"
 goto "Volume2"
+
+:"AssignDriveLetterBootloader"
+if exist "diskpart.txt" goto "DiskPartExistAssignDriveLetterBootloader"
+echo.
+if /i "%BootAsk2%"=="No" echo Assigning drive letter "%BootloaderDriveLetter%" to boot partition and formating boot partition.
+if /i "%BootAsk2%"=="Yes" echo Formating boot partition "%DriveLetterBootloader%".
+(echo sel vol %BootVolume%) > "diskpart.txt"
+(echo format fs=fat32 label="System" quick) >> "diskpart.txt"
+if /i "%BootAsk2%"=="No" (echo assign letter=%BootloaderDriveLetter%) >> "diskpart.txt"
+if /i "%MBRGPT%"=="MBR" (echo active) >> "diskpart.txt"
+(echo exit) >> "diskpart.txt"
+"%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
+if not "%errorlevel%"=="0" goto "AssignDriveLetterBootloaderError"
+if /i "%BootAsk2%"=="No" echo Drive letter "%BootloaderDriveLetter%" assigned to boot partition and boot partition "%BootloaderDriveLetter%" has been formated.
+if /i "%BootAsk2%"=="Yes" echo Boot partition "%DriveLetterBootloader%" has been formated.
+del "diskpart.txt" /f /q > nul 2>&1
+if /i "%BootAsk2%"=="No" set DriveLetterBootloader=%BootloaderDriveLetter%
+if /i "%WindowsAsk%"=="No" goto "AssignDriveLetterWindows"
+if /i "%WindowsAsk%"=="Yes" goto "Bootloader"
+
+:"DiskPartExistAssignDriveLetterBootloader"
+set DiskPart=True
+echo.
+echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. "diskpart.txt" is located in the folder you ran this batch file from. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
+pause > nul 2>&1
+goto "AssignDriveLetterBootloader"
+
+:"AssignDriveLetterBootloaderError"
+del diskpart.txt /f /q > nul 2>&1
+echo There has been an error! Press any key to try again.
+pause > nul 2>&1
+goto "AssignDriveLetterBootloader"
+
+:"AssignDriveLetterWindows"
+if exist "diskpart.txt" goto "DiskPartExistAssignDriveLetterWindows"
+echo.
+echo Assigning Windows volume %WindowsVolume% drive letter "%WindowsDriveLetter%".
+(echo sel vol %WindowsVolume%) > "diskpart.txt"
+(echo assign letter=%WindowsDriveLetter%) >> "diskpart.txt"
+(echo exit) >> "diskpart.txt"
+"%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
+if not "%errorlevel%"=="0" goto "AssignDriveLetterWindowsError"
+del "diskpart.txt" /f /q > nul 2>&1
+echo Assigned Windows volume %WindowsVolume% drive letter "%WindowsDriveLetter%".
+set DriveLetterWindows=%WindowsDriveLetter%
+goto "Bootloader"
+
+:"DiskPartExistAssignDriveLetterWindows"
+set DiskPart=True
+echo.
+echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. "diskpart.txt" is located in the folder you ran this batch file from. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
+pause > nul 2>&1
+goto "AssignDriveLetterWindows"
+
+:"AssignDriveLetterWindowsError"
+del "diskpart.txt" /f /q > nul 2>&1
+echo There has been an error! Press any key to try again.
+pause > nul 2>&1
+goto "WindowsDriveLetter"
 
 :"Bootloader"
 echo.
