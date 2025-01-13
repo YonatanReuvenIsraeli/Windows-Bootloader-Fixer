@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.1.1
+echo Version: 4.1.2
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -638,9 +638,9 @@ if /i "%BIOSType%"=="3" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Wi
 if not "%errorlevel%"=="0" goto "ErrorBootloader"
 goto "Volume3"
 
-:"ErrorBIOS"
+:"ErrorBootloader"
 echo There was an error and no new bootloader was created. You can try again.
-goto "Start
+goto "Start"
 
 :"Volume3"
 if exist "diskpart.txt" goto "DiskPartExistVolume3"
