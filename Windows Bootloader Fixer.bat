@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.1.6
+echo Version: 4.1.7
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -160,17 +160,17 @@ if not "%errorlevel%"=="0" goto "ListPartitionError"
 del "diskpart.txt" /f /q > nul 2>&1
 echo Partition listed in disk %Disk%.
 echo.
-set RemovePartition=
-set /p RemovePartition="Enter partition number that needs to be deleted to make space for boot partition. Recomended space is 350 MB but you can try to go down to 100 MB if you do not have the space. Enter "Done" if you are done deleting partitions. (0-?/Done) "
-if /i "%RemovePartition%"=="Done" goto "NewPartition"
-goto "SureRemovePartition"
+set DeletePartition=
+set /p DeletePartition="Enter partition number that needs to be deleted to make space for boot partition. Recomended space is 350 MB but you can try to go down to 100 MB if you do not have the space. Enter "Done" if you are done deleting partitions. (0-?/Done) "
+if /i "%DeletePartition%"=="Done" goto "NewPartition"
+goto "SureDeletePartition"
 
-:"DiskPartExistRemovePartition"
+:"DiskPartExistDeletePartition"
 set DiskPart=True
 echo.
 echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. "diskpart.txt" is located in the folder you ran this batch file from. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
 pause > nul 2>&1
-goto "RemovePartition"
+goto "DeletePartition"
 
 :"ListPartitionError"
 del "diskpart.txt" /f /q > nul 2>&1
@@ -178,46 +178,46 @@ echo There has been an error! Press any key to try again.
 pause > nul 2>&1
 goto "ListPartition"
 
-:"SureRemovePartition"
+:"SureDeletePartition"
 echo.
-set SureRemovePartition=
-set /p SureRemovePartition="Are you sure you want to delete partition %RemovePartition%? (Yes/No) "
-if /i "%SureRemovePartition%"=="Yes" goto "RemovePartition"
-if /i "%SureRemovePartition%"=="No" goto "ListPartition"
+set SureDeletePartition=
+set /p SureDeletePartition="Are you sure you want to delete partition %DeletePartition%? (Yes/No) "
+if /i "%SureDeletePartition%"=="Yes" goto "DeletePartition"
+if /i "%SureDeletePartition%"=="No" goto "ListPartition"
 echo Invalid syntax!
-goto "SureRemovePartition"
+goto "SureDeletePartition"
 
-:"RemovePartition"
-if exist "diskpart.txt" goto "DiskPartExistRemovePartition"
+:"DeletePartition"
+if exist "diskpart.txt" goto "DiskPartExistDeletePartition"
 echo.
-echo Deleting partition %RemovePartition%.
+echo Deleting partition %DeletePartition%.
 (echo sel disk %Disk%) > "diskpart.txt"
-(echo sel part %RemovePartition%) >> "diskpart.txt"
+(echo sel part %DeletePartition%) >> "diskpart.txt"
 (echo del part override) >> "diskpart.txt"
 (echo exit) >> "diskpart.txt"
 "%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
-if not "%errorlevel%"=="0" goto "RemovePartitionError"
+if not "%errorlevel%"=="0" goto "DeletePartitionError"
 del "diskpart.txt" /f /q > nul 2>&1
-echo Partition %RemovePartition% deleted.
+echo Partition %DeletePartition% deleted.
 goto "ListPartition"
 
-:"DiskPartExistRemovePartition"
+:"DiskPartExistDeletePartition"
 set DiskPart=True
 echo.
 echo Please temporary rename to something else or temporary move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. "diskpart.txt" is located in the folder you ran this batch file from. Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
 pause > nul 2>&1
-goto "RemovePartition"
+goto "DeletePartition"
 
-:"RemovePartitionError"
+:"DeletePartitionError"
 del "diskpart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
-goto "RemovePartition"
+goto "DeletePartition"
 
 :"NewPartition"
 echo.
 set Size=
-set /p Size="Please enter boot partition size. Recomended is 350 MB but you can try to go down to 100 MB if you do not have the space. (100-350) "
+set /p Size="Please enter boot partition size to create. Recomended is 350 MB but you can try to go down to 100 MB if you do not have the space. (100-350) "
 if not "%Size%" GEQ "100" goto "NotInRange"
 if not "%Size%" LEQ "350" goto "NotInRange"
 if exist "diskpart.txt" goto "DiskPartExistNewPartition"
