@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.1.2
+echo Version: 4.1.3
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -12,7 +12,7 @@ if not "%errorlevel%"=="0" goto "NotAdministrator"
 "%windir%\System32\net.exe" user > nul 2>&1
 if "%errorlevel%"=="0" set PERE=False
 if not "%errorlevel%"=="0" set PERE=True
-goto "Start"
+goto "DiskPartSet"
 
 :"NotAdministrator"
 echo.
@@ -23,47 +23,6 @@ goto "Close"
 :"Close"
 endlocal
 exit
-
-:"Start"
-echo.
-echo [1] Legacy BIOS.
-echo [2] UEFI.
-echo [3] Both.
-echo.
-set BIOSType=
-set /p BIOSType="Are you trying to fix Legacy BIOS, UEFI or both? (1-3) "
-if /i "%BIOSType%"=="1" goto "SureBIOSTypeLegacyBIOS"
-if /i "%BIOSType%"=="2" goto "SureBIOSTypeUEFI"
-if /i "%BIOSType%"=="3" goto "SureBIOSTypeBoth"
-echo Invalid syntax!
-goto "Start"
-
-:"SureBIOSTypeLegacyBIOS"
-echo.
-set SureBIOSType=
-set /p SureBIOSType="Are you sure you are trying to fix legacy BIOS? (Yes/No) "
-if /i "%SureBIOSType%"=="Yes" goto "DiskPartSet"
-if /i "%SureBIOSType%"=="No" goto "Start"
-echo Invalid syntax!
-goto "SureBIOSTypeBIOS"
-
-:"SureBIOSTypeUEFI"
-echo.
-set SureBIOSType=
-set /p SureBIOSType="Are you sure you are trying to fix UEFI? (Yes/No) "
-if /i "%SureBIOSType%"=="Yes" goto "DiskPartSet"
-if /i "%SureBIOSType%"=="No" goto "Start"
-echo Invalid syntax!
-goto "SureBIOSTypeUEFI"
-
-:"SureBIOSTypeBoth"
-echo.
-set SureBIOSType=
-set /p SureBIOSType="Are you sure you are trying to fix both? (Yes/No) "
-if /i "%SureBIOSType%"=="Yes" goto "DiskPartSet"
-if /i "%SureBIOSType%"=="No" goto "Start"
-echo Invalid syntax!
-goto "SureBIOSTypeBoth"
 
 :"DiskPartSet"
 set DiskPart=
@@ -120,10 +79,35 @@ echo.
 set SureMBRGPT=
 if /i "%MBRGPT%"=="MBR" set /p SureMBRGPT="Are you sure disk %Disk% is MBR? (Yes/No) "
 if /i "%MBRGPT%"=="GPT" set /p SureMBRGPT="Are you sure disk %Disk% is GPT? (Yes/No) "
-if /i "%SureMBRGPT%"=="Yes" goto "Partition"
+if /i "%SureMBRGPT%"=="Yes" goto "BIOSType"
 if /i "%SureMBRGPT%"=="No" goto "MBRGPT"
 echo Invalid syntax!
 goto "SureMBRGPT"
+
+:"BIOSType"
+echo.
+echo [1] Legacy BIOS.
+echo [2] UEFI.
+echo [3] Both.
+echo.
+set BIOSType=
+set /p BIOSType="Are you trying to fix legacy BIOS, UEFI or both? (1-3) "
+if /i "%BIOSType%"=="1" goto "SureBIOSType"
+if /i "%BIOSType%"=="2" goto "SureBIOSType"
+if /i "%BIOSType%"=="3" goto "SureBIOSType"
+echo Invalid syntax!
+goto "BIOSType"
+
+:"SureBIOSType"
+echo.
+set SureBIOSType=
+if /i "%BIOSType%"=="1" set /p SureBIOSType="Are you sure you are trying to fix legacy BIOS? (Yes/No) "
+if /i "%BIOSType%"=="2" set /p SureBIOSType="Are you sure you are trying to fix UEFI? (Yes/No) "
+if /i "%BIOSType%"=="3" set /p SureBIOSType="Are you sure you are trying to fix both? (Yes/No) "
+if /i "%SureBIOSType%"=="Yes" goto "Partition"
+if /i "%SureBIOSType%"=="No" goto "BIOSType"
+echo Invalid syntax!
+goto "SureBIOSType"
 
 :"Partition"
 if exist "diskpart.txt" goto "DiskPartExistPartition"
@@ -640,7 +624,7 @@ goto "Volume3"
 
 :"ErrorBootloader"
 echo There was an error and no new bootloader was created. You can try again.
-goto "Start"
+goto "Disk"
 
 :"Volume3"
 if exist "diskpart.txt" goto "DiskPartExistVolume3"
