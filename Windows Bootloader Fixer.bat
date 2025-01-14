@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.2.0
+echo Version: 4.2.1
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -322,6 +322,31 @@ echo.
 set BootloaderDriveLetter=
 set /p BootloaderDriveLetter="Enter an unused drive letter. (A:-Z:) "
 if exist "%BootloaderDriveLetter%" goto "DriveLetterBootloaderExist"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="A:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="B:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="C:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="D:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="E:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="F:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="G:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="H:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="I:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="J:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="K:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="L:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="M:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="N:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="O:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="P:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="Q:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="R:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="S:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="U:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="V:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="W:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="X:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="Y:" goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" if /i "%BootloaderDriveLetter%"=="Z:" goto "AssignDriveLetterBootloader"
 if /i "%BootloaderDriveLetter%"=="A:" goto "WindowsAsk1"
 if /i "%BootloaderDriveLetter%"=="B:" goto "WindowsAsk1"
 if /i "%BootloaderDriveLetter%"=="C:" goto "WindowsAsk1"
@@ -399,6 +424,7 @@ goto "SureDriveLetterBootloader"
 
 :"CheckExistDriveLetterBootloader"
 if not exist "%DriveLetterBootloader%" goto "DriveLetterBootloaderNotExist"
+if /i "%BootloaderError%"=="True" goto "AssignDriveLetterBootloader"
 goto "WindowsAsk1"
 
 :"DriveLetterBootloaderNotExist"
@@ -468,6 +494,31 @@ echo.
 set WindowsDriveLetter=
 set /p WindowsDriveLetter="Enter an unused drive letter. (A:-Z:) "
 if exist "%WindowsDriveLetter%" goto "WindowsDriveLetterExist"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="A:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="B:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="C:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="D:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="E:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="F:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="G:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="H:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="I:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="J:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="K:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="L:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="M:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="N:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="O:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="P:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="Q:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="R:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="S:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="U:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="V:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="W:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="X:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="Y:" goto "AssignDriveLetterWindows"
+if /i "%WindowsError%"=="True" if /i "%WindowsDriveLetter%"=="Z:" goto "AssignDriveLetterWindows"
 if /i "%WindowsDriveLetter%"=="A:" goto "AssignDriveLetterBootloader"
 if /i "%WindowsDriveLetter%"=="B:" goto "AssignDriveLetterBootloader"
 if /i "%WindowsDriveLetter%"=="C:" goto "AssignDriveLetterBootloader"
@@ -487,7 +538,6 @@ if /i "%WindowsDriveLetter%"=="P:" goto "AssignDriveLetterBootloader"
 if /i "%WindowsDriveLetter%"=="Q:" goto "AssignDriveLetterBootloader"
 if /i "%WindowsDriveLetter%"=="R:" goto "AssignDriveLetterBootloader"
 if /i "%WindowsDriveLetter%"=="S:" goto "AssignDriveLetterBootloader"
-if /i "%WindowsDriveLetter%"=="T:" goto "AssignDriveLetterBootloader"
 if /i "%WindowsDriveLetter%"=="U:" goto "AssignDriveLetterBootloader"
 if /i "%WindowsDriveLetter%"=="V:" goto "AssignDriveLetterBootloader"
 if /i "%WindowsDriveLetter%"=="W:" goto "AssignDriveLetterBootloader"
@@ -546,6 +596,7 @@ goto "SureDriveLetterWindows"
 :"CheckExistDriveLetterWindows"
 if not exist "%DriveLetterWindows%" goto "DriveLetterWindowsNotExist"
 if not exist "%DriveLetterWindows%"\Windows goto "NotWindows"
+if /i "%WindowsError%"=="True" goto "AssignDriveLetterWindows"
 goto "AssignDriveLetterBootloader"
 
 :"DriveLetterWindowsNotExist"
@@ -569,9 +620,9 @@ if /i "%MBRGPT%"=="MBR" (echo active) >> "diskpart.txt"
 (echo exit) >> "diskpart.txt"
 "%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "AssignDriveLetterBootloaderError"
+del "diskpart.txt" /f /q > nul 2>&1
 if /i "%BootAsk2%"=="No" echo Drive letter "%BootloaderDriveLetter%" assigned to boot partition and boot partition "%BootloaderDriveLetter%" has been formated.
 if /i "%BootAsk2%"=="Yes" echo Boot partition "%DriveLetterBootloader%" has been formated.
-del "diskpart.txt" /f /q > nul 2>&1
 if /i "%BootAsk2%"=="No" set DriveLetterBootloader=%BootloaderDriveLetter%
 if /i "%WindowsAsk%"=="No" goto "AssignDriveLetterWindows"
 if /i "%WindowsAsk%"=="Yes" goto "Bootloader"
@@ -585,9 +636,9 @@ goto "AssignDriveLetterBootloader"
 
 :"AssignDriveLetterBootloaderError"
 del diskpart.txt /f /q > nul 2>&1
-echo There has been an error! Press any key to try again.
-pause > nul 2>&1
-goto "AssignDriveLetterBootloader"
+set BootloaderError=True
+echo There has been an error!
+goto "Volume1"
 
 :"AssignDriveLetterWindows"
 if exist "diskpart.txt" goto "DiskPartExistAssignDriveLetterWindows"
@@ -612,9 +663,9 @@ goto "AssignDriveLetterWindows"
 
 :"AssignDriveLetterWindowsError"
 del "diskpart.txt" /f /q > nul 2>&1
-echo There has been an error! Press any key to try again.
-pause > nul 2>&1
-goto "WindowsDriveLetter"
+set WindowsError=True
+echo There has been an error!
+goto "Volume2"
 
 :"Bootloader"
 echo.
