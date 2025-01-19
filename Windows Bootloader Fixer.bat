@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.2.2
+echo Version: 4.2.3
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -671,3 +671,4 @@ endlocal
 echo Your bootloader is fixed! Press any key to reboot.
 pause > nul 2>&1
 "%windir%\System32\wpeutil.exe" Reboot
+exit
