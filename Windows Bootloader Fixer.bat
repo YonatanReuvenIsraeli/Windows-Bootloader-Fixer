@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.2.4
+echo Version: 4.2.5
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -545,16 +545,15 @@ goto "SureDriveLetterWindows"
 
 :"CheckExistDriveLetterWindows"
 if not exist "%DriveLetterWindows%" goto "DriveLetterWindowsNotExist"
-if not exist "%DriveLetterWindows%"\Windows goto "NotWindows"
+if not exist "%DriveLetterWindows%\Windows" goto "NotWindows"
 goto "AssignDriveLetterBootloader"
 
 :"DriveLetterWindowsNotExist"
 echo "%DriveLetterWindows%" does not exist! Please try again.
-goto "DriveLetterWindows"
+goto "Volume2"
 
 :"NotWindows"
 echo Windows not installed on "%DriveLetterWindows%"!
-goto "DriveLetterWindows"
 goto "Volume2"
 
 :"AssignDriveLetterBootloader"
