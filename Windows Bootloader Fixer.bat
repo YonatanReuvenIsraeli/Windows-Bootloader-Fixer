@@ -2,7 +2,7 @@
 setlocal
 title Windows Bootloader Fixer
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.2.3
+echo Version: 4.2.4
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -431,7 +431,7 @@ pause > nul 2>&1
 goto "Volume2"
 
 :"WindowsAsk1"
-if /i "%BootloaderError%"=="True" if /i goto "AssignDriveLetterBootloader"
+if /i "%BootloaderError%"=="True" goto "AssignDriveLetterBootloader"
 echo.
 set WindowsVolume=
 set /p WindowsVolume="What volume is the Windows volume? (0-?) "
