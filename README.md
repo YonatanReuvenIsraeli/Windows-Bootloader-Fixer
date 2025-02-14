@@ -1,4 +1,4 @@
-# Windows Bootloader Fixer v4.2.10
+# Windows Bootloader Fixer v4.2.11
 Fixes the Windows bootloader.
 
 ## Notes:
