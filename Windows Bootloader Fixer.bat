@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.2.13
+echo Version: 4.2.14
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -495,8 +495,7 @@ goto "NewPartition"
 
 :"NewPartitionError"
 del "diskpart.txt" /f /q > nul 2>&1
-echo There has been an error! Press any key to try again.
-pause > nul 2>&1
+echo There has been an error! You can try again.
 goto "NewPartition"
 
 :"SureBootPartition"
