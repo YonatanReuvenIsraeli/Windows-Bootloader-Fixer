@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 4.2.10
+echo Version: 4.2.11
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -218,8 +218,8 @@ goto "DeletePartition"
 echo.
 set Size=
 set /p Size="Please enter boot partition size to create. Recommended size is 350 MB but you can try to go down to 100 MB if you do not have the space. (100-350) "
-if not "%Size%" GEQ "100" goto "NotInRange"
-if not "%Size%" LEQ "350" goto "NotInRange"
+if not %Size% GEQ 100 goto "NotInRange"
+if not %Size%" LEQ 350 goto "NotInRange"
 if exist "diskpart.txt" goto "DiskPartExistNewPartition"
 echo.
 echo Remaking boot partition.
