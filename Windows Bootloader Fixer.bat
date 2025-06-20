@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 5.0.1
+echo Version: 5.0.2
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -574,7 +574,7 @@ goto "BootloaderDriveLetter"
 
 :"BootloaderDriveLetter"
 echo.
-echo Finding an available drive letter for the bootloader.
+echo Finding an available drive letter for the boot volume.
 if not exist "A:" if /i not "%WindowsDriveLetter%"=="A:" set BootloaderDriveLetter=A:
 if not exist "A:" if /i not "%WindowsDriveLetter%"=="A:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "B:" if /i not "%WindowsDriveLetter%"=="B:" set BootloaderDriveLetter=B:
@@ -632,7 +632,7 @@ pause > nul 2>&1
 goto "BootloaderDriveLetter"
 
 :"AvailableDriveLetterFoundBootloader"
-echo Available drive letter found for the bootloader.
+echo Available drive letter found for the boot volume.
 goto "Volume2"
 
 :"DriveLetterBootloader"
@@ -746,7 +746,7 @@ goto "SureWindowsAsk2"
 
 :"WindowsDriveLetter"
 echo.
-echo Finding an available drive letter.
+echo Finding an available drive letter for the Windows volume.
 if not exist "A:" if /i not "%BootloaderDriveLetter%"=="A:" set WindowsDriveLetter=A:
 if not exist "A:" if /i not "%BootloaderDriveLetter%"=="A:" goto "AvailableDriveLetterFoundWindows"
 if not exist "B:" if /i not "%BootloaderDriveLetter%"=="B:" set WindowsDriveLetter=B:
@@ -804,7 +804,7 @@ pause > nul 2>&1
 goto "WindowsDriveLetter"
 
 :"AvailableDriveLetterFoundWindows"
-echo Available drive letter found for Windows.
+echo Available drive letter found for the Windows volume.
 goto "AssignDriveLetterBootloader"
 
 :"DriveLetterWindows"
