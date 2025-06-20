@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 5.0.0
+echo Version: 5.0.1
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -553,7 +553,7 @@ echo.
 set BootAsk2=
 set /p BootAsk2="Is the boot volume %BootVolume% already assigned a drive letter? (Yes/No) "
 if /i "%BootAsk2%"=="Yes" goto "SureBootAsk2"
-if /i "%BootAsk2%"=="No" goto "BootloaderDriveLetter"
+if /i "%BootAsk2%"=="No" goto "WindowsDriveLetterSet"
 echo Invalid syntax!
 goto "BootAsk2"
 
@@ -565,6 +565,12 @@ if /i "%SureBootAsk2%"=="Yes" goto "DriveLetterBootloader"
 if /i "%SureBootAsk2%"=="No" goto "BootAsk2"
 echo Invalid syntax!
 goto "SureBootAsk2"
+
+
+:"WindowsDriveLetterSet"
+if /i "%BootloaderError%"=="True" goto "BootloaderDriveLetter"
+set WindowsDriveLetter=
+goto "BootloaderDriveLetter"
 
 :"BootloaderDriveLetter"
 echo.
