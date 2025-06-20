@@ -570,57 +570,57 @@ goto "SureBootAsk2"
 echo.
 echo Finding an available drive letter for the bootloader.
 if not exist "A:" if /i not "%WindowsDriveLetter%"=="A:" set BootloaderDriveLetter=A:
-if not exist "A:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "A:" if /i not "%WindowsDriveLetter%"=="A:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "B:" if /i not "%WindowsDriveLetter%"=="B:" set BootloaderDriveLetter=B:
-if not exist "B:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "B:" if /i not "%WindowsDriveLetter%"=="B:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "C:" if /i not "%WindowsDriveLetter%"=="C:" set BootloaderDriveLetter=C:
-if not exist "C:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "C:" if /i not "%WindowsDriveLetter%"=="C:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "D:" if /i not "%WindowsDriveLetter%"=="D:" set BootloaderDriveLetter=D:
-if not exist "D:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "D:" if /i not "%WindowsDriveLetter%"=="D:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "E:" if /i not "%WindowsDriveLetter%"=="E:" set BootloaderDriveLetter=E:
-if not exist "E:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "E:" if /i not "%WindowsDriveLetter%"=="E:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "F:" if /i not "%WindowsDriveLetter%"=="F:" set BootloaderDriveLetter=F:
-if not exist "F:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "F:" if /i not "%WindowsDriveLetter%"=="F:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "G:" if /i not "%WindowsDriveLetter%"=="G:" set BootloaderDriveLetter=G:
-if not exist "G:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "G:" if /i not "%WindowsDriveLetter%"=="G:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "H:" if /i not "%WindowsDriveLetter%"=="H:" set BootloaderDriveLetter=H:
-if not exist "H:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "H:" if /i not "%WindowsDriveLetter%"=="H:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "I:" if /i not "%WindowsDriveLetter%"=="I:" set BootloaderDriveLetter=I:
-if not exist "I:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "I:" if /i not "%WindowsDriveLetter%"=="I:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "J:" if /i not "%WindowsDriveLetter%"=="J:" set BootloaderDriveLetter=J:
-if not exist "J:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "J:" if /i not "%WindowsDriveLetter%"=="J:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "K:" if /i not "%WindowsDriveLetter%"=="K:" set BootloaderDriveLetter=K:
-if not exist "K:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "K:" if /i not "%WindowsDriveLetter%"=="K:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "L:" if /i not "%WindowsDriveLetter%"=="L:" set BootloaderDriveLetter=L:
-if not exist "L:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "L:" if /i not "%WindowsDriveLetter%"=="L:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "M:" if /i not "%WindowsDriveLetter%"=="M:" set BootloaderDriveLetter=M:
-if not exist "M:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "M:" if /i not "%WindowsDriveLetter%"=="M:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "N:" if /i not "%WindowsDriveLetter%"=="N:" set BootloaderDriveLetter=N:
-if not exist "N:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "N:" if /i not "%WindowsDriveLetter%"=="N:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "O:" if /i not "%WindowsDriveLetter%"=="O:" set BootloaderDriveLetter=O:
-if not exist "O:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "O:" if /i not "%WindowsDriveLetter%"=="O:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "P:" if /i not "%WindowsDriveLetter%"=="P:" set BootloaderDriveLetter=P:
-if not exist "P:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "P:" if /i not "%WindowsDriveLetter%"=="P:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "Q:" if /i not "%WindowsDriveLetter%"=="Q:" set BootloaderDriveLetter=Q:
-if not exist "Q:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "Q:" if /i not "%WindowsDriveLetter%"=="Q:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "R:" if /i not "%WindowsDriveLetter%"=="R:" set BootloaderDriveLetter=R:
-if not exist "R:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "R:" if /i not "%WindowsDriveLetter%"=="R:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "S:" if /i not "%WindowsDriveLetter%"=="S:" set BootloaderDriveLetter=S:
-if not exist "S:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "S:" if /i not "%WindowsDriveLetter%"=="S:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "T:" if /i not "%WindowsDriveLetter%"=="T:" set BootloaderDriveLetter=T:
-if not exist "T:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "T:" if /i not "%WindowsDriveLetter%"=="T:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "U:" if /i not "%WindowsDriveLetter%"=="U:" set BootloaderDriveLetter=U:
-if not exist "U:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "U:" if /i not "%WindowsDriveLetter%"=="U:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "V:" if /i not "%WindowsDriveLetter%"=="V:" set BootloaderDriveLetter=V:
-if not exist "V:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "V:" if /i not "%WindowsDriveLetter%"=="V:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "W:" if /i not "%WindowsDriveLetter%"=="W:" set BootloaderDriveLetter=W:
-if not exist "W:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "W:" if /i not "%WindowsDriveLetter%"=="W:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "X:" if /i not "%WindowsDriveLetter%"=="X:" set BootloaderDriveLetter=X:
-if not exist "X:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "X:" if /i not "%WindowsDriveLetter%"=="X:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "Y:" if /i not "%WindowsDriveLetter%"=="Y:" set BootloaderDriveLetter=Y:
-if not exist "Y:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "Y:" if /i not "%WindowsDriveLetter%"=="Y:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "Z:" if /i not "%WindowsDriveLetter%"=="Z:" set BootloaderDriveLetter=Z:
-if not exist "Z:" goto "AvailableDriveLetterFoundBootloader"
+if not exist "Z:" if /i not "%WindowsDriveLetter%"=="Z:" goto "AvailableDriveLetterFoundBootloader"
 echo No drive letters available for the bootloader! Please unmount 1 drive and then press any key to try again.
 pause > nul 2>&1
 goto "BootloaderDriveLetter"
