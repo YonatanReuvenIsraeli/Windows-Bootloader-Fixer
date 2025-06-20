@@ -680,6 +680,7 @@ echo "%DriveLetterBootloader%" does not exist! Please try again.
 goto "Volume1"
 
 :"Volume2"
+if /i "%BootloaderError%"=="True" goto "AssignDriveLetterBootloader"
 if exist "diskpart.txt" goto "DiskPartExistVolume2"
 echo.
 echo Listing volumes in disk %Disk%.
@@ -705,7 +706,6 @@ pause > nul 2>&1
 goto "Volume2"
 
 :"WindowsAsk1"
-if /i "%BootloaderError%"=="True" goto "AssignDriveLetterBootloader"
 echo.
 set WindowsVolume=
 set /p WindowsVolume="What volume is the Windows volume? (0-?) "
