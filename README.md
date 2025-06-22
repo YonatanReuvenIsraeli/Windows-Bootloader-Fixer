@@ -1,4 +1,4 @@
-# Windows Bootloader Fixer v5.1.0
+# Windows Bootloader Fixer v5.1.1
 Fixes the Windows bootloader.
 
 ## Notes:
