@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 5.1.2
+echo Version: 5.1.3
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -810,7 +810,7 @@ goto "BootloaderDriveLetter"
 
 :"AvailableDriveLetterFoundBootloader"
 if /i "%BootloaderError%"=="True" echo Found an available drive letter for the boot volume.
-if /i "%WindowsAsk2%"=="Yes" echo Found an available drive letter for the boot volume.
+if /i not "%BootloaderError%"=="True" if /i "%WindowsAsk2%"=="Yes" echo Found an available drive letter for the boot volume.
 if /i "%BootloaderError%"=="True" goto "AssignDriveLetterBootloader"
 if /i "%WindowsAsk2%"=="Yes" goto "AssignDriveLetterBootloader"
 if /i "%WindowsAsk2%"=="No" goto "WindowsDriveLetter"
