@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 5.0.2
+echo Version: 5.0.3
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -627,7 +627,7 @@ if not exist "Y:" if /i not "%WindowsDriveLetter%"=="Y:" set BootloaderDriveLett
 if not exist "Y:" if /i not "%WindowsDriveLetter%"=="Y:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "Z:" if /i not "%WindowsDriveLetter%"=="Z:" set BootloaderDriveLetter=Z:
 if not exist "Z:" if /i not "%WindowsDriveLetter%"=="Z:" goto "AvailableDriveLetterFoundBootloader"
-echo No drive letters available for the bootloader! Please unmount 1 drive and then press any key to try again.
+echo No drive letters are available for the bootloader! Please unmount 1 drive and then press any key to try again.
 pause > nul 2>&1
 goto "BootloaderDriveLetter"
 
@@ -799,7 +799,7 @@ if not exist "Y:" if /i not "%BootloaderDriveLetter%"=="Y:" set WindowsDriveLett
 if not exist "Y:" if /i not "%BootloaderDriveLetter%"=="Y:" goto "AvailableDriveLetterFoundWindows"
 if not exist "Z:" if /i not "%BootloaderDriveLetter%"=="Z:" set WindowsDriveLetter=Z:
 if not exist "Z:" if /i not "%BootloaderDriveLetter%"=="Z:" goto "AvailableDriveLetterFoundWindows"
-echo No drive letters available for Windows! Please unmount 1 drive and then press any key to try again.
+echo No drive letters are available for Windows! Please unmount 1 drive and then press any key to try again.
 pause > nul 2>&1
 goto "WindowsDriveLetter"
 
