@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 5.1.1
+echo Version: 5.1.2
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -745,8 +745,12 @@ set WindowsDriveLetter=
 goto "BootloaderDriveLetter"
 
 :"BootloaderDriveLetter"
-echo.
-echo Finding an available drive letter for the boot volume.
+if /i "%BootloaderError%"=="True" echo.
+if /i "%BootloaderError%"=="True" echo Finding an available drive letter for the boot volume.
+if /i not "%BootloaderError%"=="True" if /i "%WindowsAsk2%"=="Yes" echo.
+if /i not "%BootloaderError%"=="True" if /i "%WindowsAsk2%"=="Yes" echo Finding an available drive letter for the boot volume.
+if /i not "%BootloaderError%"=="True" if /i "%WindowsAsk2%"=="No" echo.
+if /i not "%BootloaderError%"=="True" if /i "%WindowsAsk2%"=="No" echo Finding available drive letters for the boot and Windows volumes.
 if not exist "A:" if /i not "%WindowsDriveLetter%"=="A:" set BootloaderDriveLetter=A:
 if not exist "A:" if /i not "%WindowsDriveLetter%"=="A:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "B:" if /i not "%WindowsDriveLetter%"=="B:" set BootloaderDriveLetter=B:
@@ -799,19 +803,23 @@ if not exist "Y:" if /i not "%WindowsDriveLetter%"=="Y:" set BootloaderDriveLett
 if not exist "Y:" if /i not "%WindowsDriveLetter%"=="Y:" goto "AvailableDriveLetterFoundBootloader"
 if not exist "Z:" if /i not "%WindowsDriveLetter%"=="Z:" set BootloaderDriveLetter=Z:
 if not exist "Z:" if /i not "%WindowsDriveLetter%"=="Z:" goto "AvailableDriveLetterFoundBootloader"
-echo No drive letters are available for the bootloader! Please unmount 1 drive and then press any key to try again.
+echo No drive letters are available for the boot volume! Please unmount 1 drive and then press any key to try again.
+if /i "%WindowsAsk2%"=="No" echo No drive letters are available for the boot and Windows volumes! Please unmount 2 drives and then press any key to try again.
 pause > nul 2>&1
 goto "BootloaderDriveLetter"
 
 :"AvailableDriveLetterFoundBootloader"
-echo Available drive letter found for the boot volume.
+if /i "%BootloaderError%"=="True" echo Found an available drive letter for the boot volume.
+if /i "%WindowsAsk2%"=="Yes" echo Found an available drive letter for the boot volume.
 if /i "%BootloaderError%"=="True" goto "AssignDriveLetterBootloader"
 if /i "%WindowsAsk2%"=="Yes" goto "AssignDriveLetterBootloader"
 if /i "%WindowsAsk2%"=="No" goto "WindowsDriveLetter"
 
 :"WindowsDriveLetter"
-echo.
-echo Finding an available drive letter for the Windows volume.
+if /i "%WindowsError%"=="True" echo.
+if /i "%WindowsError%"=="True" echo Finding an available drive letter for the Windows volume.
+if /i not "%WindowsError%"=="True" if /i "%BootAsk2%"=="Yes" echo.
+if /i not "%WindowsError%"=="True" if /i "%BootAsk2%"=="Yes" echo Finding an available drive letter for the Windows volume.
 if not exist "A:" if /i not "%BootloaderDriveLetter%"=="A:" set WindowsDriveLetter=A:
 if not exist "A:" if /i not "%BootloaderDriveLetter%"=="A:" goto "AvailableDriveLetterFoundWindows"
 if not exist "B:" if /i not "%BootloaderDriveLetter%"=="B:" set WindowsDriveLetter=B:
@@ -864,12 +872,13 @@ if not exist "Y:" if /i not "%BootloaderDriveLetter%"=="Y:" set WindowsDriveLett
 if not exist "Y:" if /i not "%BootloaderDriveLetter%"=="Y:" goto "AvailableDriveLetterFoundWindows"
 if not exist "Z:" if /i not "%BootloaderDriveLetter%"=="Z:" set WindowsDriveLetter=Z:
 if not exist "Z:" if /i not "%BootloaderDriveLetter%"=="Z:" goto "AvailableDriveLetterFoundWindows"
-echo No drive letters are available for Windows! Please unmount 1 drive and then press any key to try again.
+echo No drive letters are available for the Windows volume! Please unmount 1 drive and then press any key to try again.
 pause > nul 2>&1
 goto "WindowsDriveLetter"
 
 :"AvailableDriveLetterFoundWindows"
-echo Available drive letter found for the Windows volume.
+if /i not "%WindowsError%"=="True" if /i "%BootAsk2%"=="No" echo Found available drive letters for the boot and Windows volumes.
+if /i not "%WindowsError%"=="True" if /i "%BootAsk2%"=="Yes" echo Found an available drive letter for the Windows volume.
 if /i "%WindowsError%"=="True" goto "AssignDriveLetterWindows"
 goto "AssignDriveLetterBootloader"
 
@@ -987,6 +996,7 @@ exit
 
 :"DoneReboot"
 endlocal
+echo.
 echo Your bootloader is fixed! Please save everything you want before restarting this PC! Press any key to restart this PC.
 pause > nul 2>&1
 "%windir%\System32\wpeutil.exe" Reboot
