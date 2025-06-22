@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 5.1.0
+echo Version: 5.1.1
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -948,12 +948,15 @@ goto "Disk"
 
 :"Volume3"
 if exist "diskpart.txt" goto "DiskPartExistVolume3"
+echo.
+echo Removing drive letter "%BootloaderDriveLetter%" from boot partition.
 (echo sel vol %BootVolume%) > "diskpart.txt"
 (echo remove letter=%DriveLetterBootloader%) >> "diskpart.txt"
 (echo exit) >> "diskpart.txt"
 "%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "Volume3Error"
 del "diskpart.txt" /f /q > nul 2>&1
+echo Removed drive letter "%BootloaderDriveLetter%" from boot partition.
 if /i "%DiskPart%"=="True" goto "DiskPartDone"
 if /i "%PERE%"=="False" goto "DoneExit"
 if /i "%PERE%"=="True" goto "DoneReboot"
