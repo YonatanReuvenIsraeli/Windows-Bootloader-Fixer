@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 5.1.3
+echo Version: 5.1.4
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -877,8 +877,8 @@ pause > nul 2>&1
 goto "WindowsDriveLetter"
 
 :"AvailableDriveLetterFoundWindows"
-if /i not "%WindowsError%"=="True" if /i "%BootAsk2%"=="No" echo Found available drive letters for the boot and Windows volumes.
 if /i not "%WindowsError%"=="True" if /i "%BootAsk2%"=="Yes" echo Found an available drive letter for the Windows volume.
+if /i not "%WindowsError%"=="True" if /i "%BootAsk2%"=="No" echo Found available drive letters for the boot and Windows volumes.
 if /i "%WindowsError%"=="True" goto "AssignDriveLetterWindows"
 goto "AssignDriveLetterBootloader"
 
@@ -886,8 +886,8 @@ goto "AssignDriveLetterBootloader"
 if /i "%WindowsError%"=="True" goto "AssignDriveLetterWindows"
 if exist "diskpart.txt" goto "DiskPartExistAssignDriveLetterBootloader"
 echo.
-if /i "%BootAsk2%"=="No" echo Assigning drive letter "%BootloaderDriveLetter%" to boot partition and formatting boot partition.
 if /i "%BootAsk2%"=="Yes" echo Formatting boot partition "%DriveLetterBootloader%".
+if /i "%BootAsk2%"=="No" echo Assigning drive letter "%BootloaderDriveLetter%" to boot partition and formatting boot partition "%BootloaderDriveLetter%".
 (echo sel vol %BootVolume%) > "diskpart.txt"
 (echo format fs=fat32 label="System" quick) >> "diskpart.txt"
 if /i "%BootAsk2%"=="No" (echo assign letter=%BootloaderDriveLetter%) >> "diskpart.txt"
@@ -896,11 +896,11 @@ if /i "%MBRGPT%"=="MBR" (echo active) >> "diskpart.txt"
 "%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "AssignDriveLetterBootloaderError"
 del "diskpart.txt" /f /q > nul 2>&1
-if /i "%BootAsk2%"=="No" echo Drive letter "%BootloaderDriveLetter%" assigned to boot partition and boot partition "%BootloaderDriveLetter%" has been formatted.
 if /i "%BootAsk2%"=="Yes" echo Boot partition "%DriveLetterBootloader%" has been formatted.
+if /i "%BootAsk2%"=="No" echo Drive letter "%BootloaderDriveLetter%" assigned to boot partition and boot partition "%BootloaderDriveLetter%" has been formatted.
 if /i "%BootAsk2%"=="No" set DriveLetterBootloader=%BootloaderDriveLetter%
-if /i "%WindowsAsk2%"=="No" goto "AssignDriveLetterWindows"
 if /i "%WindowsAsk2%"=="Yes" goto "Bootloader"
+if /i "%WindowsAsk2%"=="No" goto "AssignDriveLetterWindows"
 
 :"DiskPartExistAssignDriveLetterBootloader"
 set DiskPart=True
