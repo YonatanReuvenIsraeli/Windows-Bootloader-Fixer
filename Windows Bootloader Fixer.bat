@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.0.3
+echo Version: 8.0.4
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -86,13 +86,13 @@ goto "SureMBRGPT"
 
 :"BIOSType"
 echo.
-echo [1] Automatically detect the BIOS type.
+echo [1] Automatically detect and use the current BIOS type.
 echo [2] Legacy BIOS.
 echo [3] UEFI.
 echo [4] Both.
 echo.
 set BIOSType=
-set /p BIOSType="Do you want to automatically detect the BIOS type, or do you want to fix legacy BIOS, UEFI or both? (1-4) "
+set /p BIOSType="Do you want to automatically detect and use the current BIOS type, or do you want to fix legacy BIOS, UEFI or both? (1-4) "
 if /i "%BIOSType%"=="1" goto "SureBIOSType"
 if /i "%BIOSType%"=="2" goto "SureBIOSType"
 if /i "%BIOSType%"=="3" goto "SureBIOSType"
@@ -103,7 +103,7 @@ goto "BIOSType"
 :"SureBIOSType"
 echo.
 set SureBIOSType=
-if /i "%BIOSType%"=="1" set /p SureBIOSType="Are you sure you want to automatically detect the BIOS type? (Yes/No) "
+if /i "%BIOSType%"=="1" set /p SureBIOSType="Are you sure you want to automatically detect and use the current BIOS type? (Yes/No) "
 if /i "%BIOSType%"=="2" set /p SureBIOSType="Are you sure you are trying to fix legacy BIOS? (Yes/No) "
 if /i "%BIOSType%"=="3" set /p SureBIOSType="Are you sure you are trying to fix UEFI? (Yes/No) "
 if /i "%BIOSType%"=="4" set /p SureBIOSType="Are you sure you are trying to fix both? (Yes/No) "
