@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 7.0.2
+echo Version: 7.0.3
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -115,8 +115,8 @@ goto "SureBIOSType"
 
 :"BootDetect"
 echo.
-echo [1] Automatically detect the boot volume.
-echo [2] Manually detect the boot volume.
+echo [1] Automatically detect and not format the boot volume.
+echo [2] Manually detect and format the boot volume.
 echo.
 set BootDetect=
 set /p BootDetect="What do you want to do? (1-2) "
@@ -128,8 +128,8 @@ goto "BootDetect"
 :"SureBootDetect"
 echo.
 set SureBootDetect=
-if /i "%BootDetect%"=="1" set /p SureBootDetect="Are you sure you want to automatically detect the boot volume? (Yes/No) "
-if /i "%BootDetect%"=="2" set /p SureBootDetect="Are you sure you want to manually detect the boot volume? (Yes/No) "
+if /i "%BootDetect%"=="1" set /p SureBootDetect="Are you sure you want to automatically detect and not format the boot volume? (Yes/No) "
+if /i "%BootDetect%"=="2" set /p SureBootDetect="Are you sure you want to manually detect and format the boot volume? (Yes/No) "
 if /i "%BootDetect%"=="1" if /i "%SureBootDetect%"=="Yes" goto "BootloaderErrorWindowsErrorSet"
 if /i "%BootDetect%"=="2" if /i "%SureBootDetect%"=="Yes" goto "Partition"
 if /i "SureBootDetect"=="No" goto "BootDetect"
