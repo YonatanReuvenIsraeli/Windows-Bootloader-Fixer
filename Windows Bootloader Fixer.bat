@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.0.0
+echo Version: 8.0.1
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -108,7 +108,7 @@ if /i "%BIOSType%"=="2" set /p SureBIOSType="Are you sure you are trying to fix 
 if /i "%BIOSType%"=="3" set /p SureBIOSType="Are you sure you are trying to fix UEFI? (Yes/No) "
 if /i "%BIOSType%"=="4" set /p SureBIOSType="Are you sure you are trying to fix both? (Yes/No) "
 if /i "%BIOSType%"=="1" if /i "%SureBIOSType%"=="Yes" goto "BootDetect"
-if /i not "%BIOSType%"=="1" if /i "%SureBIOSType%"=="Yes" goto "Partition"
+if /i not "%BIOSType%"=="1" if /i "%SureBIOSType%"=="Yes" goto "Format"
 if /i "%SureBIOSType%"=="No" goto "BIOSType"
 echo Invalid syntax!
 goto "SureBIOSType"
@@ -598,7 +598,8 @@ goto "SureBootAsk1"
 :"SureBootAsk1"
 echo.
 set SureBootAsk1=
-set /p SureBootAsk1="All/some data on volume %BootVolume% will be deleted! Are you sure volume %BootVolume% is the boot volume? (Yes/No) "
+if /i "%Format%"=="1" set /p SureBootAsk1="All data on volume %BootVolume% will be deleted! Are you sure volume %BootVolume% is the boot volume? (Yes/No) "
+if /i "%Format%"=="2" set /p SureBootAsk1="Some data on volume %BootVolume% will be deleted! Are you sure volume %BootVolume% is the boot volume? (Yes/No) "
 if /i "%SureBootAsk1%"=="Yes" goto "BootAsk2"
 if /i "%SureBootAsk1%"=="No" goto "Volume1"
 echo Invalid syntax!
