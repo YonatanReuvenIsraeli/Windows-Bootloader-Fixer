@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 7.0.3
+echo Version: 8.0.0
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -116,7 +116,7 @@ goto "SureBIOSType"
 :"BootDetect"
 echo.
 echo [1] Automatically detect and not format the boot volume.
-echo [2] Manually detect and format the boot volume.
+echo [2] Manually detect the boot volume.
 echo.
 set BootDetect=
 set /p BootDetect="What do you want to do? (1-2) "
@@ -129,12 +129,35 @@ goto "BootDetect"
 echo.
 set SureBootDetect=
 if /i "%BootDetect%"=="1" set /p SureBootDetect="Are you sure you want to automatically detect and not format the boot volume? (Yes/No) "
-if /i "%BootDetect%"=="2" set /p SureBootDetect="Are you sure you want to manually detect and format the boot volume? (Yes/No) "
+if /i "%BootDetect%"=="2" set /p SureBootDetect="Are you sure you want to manually detect the boot volume? (Yes/No) "
 if /i "%BootDetect%"=="1" if /i "%SureBootDetect%"=="Yes" goto "BootloaderErrorWindowsErrorSet"
-if /i "%BootDetect%"=="2" if /i "%SureBootDetect%"=="Yes" goto "Partition"
-if /i "SureBootDetect"=="No" goto "BootDetect"
+if /i "%BootDetect%"=="2" if /i "%SureBootDetect%"=="Yes" goto "Format"
+if /i "%SureBootDetect%"=="No" goto "BootDetect"
 echo Invalid syntax!
 goto "SureBootDetect"
+
+:"Format"
+echo.
+echo [1] Format the boot volume.
+echo [2] Don't format the boot volume.
+echo.
+set Format=
+set /p Format="What do you want to do? (1-2) "
+if /i "%Format%"=="1" goto "SureFormat"
+if /i "%Format%"=="2" goto "SureFormat"
+echo Invalid syntax!
+goto "Format"
+
+:"SureFormat"
+echo.
+set SureFormat=
+if /i "%Format%"=="1" set /p SureFormat="Are you sure you want to format the boot volume? (Yes/No) "
+if /i "%Format%"=="2" set /p SureFormat="Are you sure you don't want to format the boot volume? (Yes/No) "
+if /i "%Format%"=="1" if /i "%SureFormat%"=="Yes" goto "Partition"
+if /i "%Format%"=="2" if /i "%SureFormat%"=="Yes" goto "Partition"
+if /i "%SureFormat%"=="No" goto "Format"
+echo Invalid syntax!
+goto "Format"
 
 :"Partition"
 if exist "diskpart.txt" goto "DiskPartExistPartition"
@@ -575,7 +598,7 @@ goto "SureBootAsk1"
 :"SureBootAsk1"
 echo.
 set SureBootAsk1=
-set /p SureBootAsk1="All data on volume %BootVolume% will be deleted! Are you sure volume %BootVolume% is the boot volume? (Yes/No) "
+set /p SureBootAsk1="All/some data on volume %BootVolume% will be deleted! Are you sure volume %BootVolume% is the boot volume? (Yes/No) "
 if /i "%SureBootAsk1%"=="Yes" goto "BootAsk2"
 if /i "%SureBootAsk1%"=="No" goto "Volume1"
 echo Invalid syntax!
@@ -759,6 +782,7 @@ if not exist "%DriveLetterWindows%" goto "DriveLetterWindowsNotExist"
 if not exist "%DriveLetterWindows%\Windows" goto "NotWindows"
 if /i "%WindowsError%"=="True" goto "Bootloader"
 if /i "%BootDetect%"=="1" goto "Bootloader"
+if /i "%Format%"=="2" if /i "%BootAsk2%"=="Yes" goto "Bootloader"
 if /i "%BootAsk2%"=="No" goto "WindowsDriveLetterSet"
 goto "AssignDriveLetterBootloader"
 
@@ -843,7 +867,7 @@ if /i "%BootloaderError%"=="True" echo Found an available drive letter for the b
 if /i not "%BootloaderError%"=="True" if /i "%WindowsAsk2%"=="Yes" echo Found an available drive letter for the boot volume.
 if /i "%BootloaderError%"=="True" goto "AssignDriveLetterBootloader"
 if /i "%WindowsAsk2%"=="Yes" goto "AssignDriveLetterBootloader"
-if /i "%WindowsAsk2%"=="No" goto "WindowsDriveLetter"
+goto "WindowsDriveLetter"
 
 :"BootloaderDriveLetterSet"
 set BootloaderDriveLetter=
@@ -917,25 +941,27 @@ if /i not "%WindowsError%"=="True" if /i "%BootAsk2%"=="Yes" echo Found an avail
 if /i not "%WindowsError%"=="True" if /i "%BootAsk2%"=="No" echo Found available drive letters for the boot and Windows volumes.
 if /i "%BootDetect%"=="1" echo Found an available drive letter for the Windows volume.
 if /i "%WindowsError%"=="True" goto "AssignDriveLetterWindows"
+if /i "%Format%"=="2" if /i "%BootAsk2%"=="Yes" goto "AssignDriveLetterWindows"
 if /i "%BootDetect%"=="1" goto "AssignDriveLetterWindows"
 goto "AssignDriveLetterBootloader"
 
 :"AssignDriveLetterBootloader"
-if /i "%WindowsError%"=="True" goto "AssignDriveLetterWindows"
 if exist "diskpart.txt" goto "DiskPartExistAssignDriveLetterBootloader"
 echo.
-if /i "%BootAsk2%"=="Yes" echo Formatting boot partition "%DriveLetterBootloader%".
-if /i "%BootAsk2%"=="No" echo Assigning drive letter "%BootloaderDriveLetter%" to boot partition and formatting boot partition "%BootloaderDriveLetter%".
+if /i "%Format%"=="1" if /i "%BootAsk2%"=="Yes" echo Formatting boot partition "%DriveLetterBootloader%".
+if /i "%Format%"=="1" if /i "%BootAsk2%"=="No" echo Assigning drive letter "%BootloaderDriveLetter%" to boot partition and formatting boot partition "%BootloaderDriveLetter%".
+if /i "%Format%"=="2" echo Assigning drive letter "%BootloaderDriveLetter%" to boot partition.
 (echo sel vol %BootVolume%) > "diskpart.txt"
-(echo format fs=fat32 label="System" quick override) >> "diskpart.txt"
+if /i "%Format%"=="1" (echo format fs=fat32 label="System" quick override) >> "diskpart.txt"
 if /i "%BootAsk2%"=="No" (echo assign letter=%BootloaderDriveLetter%) >> "diskpart.txt"
 if /i "%MBRGPT%"=="MBR" (echo active) >> "diskpart.txt"
 (echo exit) >> "diskpart.txt"
 "%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "AssignDriveLetterBootloaderError"
 del "diskpart.txt" /f /q > nul 2>&1
-if /i "%BootAsk2%"=="Yes" echo Boot partition "%DriveLetterBootloader%" has been formatted.
-if /i "%BootAsk2%"=="No" echo Drive letter "%BootloaderDriveLetter%" assigned to boot partition and boot partition "%BootloaderDriveLetter%" has been formatted.
+if /i "%Format%"=="1" if /i "%BootAsk2%"=="Yes" echo Boot partition "%DriveLetterBootloader%" has been formatted.
+if /i "%Format%"=="1" if /i "%BootAsk2%"=="No" echo Drive letter "%BootloaderDriveLetter%" assigned to boot partition and boot partition "%BootloaderDriveLetter%" has been formatted.
+if /i "%Format%"=="2" echo Assigned drive letter "%BootloaderDriveLetter%" to boot partition.
 if /i "%BootAsk2%"=="No" set DriveLetterBootloader=%BootloaderDriveLetter%
 if /i "%WindowsAsk2%"=="Yes" goto "Bootloader"
 if /i "%WindowsAsk2%"=="No" goto "AssignDriveLetterWindows"
@@ -1001,14 +1027,14 @@ goto "Disk"
 :"Volume3"
 if exist "diskpart.txt" goto "DiskPartExistVolume3"
 echo.
-echo Removing drive letter "%BootloaderDriveLetter%" from boot partition.
+echo Removing drive letter "%DriveLetterBootloader%" from boot partition.
 (echo sel vol %BootVolume%) > "diskpart.txt"
 (echo remove letter=%DriveLetterBootloader%) >> "diskpart.txt"
 (echo exit) >> "diskpart.txt"
 "%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "Volume3Error"
 del "diskpart.txt" /f /q > nul 2>&1
-echo Removed drive letter "%BootloaderDriveLetter%" from boot partition.
+echo Removed drive letter "%DriveLetterBootloader%" from boot partition.
 if /i "%DiskPart%"=="True" goto "DiskPartDone"
 if /i "%PERE%"=="False" goto "DoneExit"
 if /i "%PERE%"=="True" goto "DoneReboot"
