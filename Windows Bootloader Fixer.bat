@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 6.0.0
+echo Version: 7.0.0
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -107,10 +107,34 @@ if /i "%BIOSType%"=="1" set /p SureBIOSType="Are you sure you want to automatica
 if /i "%BIOSType%"=="2" set /p SureBIOSType="Are you sure you are trying to fix legacy BIOS? (Yes/No) "
 if /i "%BIOSType%"=="3" set /p SureBIOSType="Are you sure you are trying to fix UEFI? (Yes/No) "
 if /i "%BIOSType%"=="4" set /p SureBIOSType="Are you sure you are trying to fix both? (Yes/No) "
-if /i "%SureBIOSType%"=="Yes" goto "Partition"
+if /i "%BIOSType%"=="1" if /i "%SureBIOSType%"=="Yes" goto "BootDetect"
+if /i not "%BIOSType%"=="1" if /i "%SureBIOSType%"=="Yes" goto "Partition"
 if /i "%SureBIOSType%"=="No" goto "BIOSType"
 echo Invalid syntax!
 goto "SureBIOSType"
+
+:"BootDetect"
+echo.
+echo [1] Automatically detect the boot volume.
+echo [2] Manually detect the boot volume.
+echo.
+set BootDetect=
+set /p BootDetect="What do you want to do? (1-2) "
+if /i "%BootDetect%"=="1" goto "SureBootDetect"
+if /i "%BootDetect%"=="2" goto "SureBootDetect"
+echo Invalid syntax!
+goto "BootDetect"
+
+:"SureBootDetect"
+echo.
+set SureBootDetect=
+if /i "%BootDetect%"=="1" set /p SureBootDetect="Are you sure you want to automatically detect the boot volume? (Yes/No) "
+if /i "%BootDetect%"=="2" set /p SureBootDetect="Are you sure you want to manually detect the boot volume? (Yes/No) "
+if /i "%BootDetect%"=="1" if /i "%SureBootDetect%"=="Yes" goto "BootloaderErrorWindowsErrorSet"
+if /i "%BootDetect%"=="2" if /i "%SureBootDetect%"=="Yes" goto "Partition"
+if /i "SureBootDetect"=="No" goto "BootDetect"
+echo Invalid syntax!
+goto "SureBootDetect"
 
 :"Partition"
 if exist "diskpart.txt" goto "DiskPartExistPartition"
@@ -514,6 +538,7 @@ goto "SureBootPartition"
 :"BootloaderErrorWindowsErrorSet"
 set BootloaderError=
 set WindowsError=
+if /i "%BootDetect%"=="1" goto "Volume2"
 goto "Volume1"
 
 :"Volume1"
@@ -670,10 +695,11 @@ goto "SureWindowsAsk1"
 echo.
 set WindowsAsk2=
 set /p WindowsAsk2="Is the Windows volume %WindowsVolume% already assigned a drive letter? (Yes/No) "
+if /i "%WindowsError%"=="True" if /i "%WindowsAsk2%"=="No" goto "WindowsDriveLetter"
 if /i "%WindowsAsk2%"=="Yes" goto "SureWindowsAsk2"
-if /i "%WindowsError%"=="True" if /i "%WindowsAsk2%"=="No" goto "WindowsDriveLetter" 
+if /i "%BootDetect%"=="1" if /i "%WindowsAsk2%"=="No" goto "BootloaderDriveLetterSet"
 if /i "%BootAsk2%"=="Yes" if /i "%WindowsAsk2%"=="No" goto "WindowsDriveLetter"
-if /i "%BootAsk2%"=="No" if /i "%WindowsAsk2%"=="No" goto "BootloaderDriveLetter"
+if /i "%BootAsk2%"=="No" if /i "%WindowsAsk2%"=="No" goto "WindowsDriveLetterSet"
 echo Invalid syntax!
 goto "WindowsAsk2"
 
@@ -731,8 +757,9 @@ goto "SureDriveLetterWindows"
 :"CheckExistDriveLetterWindows"
 if not exist "%DriveLetterWindows%" goto "DriveLetterWindowsNotExist"
 if not exist "%DriveLetterWindows%\Windows" goto "NotWindows"
-if /i "%WindowsError%"=="True" goto "AssignDriveLetterWindows" 
-if /i "%BootAsk2%"=="No" goto "BootloaderDriveLetter"
+if /i "%WindowsError%"=="True" goto "Bootloader"
+if /i "%BootDetect%"=="1" goto "Bootloader"
+if /i "%BootAsk2%"=="No" goto "WindowsDriveLetterSet"
 goto "AssignDriveLetterBootloader"
 
 :"DriveLetterWindowsNotExist"
@@ -818,6 +845,10 @@ if /i "%BootloaderError%"=="True" goto "AssignDriveLetterBootloader"
 if /i "%WindowsAsk2%"=="Yes" goto "AssignDriveLetterBootloader"
 if /i "%WindowsAsk2%"=="No" goto "WindowsDriveLetter"
 
+:"BootloaderDriveLetterSet"
+set BootloaderDriveLetter=
+goto "WindowsDriveLetter"
+
 :"WindowsDriveLetter"
 if /i "%WindowsError%"=="True" echo.
 if /i "%WindowsError%"=="True" echo Finding an available drive letter for the Windows volume.
@@ -883,6 +914,7 @@ goto "WindowsDriveLetter"
 if /i not "%WindowsError%"=="True" if /i "%BootAsk2%"=="Yes" echo Found an available drive letter for the Windows volume.
 if /i not "%WindowsError%"=="True" if /i "%BootAsk2%"=="No" echo Found available drive letters for the boot and Windows volumes.
 if /i "%WindowsError%"=="True" goto "AssignDriveLetterWindows"
+if /i "%BootDetect%"=="1" goto "Bootloader"
 goto "AssignDriveLetterBootloader"
 
 :"AssignDriveLetterBootloader"
@@ -892,7 +924,7 @@ echo.
 if /i "%BootAsk2%"=="Yes" echo Formatting boot partition "%DriveLetterBootloader%".
 if /i "%BootAsk2%"=="No" echo Assigning drive letter "%BootloaderDriveLetter%" to boot partition and formatting boot partition "%BootloaderDriveLetter%".
 (echo sel vol %BootVolume%) > "diskpart.txt"
-(echo format fs=fat32 label="System" quick) >> "diskpart.txt"
+(echo format fs=fat32 label="System" quick override) >> "diskpart.txt"
 if /i "%BootAsk2%"=="No" (echo assign letter=%BootloaderDriveLetter%) >> "diskpart.txt"
 if /i "%MBRGPT%"=="MBR" (echo active) >> "diskpart.txt"
 (echo exit) >> "diskpart.txt"
@@ -948,11 +980,15 @@ goto "Volume2"
 :"Bootloader"
 echo.
 echo Fixing the Windows bootloader.
-if /i "%BIOSType%"=="1" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" > nul 2>&1
+if /i "%BIOSType%"=="1" if /i "%BootDetect%"=="1" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" > nul 2>&1
+if /i "%BIOSType%"=="1" if /i "%BootDetect%"=="2" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" > nul 2>&1
 if /i "%BIOSType%"=="2" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f BIOS > nul 2>&1
 if /i "%BIOSType%"=="3" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f UEFI > nul 2>&1
 if /i "%BIOSType%"=="4" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f ALL > nul 2>&1
 if not "%errorlevel%"=="0" goto "ErrorBootloader"
+if /i "%BootDetect%"=="1" if /i "%DiskPart%"=="True" goto "DiskPartDone"
+if /i "%BootDetect%"=="1" if /i "%PERE%"=="False" goto "DoneExit"
+if /i "%BootDetect%"=="1" if /i "%PERE%"=="True" goto "DoneReboot"
 goto "Volume3"
 
 :"ErrorBootloader"
@@ -994,13 +1030,16 @@ if /i "%PERE%"=="True" goto "DoneReboot"
 
 :"DoneExit"
 endlocal
+if /i not "%BootDetect%"=="1" if /i not "%DiskPart%"=="True" echo.
+if /i "%DiskPart%"=="True" echo.
 echo Your bootloader is fixed! Press any key to exit.
 pause > nul 2>&1
 exit
 
 :"DoneReboot"
 endlocal
-echo.
+if /i not "%BootDetect%"=="1" if /i not "%DiskPart%"=="True" echo.
+if /i "%DiskPart%"=="True" echo.
 echo Your bootloader is fixed! Please save everything you want before restarting this PC! Press any key to restart this PC.
 pause > nul 2>&1
 "%windir%\System32\wpeutil.exe" Reboot
