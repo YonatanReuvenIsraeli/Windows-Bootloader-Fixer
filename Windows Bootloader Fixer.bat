@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 7.0.1
+echo Version: 7.0.2
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -1032,17 +1032,17 @@ if /i "%PERE%"=="False" goto "DoneExit"
 if /i "%PERE%"=="True" goto "DoneReboot"
 
 :"DoneExit"
-endlocal
 if /i not "%BootDetect%"=="1" if /i not "%DiskPart%"=="True" echo.
 if /i "%DiskPart%"=="True" echo.
+endlocal
 echo Your bootloader is fixed! Press any key to exit.
 pause > nul 2>&1
 exit
 
 :"DoneReboot"
-endlocal
 if /i not "%BootDetect%"=="1" if /i not "%DiskPart%"=="True" echo.
 if /i "%DiskPart%"=="True" echo.
+endlocal
 echo Your bootloader is fixed! Please save everything you want before restarting this PC! Press any key to restart this PC.
 pause > nul 2>&1
 "%windir%\System32\wpeutil.exe" Reboot
