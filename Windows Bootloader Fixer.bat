@@ -852,6 +852,8 @@ goto "WindowsDriveLetter"
 :"WindowsDriveLetter"
 if /i "%WindowsError%"=="True" echo.
 if /i "%WindowsError%"=="True" echo Finding an available drive letter for the Windows volume.
+if /i "%BootDetect%"=="1" echo.
+if /i "%BootDetect%"=="1" echo Finding an available drive letter for the Windows volume.
 if /i not "%WindowsError%"=="True" if /i "%BootAsk2%"=="Yes" echo.
 if /i not "%WindowsError%"=="True" if /i "%BootAsk2%"=="Yes" echo Finding an available drive letter for the Windows volume.
 if not exist "A:" if /i not "%BootloaderDriveLetter%"=="A:" set WindowsDriveLetter=A:
@@ -913,6 +915,7 @@ goto "WindowsDriveLetter"
 :"AvailableDriveLetterFoundWindows"
 if /i not "%WindowsError%"=="True" if /i "%BootAsk2%"=="Yes" echo Found an available drive letter for the Windows volume.
 if /i not "%WindowsError%"=="True" if /i "%BootAsk2%"=="No" echo Found available drive letters for the boot and Windows volumes.
+if /i "%BootDetect%"=="1" echo Found an available drive letter for the Windows volume.
 if /i "%WindowsError%"=="True" goto "AssignDriveLetterWindows"
 if /i "%BootDetect%"=="1" goto "Bootloader"
 goto "AssignDriveLetterBootloader"
@@ -980,8 +983,8 @@ goto "Volume2"
 :"Bootloader"
 echo.
 echo Fixing the Windows bootloader.
-if /i "%BIOSType%"=="1" if /i "%BootDetect%"=="1" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" > nul 2>&1
-if /i "%BIOSType%"=="1" if /i "%BootDetect%"=="2" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" > nul 2>&1
+if /i "%BootDetect%"=="1" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" > nul 2>&1
+if /i "%BootDetect%"=="2" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" > nul 2>&1
 if /i "%BIOSType%"=="2" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f BIOS > nul 2>&1
 if /i "%BIOSType%"=="3" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f UEFI > nul 2>&1
 if /i "%BIOSType%"=="4" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f ALL > nul 2>&1
