@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.0.4
+echo Version: 8.0.5
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -890,7 +890,9 @@ if exist "diskpart.txt" goto "DiskPartExistAssignDriveLetterBootloader"
 echo.
 if /i "%BootAsk2%"=="Yes" echo Formatting boot partition "%DriveLetterBootloader%".
 if /i "%BootAsk2%"=="No" echo Assigning drive letter "%BootloaderDriveLetter%" to boot partition and formatting boot partition "%BootloaderDriveLetter%".
-(echo sel vol %BootVolume%) > "diskpart.txt"
+if /i "%BootAsk2%"=="No" (echo automount scrub) > "diskpart.txt"
+if /i "%BootAsk2%"=="Yes" (echo sel vol %BootVolume%) > "diskpart.txt"
+if /i "%BootAsk2%"=="No" (echo sel vol %BootVolume%) >> "diskpart.txt"
 (echo format fs=fat32 label="System" quick) >> "diskpart.txt"
 if /i "%BootAsk2%"=="No" (echo assign letter=%BootloaderDriveLetter%) >> "diskpart.txt"
 if /i "%MBRGPT%"=="MBR" (echo active) >> "diskpart.txt"
@@ -921,7 +923,8 @@ goto "Volume1"
 if exist "diskpart.txt" goto "DiskPartExistAssignDriveLetterWindows"
 echo.
 echo Assigning Windows volume %WindowsVolume% drive letter "%WindowsDriveLetter%".
-(echo sel vol %WindowsVolume%) > "diskpart.txt"
+(echo automount scrub) > "diskpart.txt"
+(echo sel vol %WindowsVolume%) >> "diskpart.txt"
 (echo assign letter=%WindowsDriveLetter%) >> "diskpart.txt"
 (echo exit) >> "diskpart.txt"
 "%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
