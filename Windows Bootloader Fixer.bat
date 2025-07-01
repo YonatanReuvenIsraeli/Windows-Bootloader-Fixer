@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.0.9
+echo Version: 8.0.10
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -551,7 +551,7 @@ goto "SureBootAsk1"
 echo.
 set SureBootAsk1=
 set /p SureBootAsk1="All data on volume %BootVolume% will be deleted! Are you sure volume %BootVolume% is the boot volume? (Yes/No) "
-if /i "%BootloadetError%"=="True" if /i "%BootVolume%"=="%WindowsVolume%" if /i "%SureBootAsk1%"=="Yes" goto "SameBootWindows"
+if /i "%BootloaderError%"=="True" if /i "%BootVolume%"=="%WindowsVolume%" if /i "%SureBootAsk1%"=="Yes" goto "SameBootWindows"
 if /i "%SureBootAsk1%"=="Yes" goto "BootAsk2"
 if /i "%SureBootAsk1%"=="No" goto "Volume1"
 echo Invalid syntax!
