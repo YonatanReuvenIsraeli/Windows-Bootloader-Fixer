@@ -1,4 +1,4 @@
-# Windows Bootloader Fixer v8.0.8
+# Windows Bootloader Fixer v8.0.9
 Fixes the Windows bootloader.
 
 ## Notes:
