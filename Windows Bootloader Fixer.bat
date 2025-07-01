@@ -674,7 +674,7 @@ goto "SureWindowsAsk1"
 
 :"SameWindowsBoot"
 echo Windows volume %WindowsVolume% same as boot volume %BootVolume%! Please try again.
-if /i "%WindowsError%"=="True" goto "Volume2
+if /i "%WindowsError%"=="True" goto "Volume2"
 goto "Volume1"
 
 :"WindowsAsk2"
