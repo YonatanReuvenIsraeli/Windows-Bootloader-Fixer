@@ -742,7 +742,7 @@ goto "SureDriveLetterWindows"
 :"CheckExistDriveLetterWindows"
 if not exist "%DriveLetterWindows%" goto "DriveLetterWindowsNotExist"
 if not exist "%DriveLetterWindows%\Windows" goto "NotWindows"
-if /i "%WindowsError%"=="True" goto "AssignDriveLetterWindows" 
+if /i "%WindowsError%"=="True" goto "AssignDriveLetterWindows"
 if /i "%BootAsk2%"=="No" goto "BootloaderDriveLetter"
 goto "AssignDriveLetterBootloader"
 
@@ -943,7 +943,7 @@ if not "%errorlevel%"=="0" goto "AssignDriveLetterWindowsError"
 del "diskpart.txt" /f /q > nul 2>&1
 echo Assigned Windows volume %WindowsVolume% drive letter "%WindowsDriveLetter%".
 set DriveLetterWindows=%WindowsDriveLetter%
-goto "Bootloader"
+goto "CheckExistDriveLetterWindowsAssign"
 
 :"DiskPartExistAssignDriveLetterWindows"
 set DiskPart=True
@@ -956,6 +956,15 @@ goto "AssignDriveLetterWindows"
 del "diskpart.txt" /f /q > nul 2>&1
 set WindowsError=True
 echo There has been an error!
+goto "Volume2"
+
+:"CheckExistDriveLetterWindowsAssign"
+if not exist "%DriveLetterWindows%\Windows" goto "NotWindowsAssign"
+goto "Bootloader"
+
+:"NotWindowsAssign"
+set WindowsError=True
+echo Windows not installed on volume %WindowsVolume%!
 goto "Volume2"
 
 :"Bootloader"
