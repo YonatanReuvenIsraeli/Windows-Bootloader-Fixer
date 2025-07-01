@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.0.8
+echo Version: 8.0.9
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -996,38 +996,38 @@ if /i "%BIOSType%"=="2" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Wi
 if /i "%BIOSType%"=="3" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f UEFI > nul 2>&1
 if /i "%BIOSType%"=="4" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f ALL > nul 2>&1
 if not "%errorlevel%"=="0" goto "ErrorBootloader"
-goto "Volume3"
+goto "RemoveLetterBootloader"
 
 :"ErrorBootloader"
 echo There was an error and no new bootloader was created. You can try again.
 goto "Disk"
 
-:"Volume3"
-if exist "diskpart.txt" goto "DiskPartExistVolume3"
+:"RemoveLetterBootloader"
+if exist "diskpart.txt" goto "DiskPartExistRemoveLetterBootloader"
 echo.
 echo Removing drive letter "%DriveLetterBootloader%" from boot partition.
 (echo sel vol %BootVolume%) > "diskpart.txt"
 (echo remove letter=%DriveLetterBootloader%) >> "diskpart.txt"
 (echo exit) >> "diskpart.txt"
 "%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
-if not "%errorlevel%"=="0" goto "Volume3Error"
+if not "%errorlevel%"=="0" goto "RemoveLetterBootloaderError"
 del "diskpart.txt" /f /q > nul 2>&1
 echo Removed drive letter "%DriveLetterBootloader%" from boot partition.
 if /i "%DiskPart%"=="True" goto "DiskPartDone"
 if /i "%PERE%"=="False" goto "DoneExit"
 if /i "%PERE%"=="True" goto "DoneReboot"
 
-:"DiskPartExistVolume3"
+:"DiskPartExistRemoveLetterBootloader"
 set DiskPart=True
 echo Please temporarily rename to something else or temporarily move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. "diskpart.txt" is located in the folder "%cd%". Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
 pause > nul 2>&1
-goto "Volume3"
+goto "RemoveLetterBootloader"
 
-:"Volume3Error"
+:"RemoveLetterBootloaderError"
 del "diskpart.txt" /f /q > nul 2>&1
 echo There has been an error! Press any key to try again.
 pause > nul 2>&1
-goto "Volume3"
+goto "RemoveLetterBootloader"
 
 :"DiskPartDone"
 echo.
