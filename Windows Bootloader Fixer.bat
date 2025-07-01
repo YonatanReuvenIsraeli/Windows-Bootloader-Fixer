@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.0.5
+echo Version: 8.0.6
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
