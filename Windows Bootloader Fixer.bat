@@ -963,9 +963,30 @@ if not exist "%DriveLetterWindows%\Windows" goto "NotWindowsAssign"
 goto "Bootloader"
 
 :"NotWindowsAssign"
+if exist "diskpart.txt" goto "DiskPartExistNotWindowsAssign"
+echo.
+echo Windows not installed on volume %WindowsVolume%! Removing drive letter "%DriveLetterWindows%" from volume %WindowsVolume%.
+(echo sel vol %WindowsVolume%) > "diskpart.txt"
+(echo remove letter=%DriveLetterWindows%) >> "diskpart.txt"
+(echo exit) >> "diskpart.txt"
+"%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
+if not "%errorlevel%"=="0" goto "NotWindowsAssignError"
+del "diskpart.txt" /f /q > nul 2>&1
+echo Removed drive letter "%DriveLetterWindows%" from volume %WindowsVolume%.Please try again.
 set WindowsError=True
-echo Windows not installed on volume %WindowsVolume%!
 goto "Volume2"
+
+:"DiskPartExistNotWindowsAssign"
+set DiskPart=True
+echo Please temporarily rename to something else or temporarily move to another location "diskpart.txt" in order for this batch file to proceed. "diskpart.txt" is not a system file. "diskpart.txt" is located in the folder "%cd%". Press any key to continue when "diskpart.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
+pause > nul 2>&1
+goto "NotWindowsAssign"
+
+:"NotWindowsAssignError"
+del "diskpart.txt" /f /q > nul 2>&1
+echo There has been an error! Press any key to try again.
+pause > nul 2>&1
+goto "NotWindowsAssign"
 
 :"Bootloader"
 echo.
