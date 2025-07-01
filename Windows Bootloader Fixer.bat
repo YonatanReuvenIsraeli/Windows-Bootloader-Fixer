@@ -551,10 +551,15 @@ goto "SureBootAsk1"
 echo.
 set SureBootAsk1=
 set /p SureBootAsk1="All data on volume %BootVolume% will be deleted! Are you sure volume %BootVolume% is the boot volume? (Yes/No) "
+if /i "%BootloadetError%"=="True" if /i "%BootVolume%"=="%WindowsVolume%" if /i "%SureBootAsk1%"=="Yes" goto "SameBootWindows"
 if /i "%SureBootAsk1%"=="Yes" goto "BootAsk2"
 if /i "%SureBootAsk1%"=="No" goto "Volume1"
 echo Invalid syntax!
 goto "SureBootAsk1"
+
+:"SameBootWindows"
+echo Boot volume %BootVolume% same as Windows volume %WindowsVolume%! Please try again.
+goto "Volume1"
 
 :"BootAsk2"
 echo.
@@ -661,10 +666,16 @@ goto "SureWindowsAsk1"
 echo.
 set SureWindowsAsk1=
 set /p SureWindowsAsk1="Are you sure volume %WindowsVolume% is the Windows volume? (Yes/No) "
+if /i "%BootVolume%"=="%WindowsVolume%" if /i "%SureWindowsAsk1%"=="Yes" goto "SameWindowsBoot"
 if /i "%SureWindowsAsk1%"=="Yes" goto "WindowsAsk2"
 if /i "%SureWindowsAsk1%"=="No" goto "Volume2"
 echo Invalid syntax!
 goto "SureWindowsAsk1"
+
+:"SameWindowsBoot"
+echo Windows volume %WindowsVolume% same as boot volume %BootVolume%! Please try again.
+if /i "%WindowsError%"=="True" goto "Volume2
+goto "Volume1"
 
 :"WindowsAsk2"
 echo.
