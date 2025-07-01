@@ -972,7 +972,7 @@ echo Windows not installed on volume %WindowsVolume%! Removing drive letter "%Dr
 "%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "NotWindowsAssignError"
 del "diskpart.txt" /f /q > nul 2>&1
-echo Removed drive letter "%DriveLetterWindows%" from volume %WindowsVolume%.Please try again.
+echo Removed drive letter "%DriveLetterWindows%" from volume %WindowsVolume% Please try again.
 set WindowsError=True
 goto "Volume2"
 
