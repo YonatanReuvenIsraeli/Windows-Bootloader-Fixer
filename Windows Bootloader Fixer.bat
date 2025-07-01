@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.0.13
+echo Version: 8.0.14
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -558,7 +558,7 @@ echo Invalid syntax!
 goto "SureBootAsk1"
 
 :"SameBootWindows"
-echo Boot volume volume %BootVolume% is the same as Windows volume volume %WindowsVolume%! Please try again.
+echo Boot volume %BootVolume% is the same as Windows volume %WindowsVolume%! Please try again.
 goto "Volume1"
 
 :"BootAsk2"
@@ -673,7 +673,7 @@ echo Invalid syntax!
 goto "SureWindowsAsk1"
 
 :"SameWindowsBoot"
-echo Windows volume volume %WindowsVolume% is the same as boot volume volume %BootVolume%! Please try again.
+echo Windows volume %WindowsVolume% is the same as boot volume %BootVolume%! Please try again.
 if /i "%WindowsError%"=="True" goto "Volume2"
 goto "Volume1"
 
