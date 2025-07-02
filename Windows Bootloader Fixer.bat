@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.0.14
+echo Version: 8.0.15
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -125,7 +125,7 @@ del "diskpart.txt" /f /q > nul 2>&1
 echo Found partitions in disk %Disk%.
 echo.
 set Partition=
-set /p Partition="What is the partition number of the boot partition? If there is no boot partition or boot partition needs to be remade enter "Need boot partition" (0-?/Need boot partition) "
+set /p Partition="What is the partition number of the boot partition? If there is no boot partition or boot partition needs to be recreated enter "Need boot partition" (0-?/Need boot partition) "
 if /i "%Partition%"=="Need boot partition" goto "SurePartition"
 goto "SureBootPartition"
 
@@ -145,7 +145,7 @@ goto "Disk"
 :"SurePartition"
 echo.
 set SurePartition=
-set /p SurePartition="Are you sure there is no boot partition or boot partition needs to be remade? (Yes/No) "
+set /p SurePartition="Are you sure there is no boot partition or boot partition needs to be recreated? (Yes/No) "
 if /i "%SurePartition%"=="Yes" goto "ListPartition"
 if /i "%SurePartition%"=="No" goto "Partition"
 echo Invalid syntax!
@@ -479,7 +479,7 @@ goto "NewPartition"
 :"CreatePartition"
 if exist "diskpart.txt" goto "DiskPartExistNewPartition"
 echo.
-echo Remaking boot partition.
+echo Recreating boot partition.
 (echo sel disk %Disk%) > "diskpart.txt"
 if /i "%MBRGPT%"=="MBR" (echo create partition primary size=%Size%) >> "diskpart.txt"
 if /i "%MBRGPT%"=="GPT" (echo create partition efi size=%Size%) >> "diskpart.txt"
@@ -487,7 +487,7 @@ if /i "%MBRGPT%"=="GPT" (echo create partition efi size=%Size%) >> "diskpart.txt
 "%windir%\System32\diskpart.exe" /s "diskpart.txt" > nul 2>&1
 if not "%errorlevel%"=="0" goto "NewPartitionError"
 del "diskpart.txt" /f /q > nul 2>&1
-echo Boot partition remade.
+echo Boot partition recreated.
 goto "Partition"
 
 :"DiskPartExistNewPartition"
