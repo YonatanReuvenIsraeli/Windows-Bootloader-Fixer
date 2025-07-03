@@ -1,8 +1,8 @@
-# Windows Bootloader Fixer v8.0.17
+# Windows Bootloader Fixer v8.0.18
 Fixes the Windows bootloader.
 
 ## Notes:
-- Allows you to fix Windows bootloaders for Legacy BIOS, UEFI and both.
+- Allows you to fix Windows bootloaders for legacy BIOS and both legacy BIOS and UEFI (MBR) or UEFI (GPT) both.
 - This batch file does not support fixing the bootloader for Windows To Go installations.
 - This batch file cannot fix the bootloader of an online Windows installation.
 - You may have to reconfigure other boot configurations.
