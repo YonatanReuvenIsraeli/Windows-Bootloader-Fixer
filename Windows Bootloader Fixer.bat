@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.0.17
+echo Version: 8.0.18
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -79,7 +79,8 @@ echo.
 set SureMBRGPT=
 if /i "%MBRGPT%"=="MBR" set /p SureMBRGPT="Are you sure disk %Disk% is MBR? (Yes/No) "
 if /i "%MBRGPT%"=="GPT" set /p SureMBRGPT="Are you sure disk %Disk% is GPT? (Yes/No) "
-if /i "%SureMBRGPT%"=="Yes" goto "BIOSType"
+if /i "%MBRGPT%"=="MBR" if /i "%SureMBRGPT%"=="Yes" goto "BIOSType"
+if /i "%MBRGPT%"=="GPT" if /i "%SureMBRGPT%"=="Yes" goto "Partition"
 if /i "%SureMBRGPT%"=="No" goto "MBRGPT"
 echo Invalid syntax!
 goto "SureMBRGPT"
@@ -87,14 +88,12 @@ goto "SureMBRGPT"
 :"BIOSType"
 echo.
 echo [1] Legacy BIOS.
-echo [2] UEFI.
-echo [3] Both.
+echo [2] Both legacy BIOS and UEFI.
 echo.
 set BIOSType=
-set /p BIOSType="Do you want to fix legacy BIOS, UEFI or both? (1-3) "
+set /p BIOSType="Do you want to fix legacy BIOS, or both legacy BIOS and UEFI? (1-2) "
 if /i "%BIOSType%"=="1" goto "SureBIOSType"
 if /i "%BIOSType%"=="2" goto "SureBIOSType"
-if /i "%BIOSType%"=="3" goto "SureBIOSType"
 echo Invalid syntax!
 goto "BIOSType"
 
@@ -102,8 +101,7 @@ goto "BIOSType"
 echo.
 set SureBIOSType=
 if /i "%BIOSType%"=="1" set /p SureBIOSType="Are you sure you are trying to fix legacy BIOS? (Yes/No) "
-if /i "%BIOSType%"=="2" set /p SureBIOSType="Are you sure you are trying to fix UEFI? (Yes/No) "
-if /i "%BIOSType%"=="3" set /p SureBIOSType="Are you sure you are trying to fix both? (Yes/No) "
+if /i "%BIOSType%"=="2" set /p SureBIOSType="Are you sure you are trying to fix both legacy BIOS and UEFI? (Yes/No) "
 if /i "%SureBIOSType%"=="Yes" goto "Partition"
 if /i "%SureBIOSType%"=="No" goto "BIOSType"
 echo Invalid syntax!
@@ -901,9 +899,9 @@ if /i "%BootAsk2%"=="No" echo Assigning drive letter "%BootloaderDriveLetter%" t
 if /i "%BootAsk2%"=="No" (echo automount scrub) > "diskpart.txt"
 if /i "%BootAsk2%"=="Yes" (echo sel vol %BootVolume%) > "diskpart.txt"
 if /i "%BootAsk2%"=="No" (echo sel vol %BootVolume%) >> "diskpart.txt"
-if /i "%BIOSType%"=="1" (echo format fs=ntfs label="System" quick) >> "diskpart.txt"
-if /i "%BIOSType%"=="2" (echo format fs=fat32 label="System" quick) >> "diskpart.txt"
-if /i "%BIOSType%"=="3" (echo format fs=fat32 label="System" quick) >> "diskpart.txt"
+if /i "%MBRGPT%"=="MBR" if /i "%BIOSType%"=="1" (echo format fs=ntfs label="System" quick) >> "diskpart.txt"
+if /i "%MBRGPT%"=="MBR" if /i "%BIOSType%"=="2" (echo format fs=fat32 label="System" quick) >> "diskpart.txt"
+if /i "%MBRGPT%"=="GPT" (echo format fs=fat32 label="System" quick) >> "diskpart.txt"
 if /i "%BootAsk2%"=="No" (echo assign letter=%BootloaderDriveLetter%) >> "diskpart.txt"
 if /i "%MBRGPT%"=="MBR" (echo active) >> "diskpart.txt"
 (echo exit) >> "diskpart.txt"
@@ -990,9 +988,9 @@ goto "NotWindowsAssign"
 :"Bootloader"
 echo.
 echo Fixing the Windows bootloader.
-if /i "%BIOSType%"=="1" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f BIOS > nul 2>&1
-if /i "%BIOSType%"=="2" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f UEFI > nul 2>&1
-if /i "%BIOSType%"=="3" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f ALL > nul 2>&1
+if /i "%MBRGPT%"=="MBR" if /i "%BIOSType%"=="1" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f BIOS > nul 2>&1
+if /i "%MBRGPT%"=="MBR" if /i "%BIOSType%"=="2" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f ALL > nul 2>&1
+if /i "%MBRGPT%"=="GPT" "%windir%\System32\bcdboot.exe" "%DriveLetterWindows%\Windows" /s "%DriveLetterBootloader%" /f UEFI > nul 2>&1
 if not "%errorlevel%"=="0" goto "ErrorBootloader"
 goto "RemoveDriveLetterBootloader"
 
