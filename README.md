@@ -6,4 +6,4 @@ Fixes the Windows bootloader.
 - This batch file does not support fixing the bootloader for Windows To Go installations.
 - This batch file cannot fix the bootloader of an online Windows installation.
 - You may have to reconfigure other boot configurations.
-- This batch file may clear your AutoMount settings.
+- This batch file may clear your AutoMount points.
