@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.0.20
+echo Version: 8.0.21
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -1027,7 +1027,7 @@ goto "RemoveDriveLetterBootloader"
 
 :"DiskPartDone"
 echo.
-echo You can now rename or move back the file back to "diskpart.txt".
+echo You can now rename or move the file back to "diskpart.txt".
 if /i "%PERE%"=="False" goto "DoneExit"
 if /i "%PERE%"=="True" goto "DoneReboot"
 
