@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.1.2
+echo Version: 8.1.3
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -243,7 +243,10 @@ goto "DeletePartition"
 :"NewPartition"
 echo.
 set Size=
-set /p Size="Please enter boot partition size to create. Recommended size is 350 MB but you can try to go down to 100 MB if you do not have the space. (100-350) "
+if /i "%MBRGPT%"=="MBR" if /i "%BIOSType%"=="1"  set /p Size="Please enter boot partition size to create. Recommended size is 100 MB but you can try 100-350 MB if you need to. (100-350) "
+if /i "%MBRGPT%"=="MBR" if /i "%BIOSType%"=="2" set /p Size="Please enter boot partition size to create. Recommended size is 350 MB but you can try try 100-350 MB if you need to. (100-350) "
+if /i "%MBRGPT%"=="GPT" if /i "%fsutil%"=="0" set /p Size="Please enter boot partition size to create. Recommended size is 100 MB but you can try try 100-350 MB if you need to. (100-350) "
+if /i "%MBRGPT%"=="GPT" if /i "%fsutil%"=="1" set /p Size="Please enter boot partition size to create. Recommended size is 260 MB but you can try try 100-350 MB if you need to. (100-350) "
 if /i "%MBRGPT%"=="MBR" if /i "%BIOSType%"=="1" if /i "%Size%"=="" set Size=100
 if /i "%MBRGPT%"=="MBR" if /i "%BIOSType%"=="2" if /i "%Size%"=="" set Size=350
 if /i "%MBRGPT%"=="GPT" if /i "%fsutil%"=="0" if /i "%Size%"=="" set Size=100
