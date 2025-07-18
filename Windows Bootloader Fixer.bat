@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.0.21
+echo Version: 8.1.0
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -141,10 +141,35 @@ goto "Disk"
 echo.
 set SurePartition=
 set /p SurePartition="Are you sure there is no boot partition or boot partition needs to be recreated? (Yes/No) "
-if /i "%SurePartition%"=="Yes" goto "ListPartition"
+if /i "%MBRGPT%"=="MBR" if /i "%SurePartition%"=="Yes" goto "ListPartition"
+if /i "%MBRGPT%"=="GPT" if /i "%SurePartition%"=="Yes" goto "fsutil"
 if /i "%SurePartition%"=="No" goto "Partition"
 echo Invalid syntax!
 goto "SurePartition"
+
+:"fsutil"
+if exist "fsutil.txt" goto "fsutilExist"
+echo.
+echo Getting disk %Disk% details.
+"%windir%\System32\fsutil.exe" fsinfo sectorinfo \\.\PhysicalDrive%Disk% | "%windir%\System32\find.exe" /i /c "PhysicalBytesPerSectorForAtomicity :                    4096" > "fsutil.txt"
+set /p fsutil=< "fsutil.txt"
+echo Got disk %Disk% details.
+del "fsutil.txt" /f /q > nul 2>&1
+if /i "%fsutil%"=="True" goto "fsutilDone"
+goto "ListPartition"
+
+:"fsutilExist"
+set fsutil=True
+echo.
+echo Please temporarily rename to something else or temporarily move to another location "fsutil.txt" in order for this batch file to proceed. "fsutil.txt" is not a system file. "fsutil.txt" is located in the folder "%cd%". Press any key to continue when "fsutil.txt" is renamed to something else or moved to another location. This batch file will let you know when you can rename it back to its original name or move it back to its original location.
+pause > nul 2>&1
+goto "fsutil"
+
+:"fsutilDone"
+echo.
+echo You can now rename or move the file back to "fsutil.txt". Press any key to continue.
+pause > nul 2>&1
+goto "ListPartition"
 
 :"ListPartition"
 if exist "diskpart.txt" goto "DiskPartExistListPartition"
@@ -159,7 +184,10 @@ del "diskpart.txt" /f /q > nul 2>&1
 echo Partition listed in disk %Disk%.
 echo.
 set DeletePartition=
-set /p DeletePartition="Enter partition number that needs to be deleted to make space for boot partition. Recommended size is 350 MB but you can try to go down to 100 MB if you do not have the space. Enter "Done" if you are done deleting partitions. (0-?/Done) "
+if /i "%MBRGPT%"=="MBR" if /i "%BIOSType%"=="1" set /p DeletePartition="Enter partition number that needs to be deleted to make space for boot partition. Recommended size is 100 MB but you can try 100-350 MB if you need to. Enter "Done" if you are done deleting partitions. (0-?/Done) "
+if /i "%MBRGPT%"=="MBR" if /i "%BIOSType%"=="2" set /p DeletePartition="Enter partition number that needs to be deleted to make space for boot partition. Recommended size is 350 MB but you can try 100-350 MB if you need to. Enter "Done" if you are done deleting partitions. (0-?/Done) "
+if /i "%MBRGPT%"=="GPT" if /i "fsutil"=="0" set /p DeletePartition="Enter partition number that needs to be deleted to make space for boot partition. Recommended size is 100 MB but you can try 100-350 MB if you need to. Enter "Done" if you are done deleting partitions. (0-?/Done) "
+if /i "%MBRGPT%"=="GPT" if /i "fsutil"=="1" set /p DeletePartition="Enter partition number that needs to be deleted to make space for boot partition. Recommended size is 260 MB but you can try 100-350 MB if you need to. Enter "Done" if you are done deleting partitions. (0-?/Done) "
 if /i "%DeletePartition%"=="Done" goto "NewPartition"
 goto "SureDeletePartition"
 
@@ -216,7 +244,10 @@ goto "DeletePartition"
 echo.
 set Size=
 set /p Size="Please enter boot partition size to create. Recommended size is 350 MB but you can try to go down to 100 MB if you do not have the space. (100-350) "
-if /i "%Size%"=="" set Size=350
+if /i "%MBRGPT%"=="MBR" if /i "%BIOSType%"=="1" if /i "%Size%"=="" set Size=100
+if /i "%MBRGPT%"=="MBR" if /i "%BIOSType%"=="2" if /i "%Size%"=="" set Size=350
+if /i "%MBRGPT%"=="GPT" if /i "fsutil"=="0" if /i "%Size%"=="" set Size=100
+if /i "%MBRGPT%"=="GPT" if /i "fsutil"=="1" if /i "%Size%"=="" set Size=260
 if /i "%Size%"=="100" goto "CreatePartition"
 if /i "%Size%"=="101" goto "CreatePartition"
 if /i "%Size%"=="102" goto "CreatePartition"
