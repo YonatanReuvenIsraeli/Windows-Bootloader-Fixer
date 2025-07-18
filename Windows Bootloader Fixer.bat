@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.1.0
+echo Version: 8.1.1
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -186,8 +186,8 @@ echo.
 set DeletePartition=
 if /i "%MBRGPT%"=="MBR" if /i "%BIOSType%"=="1" set /p DeletePartition="Enter partition number that needs to be deleted to make space for boot partition. Recommended size is 100 MB but you can try 100-350 MB if you need to. Enter "Done" if you are done deleting partitions. (0-?/Done) "
 if /i "%MBRGPT%"=="MBR" if /i "%BIOSType%"=="2" set /p DeletePartition="Enter partition number that needs to be deleted to make space for boot partition. Recommended size is 350 MB but you can try 100-350 MB if you need to. Enter "Done" if you are done deleting partitions. (0-?/Done) "
-if /i "%MBRGPT%"=="GPT" if /i "fsutil"=="0" set /p DeletePartition="Enter partition number that needs to be deleted to make space for boot partition. Recommended size is 100 MB but you can try 100-350 MB if you need to. Enter "Done" if you are done deleting partitions. (0-?/Done) "
-if /i "%MBRGPT%"=="GPT" if /i "fsutil"=="1" set /p DeletePartition="Enter partition number that needs to be deleted to make space for boot partition. Recommended size is 260 MB but you can try 100-350 MB if you need to. Enter "Done" if you are done deleting partitions. (0-?/Done) "
+if /i "%MBRGPT%"=="GPT" if /i "%fsutil%"=="0" set /p DeletePartition="Enter partition number that needs to be deleted to make space for boot partition. Recommended size is 100 MB but you can try 100-350 MB if you need to. Enter "Done" if you are done deleting partitions. (0-?/Done) "
+if /i "%MBRGPT%"=="GPT" if /i "%fsutil%"=="1" set /p DeletePartition="Enter partition number that needs to be deleted to make space for boot partition. Recommended size is 260 MB but you can try 100-350 MB if you need to. Enter "Done" if you are done deleting partitions. (0-?/Done) "
 if /i "%DeletePartition%"=="Done" goto "NewPartition"
 goto "SureDeletePartition"
 
