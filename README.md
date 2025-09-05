@@ -7,4 +7,4 @@ Fixes the Windows bootloader.
 - This batch file cannot fix the bootloader of an online Windows installation.
 - You may have to reconfigure other boot configurations.
 - You may lose the Windows Recovery Environment when fixing the bootloader. You can do an in-place upgrade to get back the Windows Recovery Environment.
-- This batch file may clear your AutoMount points.
+- This batch file may clear your auto-mount points.
