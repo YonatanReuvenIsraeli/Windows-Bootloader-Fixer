@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.1.5
+echo Version: 8.1.6
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -543,7 +543,7 @@ goto "NewPartition"
 :"SureBootPartition"
 echo.
 set SurePartition=
-set /p SurePartition="All data on partition %Partition% will be deleted! Are you sure volume %Partition% is the boot partition? (Yes/No) "
+set /p SurePartition="All data on partition %Partition% will be deleted! Are you sure partition %Partition% is the boot partition? (Yes/No) "
 if /i "%SurePartition%"=="Yes" goto "BootloaderErrorWindowsErrorSet"
 if /i "%SurePartition%"=="No" goto "Partition"
 echo Invalid syntax!
@@ -1088,3 +1088,4 @@ echo Your bootloader is fixed! Please save everything you want before restarting
 pause > nul 2>&1
 "%windir%\System32\wpeutil.exe" Reboot
 exit
+
