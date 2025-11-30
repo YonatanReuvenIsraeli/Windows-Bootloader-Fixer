@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.1.7
+echo Version: 8.1.8
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -508,7 +508,7 @@ goto "NewPartition"
 :"SurePartitionSize"
 echo.
 set SurePartitionSize=
-set /p SurePartitionSize="Are you sure you want a boot partition size of %Size%? MB? (Yes/No) "
+set /p SurePartitionSize="Are you sure you want a boot partition size of %Size% MB? (Yes/No) "
 if /i "%SurePartitionSize%"=="Yes" goto "CreatePartition"
 if /i "%SurePartitionSize%"=="No" goto "NewPartition"
 echo Invalid syntax!
