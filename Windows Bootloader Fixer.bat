@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.1.8
+echo Version: 8.1.9
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -965,7 +965,7 @@ pause > nul 2>&1
 goto "AssignDriveLetterBootloader"
 
 :"AssignDriveLetterBootloaderError"
-del diskpart.txt /f /q > nul 2>&1
+del "diskpart.txt" /f /q > nul 2>&1
 set BootloaderError=True
 echo There has been an error!
 goto "Volume1"
