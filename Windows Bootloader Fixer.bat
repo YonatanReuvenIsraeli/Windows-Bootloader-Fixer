@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.1.9
+echo Version: 8.1.10
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -34,7 +34,7 @@ echo.
 echo Finding disks attached to this PC.
 (echo list disk) > "diskpart.txt"
 (echo exit) >> "diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "diskpart.txt" 2>&1
+"%windir%\System32\diskpart.exe" /s "diskpart.txt"
 if not "%errorlevel%"=="0" goto "DiskError"
 del "diskpart.txt" /f /q > nul 2>&1
 echo Disks attached to this PC found.
@@ -114,7 +114,7 @@ echo Finding partitions in disk %Disk%.
 (echo sel disk %Disk%) > "diskpart.txt"
 (echo list part) >> "diskpart.txt"
 (echo exit) >> "diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "diskpart.txt" 2>&1
+"%windir%\System32\diskpart.exe" /s "diskpart.txt"
 if not "%errorlevel%"=="0" goto "PartitionError"
 del "diskpart.txt" /f /q > nul 2>&1
 echo Found partitions in disk %Disk%.
@@ -178,7 +178,7 @@ echo Listing partitions in disk %Disk%.
 (echo sel disk %Disk%) > "diskpart.txt"
 (echo list part) >> "diskpart.txt"
 (echo exit) >> "diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "diskpart.txt" 2>&1
+"%windir%\System32\diskpart.exe" /s "diskpart.txt"
 if not "%errorlevel%"=="0" goto "ListPartitionError"
 del "diskpart.txt" /f /q > nul 2>&1
 echo Partition listed in disk %Disk%.
@@ -560,7 +560,7 @@ echo.
 echo Listing volumes attached to this PC.
 (echo list vol) > "diskpart.txt"
 (echo exit) >> "diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "diskpart.txt" 2>&1
+"%windir%\System32\diskpart.exe" /s "diskpart.txt"
 if not "%errorlevel%"=="0" goto "Volume1Error"
 del "diskpart.txt" /f /q > nul 2>&1
 echo Volumes attached to this PC listed.
@@ -675,7 +675,7 @@ echo.
 echo Listing volumes in disk %Disk%.
 (echo list vol) > "diskpart.txt"
 (echo exit) >> "diskpart.txt"
-"%windir%\System32\diskpart.exe" /s "diskpart.txt" 2>&1
+"%windir%\System32\diskpart.exe" /s "diskpart.txt"
 if not "%errorlevel%"=="0" goto "Volume2Error"
 del "diskpart.txt" /f /q > nul 2>&1
 echo Volumes in disk %Disk% listed.
