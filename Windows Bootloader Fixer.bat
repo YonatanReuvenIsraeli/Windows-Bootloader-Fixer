@@ -2,7 +2,7 @@
 title Windows Bootloader Fixer
 setlocal
 echo Program Name: Windows Bootloader Fixer
-echo Version: 8.1.10
+echo Version: 8.1.11
 echo License: GNU General Public License v3.0
 echo Developer: @YonatanReuvenIsraeli
 echo GitHub: https://github.com/YonatanReuvenIsraeli
@@ -789,7 +789,7 @@ echo "%DriveLetterWindows%" does not exist! Please try again.
 goto "Volume2"
 
 :"NotWindows"
-echo Windows not installed on "%DriveLetterWindows%"!
+echo Windows not installed on "%DriveLetterWindows%"! Please try again.
 goto "Volume2"
 
 :"WindowsDriveLetterSet"
